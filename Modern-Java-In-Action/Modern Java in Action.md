@@ -7,3 +7,4 @@
 
 ### Part2. 함수형 데이터 처리
 - [Chapter4. 스트림 소개](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter4/Chapter4.md)
+- [Chapter5. 스트림 활용](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter5/Chapter5.md)
