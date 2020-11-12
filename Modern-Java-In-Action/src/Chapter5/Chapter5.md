@@ -369,7 +369,7 @@ Optional<Integer> min = numbers.stream().reduce(Integer::min);
 ## 5.6 실전 연습
 
 스트림은 최댓값이나 최솟값을 계산하는 데 사용할 키를 지정하는 `Comparator`를 인수로 받는 `min`과 `max` 메서드를 제공한다. 따라서 `min`과 `max`를 이용하면 더 쉽게 문제를 해결할 수 있다.
-
+- [연습코드 참고](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter5/Practice5_6.java)
 ---
 
 ## 5.7 숫자형 스트림
