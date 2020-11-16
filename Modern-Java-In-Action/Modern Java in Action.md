@@ -9,3 +9,4 @@
 - [Chapter4. 스트림 소개](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter4/Chapter4.md)
 - [Chapter5. 스트림 활용](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter5/Chapter5.md)
 - [Chapter6. 스트림으로 데이터 수집](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter6/Chapter6.md)
+- [Chapter7. 병렬 데이터 처리와 성능](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter7/Chapter7.md)
