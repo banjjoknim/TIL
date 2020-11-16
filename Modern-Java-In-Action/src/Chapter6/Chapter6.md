@@ -866,4 +866,9 @@ public Map<Boolean, List<Integer>> partitionPrimesWithCustomCollector(int n) {
                     .collect(new PrimeNumbersCollector());
 }
 ```
+
+#### 6.6.2 컬렉터 성능 비교
+
+책의 내용을 참조할 것.
+
 ---
