@@ -10,3 +10,6 @@
 - [Chapter5. 스트림 활용](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter5/Chapter5.md)
 - [Chapter6. 스트림으로 데이터 수집](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter6/Chapter6.md)
 - [Chapter7. 병렬 데이터 처리와 성능](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter7/Chapter7.md)
+
+### Part3. 스트림과 람다를 이용한 효과적 프로그래밍
+- [Chapter8. 컬렉션 API 개선](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter8/Chapter8.md)
