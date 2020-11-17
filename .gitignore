@@ -4,3 +4,5 @@
 .idea/vcs.xml
 TIL(Today-I-Learned).iml
 .idea/
+WebServiceBySpringBootAndAWS/settings.gradle
+WebServiceBySpringBootAndAWS/gradle/wrapper/gradle-wrapper.properties
