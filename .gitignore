@@ -6,3 +6,13 @@ TIL(Today-I-Learned).iml
 .idea/
 WebServiceBySpringBootAndAWS/settings.gradle
 WebServiceBySpringBootAndAWS/gradle/wrapper/gradle-wrapper.properties
+WebServiceBySpringBootAndAWS/build/reports/tests/test/index.html
+WebServiceBySpringBootAndAWS/build/reports/tests/test/classes/com.banjjoknim.book.springboot.web.HelloControllerTest.html
+WebServiceBySpringBootAndAWS/build/reports/tests/test/css/base-style.css
+WebServiceBySpringBootAndAWS/build/reports/tests/test/css/style.css
+WebServiceBySpringBootAndAWS/build/reports/tests/test/js/report.js
+WebServiceBySpringBootAndAWS/build/reports/tests/test/packages/com.banjjoknim.book.springboot.web.html
+WebServiceBySpringBootAndAWS/build/test-results/test/TEST-com.banjjoknim.book.springboot.web.HelloControllerTest.xml
+WebServiceBySpringBootAndAWS/build/test-results/test/binary/output.bin
+WebServiceBySpringBootAndAWS/build/test-results/test/binary/output.bin.idx
+WebServiceBySpringBootAndAWS/build/test-results/test/binary/results.bin
