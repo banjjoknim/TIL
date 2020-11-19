@@ -298,6 +298,7 @@ API를 만들기 위해 총 3개의 클래스가 필요합니다.
 여기서 많은 분들이 오해하고 계신 것이, **`Service`에서 비지니스 로직을 처리**해야 한다는 것입니다. 하지만, 전혀 그렇지 않습니다. `Service`는 **트랜잭션, 도메인 간 순서 보장**의 역할만 합니다.
 
 **Spring 웹 계층**
+
 ![Spring 웹 계층](https://blog.kakaocdn.net/dn/bFruEV/btqAUv4HJLQ/H5TVBjqkKc5KBgD4Vdyvkk/img.png)
 
 - **Web Layer**
@@ -555,3 +556,286 @@ public class PostsApiControllerTest {
 }
 ```
 `Api Controller`를 테스트하는데 `HelloController`와 달리 `@WebMvcTest`를 사용하지 않았습니다. **@WebMvcTest의 경우 JPA 기능이 작동하지 않기** 때문인데, `Controller`와 `ControllerAdvice` 등 **외부 연동과 관련된 부분만** 활성화되니 지금 같이 `JPA` 기능까지 한번에 테스트할 때는 `@SpringBootTest`와 `TestRestTemplate`을 사용하면 됩니다. 테스트를 수행하보면 `WebEnvironment.RANDOM_PORT`로 인한 랜덤 포트 실행과 `insert` 쿼리가 실행된 것 모두 확인할 수 있습니다. 등록 기능을 완성했으니 수정/조회 기능도 만들어 보겠습니다.
+
+```java
+package com.banjjoknim.book.springboot.web;
+
+import com.banjjoknim.book.springboot.service.PostsService;
+import com.banjjoknim.book.springboot.web.dto.PostsSaveRequestDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+@RequiredArgsConstructor
+@RestController
+public class PostsApiController {
+
+    private final PostsService postsService;
+
+    @PostMapping("/api/v1/posts")
+    public Long save(@RequestBody PostsSaveRequestDto requestDto) {
+        return postsService.save(requestDto);
+    }
+
+    @PutMapping("/api/v1/posts/{id}")
+    public Long update(@PathVariable Long id, @RequestBody PostsSaveRequestDto requestDto) {
+        return postsService.update(id, requestDto);
+    }
+
+    @GetMapping("/api/v1/posts/{id}")
+    public PostsResponseDto findById(@PathVariable Long id) {
+        return postsService.findById(id);
+    }
+}
+```
+
+```java
+package com.banjjoknim.book.springboot.web.dto;
+
+import com.banjjoknim.book.springboot.domain.posts.Posts;
+import lombok.Getter;
+
+@Getter
+public class PostsResponseDto {
+
+    private Long id;
+    private String title;
+    private String content;
+    private String author;
+
+    public PostsResponseDto(Posts entity) {
+        this.id = entity.getId();
+        this.title = entity.getTitle();
+        this.content = entity.getContent();
+        this.author = entity.getAuthor();
+    }
+}
+
+```
+`PostsResponseDto`는 **Entity의 필드 중 일부만 사용**하므로 생성자로 `Entity`를 받아 필드에 값을 넣습니다. 굳이 모든 필드를 가진 생성자가 필요하진 않으므로 `Dto`는 `Entity`를 받아 처리합니다.
+
+```java
+package com.banjjoknim.book.springboot.web.dto;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+public class PostsUpdateRequestDto {
+    private String title;
+    private String content;
+
+    @Builder
+    public PostsUpdateRequestDto(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+}
+```
+
+```java
+public class Posts {
+    ...
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+}
+```
+
+```java
+public class PostsService {
+    ...
+
+    @Transactional
+    public Long update(Long id, PostsUpdateRequestDto requestDto) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        posts.update(requestDto.getTitle(), requestDto.getContent());
+
+        return id;
+    }
+
+    public PostsResponseDto findById(Long id) {
+        Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        return new PostsResponseDto(entity);
+    }
+}
+```
+여기서 `update` 기능에서 데이터베이스에 **쿼리를 날리는 부분이 없습니다.** 이게 가능한 이유는 `JPA`의 **영속성 컨텍스트** 때문입니다.
+
+영속성 컨텍스트란, **앤티티를 영구 저장하는 환경**입니다. 일종의 논리적 개념이라고 보시면 되며, `JPA`의 핵심 내용은 **앤티티가 영속성 컨텐스트에 포함되어 있냐 아니냐**로 갈립니다. `JPA`의 앤티티 매니저가 활성화된 상태로(`Spring Data Jpa`를 쓴다면 기본 옵션) **트랜잭션 안에서 데이터베이스에서 데이터를 가져오면** 이 데이터는 영속성 컨텍스트가 유지된 상태입니다. 이 상태에서 해당 데이터의 값을 변경하면 **트랜잭션이 끝나는 시점에 해당 테이블에 변경분을 반영**합니다. 즉, `Entity` 객체의 값만 변경하면 별도로 **Update 쿼리를 날릴 필요가 없다**는 것입니다. 이 개념을 **더티 체킹**이라고 합니다.
+
+정상적으로 `Update` 쿼리를 수행하는지 테스트 코드로 확인해 보겠습니다. 등록기능과 마찬가지로 `PostApiControllerTest`에 추가하겠습니다.
+
+```java
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class PostsApiControllerTest {
+    @Test
+    public void Posts_수정된다() {
+
+        // given
+        Posts savedPosts = postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        Long updateId = savedPosts.getId();
+        String expectedTitle = "title2";
+        String expectedContent = "content2";
+
+        PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
+                .title(expectedTitle)
+                .content(expectedContent)
+                .build();
+
+        String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
+
+        HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
+
+        // when
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
+        assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
+    }
+}
+```
+
+테스트를 수행하보면 `update` 쿼리가 수행되는 것을 확인할 수 있습니다.
+
+**조회 기능은 실제로 톰캣을 실행**해서 확인해 보겠습니다. 앞서 언급한 대로 로컬 환경에선 데이터베이스로 `H2`를 사용합니다. 메모리에서 실행하기 때문에 **직접 접근하려면 웹 콘솔**을 사용해야만 합니다. 먼저 웹 콘솔 옵션을 활성화합니다. `application.properties`에 다음과 같이 옵션을 추가합니다.
+
+`spring.h2.console.enabled=true`
+
+추가한 뒤 `Application` 클래스의 `main` 메소드를 실행합니다. 정상적으로 실행됐다면 톰캣이 8080 포트로 실행됩니다. 여기서 웹 브라우저에 `http://localhost:8080/h2-console` 로 접속하면 웹 콘솔 화면이 등장합니다. 이때 `JDBC URL`이 `jdbc:h2:mem:testdb`로 되어 있지 않다면 똑같이 작성한 뒤 `connect` 버튼을 클릭하면 현재 프로젝트의 `H2`를 관리할 수 있는 관리 페이지로 이동합니다. 이동 후에 직접 쿼리를 실행하여 매핑된 `URL`을 통해 조회할 수 있습니다.
+
+---
+
+## 3.5 JPA Auditing으로 생성시간/수정시간 자동화하기
+
+보통 엔티티에는 해당 데이터의 생성시간과 수정시간을 포함합니다. 언제 만들어졌는지, 언제 수정되었는지 등은 차후 유지보수에 있어 굉장히 중요한 정보이기 때문입니다.
+
+```java
+// 성성일 추가 코드 예제
+public void savePosts() {
+    ...
+    posts.setCreateDate(new LocalDate());
+    postsRepository.save(posts);
+    ...
+}
+```
+이런 단순하고 반복적인 코드가 모든 테이블과 서비스 메소드에 포함되어야 한다고 생각하면 어마어마하게 귀찮고 코드가 지저분해집니다. 그래서 이 문제를 해결하고자 `JPA Auditing`을 사용합니다.
+
+#### LocalDate 사용
+`Java8`부터 `LocalDate`와 `LocalDateTime`이 등장했습니다. `Java`의 기본 날짜 타입인 `Date`의 문제점을 제대로 고친 타입이라 `Java8`일 경우 무조건 써야 한다고 생각하면 됩니다. 
+
+또한 `LocalDate`와 `LocalDateTime`이 데이터베이스에 제대로 매핑되지 않는 이슈가 `Hibernate 5.2.10` 버전에서 해결되었기 때문에, 스프링 부트 `2.x` 버전을 사용하면 기본적으로 해당 버전을 사용중이라 별다른 설정 없이 바로 적용하면 됩니다.
+
+`domain` 패키지에 `BaseTimeEntity` 클래스를 생성합니다.
+
+```java
+package com.banjjoknim.book.springboot.domain;
+
+import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
+
+@Getter
+@MappedSuperclass // 1.
+@EntityListeners(AuditingEntityListener.class) // 2.
+public class BaseTimeEntity {
+
+    @CreatedDate // 3.
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate // 4.
+    private LocalDateTime modifiedDate;
+}
+```
+`BaseTimeEntity` 클래스는 모든 `Entity`의 상위 클래스가 되어 **Entity들의 createdDate, modifiedDate를 자동으로 관리하는 역할**입니다.
+
+**1. @MappedSuperclass**
+- `JPA Entity` 클래스들이 `BaseTimeEntity`을 상속할 경우 필드들(`createdDate`, `modifiedDate`)도 칼럼으로 인식하도록 합니다.
+
+**2. @EntityListeners(AuditingEntityListener.class)**
+- `BaseTimeEntity` 클래스에 `Auditing` 기능을 포함시킵니다.
+
+**3. @CreatedDate**
+- `Entity`가 생성되어 저장될 때 시간이 자동 저장됩니다.
+
+**4. @LastModifiedDate**
+- 조회한 `Entity`의 값을 변경할 때 시간이 자동 저장됩니다.
+
+그리고 `Posts` 클래스가 `BaseTimeEntity`를 상속받도록 변경합니다.
+
+```java
+public class Posts extends BaseTimeEntity {
+}
+```
+
+마지막으로 `JPA Auditing` 어노테이션들을 모두 활성화할 수 있도록 `Application` 클래스에 활성화 어노테이션 하나를 추가합니다.
+
+```java
+package com.banjjoknim.book.springboot;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+@EnableJpaAuditing // JPA Auditing 활성화
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+```
+
+#### JPA Auditing 테스트 코드 작성하기
+`PostsRepositoryTest` 클래스에 테스트 메소드를 하나 더 추가합니다.
+
+```java
+@Test
+    public void BaseTimeEntity_등록() {
+
+        // given
+        LocalDateTime now = LocalDateTime.of(2020, 11, 19, 0, 0, 0);
+        postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        // when
+        List<Posts> postsList = postsRepository.findAll();
+
+        // then
+        Posts posts = postsList.get(0);
+
+        System.out.println(">>>>>>>>>> createDate=" + posts.getCreatedDate() + ", modifiedDate=" + posts.getModifiedDate());
+
+        assertThat(posts.getCreatedDate()).isAfter(now);
+        assertThat(posts.getModifiedDate()).isAfter(now);
+    }
+```
+테스트 코드를 수행해 보면 실제 시간이 잘 저장된 것을 확인할 수 있습니다.
+
+앞으로 추가될 엔티티들은 더이상 등록일/수정일로 고민할 필요가 없습니다. `BaseTimeEntity`만 상속받으면 자동으로 해결되기 때문입니다.
+
+---
