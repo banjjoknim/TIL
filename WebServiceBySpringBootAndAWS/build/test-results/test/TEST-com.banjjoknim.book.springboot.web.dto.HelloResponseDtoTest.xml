@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.banjjoknim.book.springboot.web.dto.HelloResponseDtoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-11-30T06:14:09" hostname="DESKTOP-FSO9NHB" time="0.001">
+  <properties/>
+  <testcase name="롬복_기능_테스트" classname="com.banjjoknim.book.springboot.web.dto.HelloResponseDtoTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
