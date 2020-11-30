@@ -164,5 +164,3 @@ $RECYCLE.BIN/
 .idea/jarRepositories.xml
 .idea/misc.xml
 .idea/vcs.xml
-
-application-oauth.properties
