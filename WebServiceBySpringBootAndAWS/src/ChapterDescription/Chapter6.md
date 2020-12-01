@@ -196,6 +196,7 @@ sudo vim /etc/sysconfig/network
 ```
 참고 링크 : [Linux 기반의 vi(vim) 에디터 사용법](https://jhnyang.tistory.com/54)
 
+참고 링크 : [Amazon Linux 인스턴스의 호스트 이름 변경](https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/set-hostname.html)
 
 변경한 후 다음 명령어로 서버를 재부팅 합니다.
 ```java
