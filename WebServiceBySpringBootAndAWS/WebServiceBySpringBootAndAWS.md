@@ -7,3 +7,4 @@
 - [Chapter5. 스프링 시큐리티와 OAuth 2.0으로 로그인 기능 구현하기](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter5.md)
 - [Chapter6. AWS 서버 환경을 만들어보자 - AWS EC2](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter6.md)
 - [Chapter7. AWS에 데이터베이스 환경을 만들어보자 - AWS RDS](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter7.md)
+- [Chapter8. EC2 서버에 프로젝트를 배포해 보자](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter8.md)
