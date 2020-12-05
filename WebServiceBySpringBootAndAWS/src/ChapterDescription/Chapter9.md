@@ -518,6 +518,15 @@ notifications:
 모든 내용을 작성했다면 프로젝트를 커밋하고 푸시합니다. 깃허브로 푸시가 되면 `Travis CI`가 자동으로 시작됩니다.
 `Travis CI`가 끝나면 `CodeDeploy` 화면 아래에서 배포가 수행되는 것을 확인할 수 있습니다(그룹 배포 내역).
 
+>###### 학습중 발생 오류 추가
+>![Chapter9_Travis_deploy_fali_by_ruby_version](https://user-images.githubusercontent.com/68052095/101242974-577a4e80-3740-11eb-8c2e-425da8609207.PNG)
+>CodeDeploy 환경구성에 Amazon EC2 인스턴스 설정이 잘못되어서 생긴 문제라고 한다
+(태그가 잘못되어서 생긴 문제).
+>또는 `travis.yml`에 오타가 있어서 트레비스 트리거가 작동하지 않아 발생한 오류라고 한다.
+>나의 경우에는 아래 사진에 표시된 부분이 달라서 트리거가 작동하지 않은 것 같다.
+>![Chapter9_Travis_deploy_fali_by_ruby_version2](https://user-images.githubusercontent.com/68052095/101245049-8ea32c80-374d-11eb-8b1b-ad2ffccf6455.png)
+>참고 링크 : [travis ci , s3, codeDeploy 연동 실패](https://github.com/jojoldu/freelec-springboot2-webservice/issues/474), [Travis CI, AWS S3, AWS CodeDeploy 배포 오류](https://jhhj424.tistory.com/16)
+
 ![Chapter9_CodeDeploy_success!](https://user-images.githubusercontent.com/68052095/101129462-ef930d80-3644-11eb-9fa0-d8b425cd574c.PNG)
 
 배포가 끝났다면 다음 명령어로 파일들이 잘 도착했는지 확인해 봅니다.
@@ -563,7 +572,7 @@ notifications:
 >
 >echo "> 새 애플리케이션 배포"
 >
->JAR_NAME=$(ls -tr \$REPOSITORY/*.jar | tall -n 1)
+>JAR_NAME=$(ls -tr \$REPOSITORY/*.jar | tail -n 1)
 >
 >echo "> JAR_NAME 에 실행권한 추가"
 >

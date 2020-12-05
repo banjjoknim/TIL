@@ -8,3 +8,4 @@
 - [Chapter6. AWS 서버 환경을 만들어보자 - AWS EC2](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter6.md)
 - [Chapter7. AWS에 데이터베이스 환경을 만들어보자 - AWS RDS](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter7.md)
 - [Chapter8. EC2 서버에 프로젝트를 배포해 보자](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter8.md)
+- [Chapter9. 코드가 푸시되면 자동으로 배포해 보자 - Travis CI 배포 자동화](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter9.md)
