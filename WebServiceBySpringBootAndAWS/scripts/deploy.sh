@@ -9,7 +9,7 @@ cp $REPOSITORY/zip/*.jar $REPOSITORY/
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
 
-CURRENT_PID=$(pgrep -fl springboot2-webservice | grep jar | awk '{print $1}')
+CURRENT_PID=$(pgrep -fl $PROJECT_NAME | grep jar | awk '{print $1}')
 
 echo "현재 구동 중인 애플리케이션 pid : $CURRENT_PID"
 
@@ -23,7 +23,7 @@ fi
 
 echo "> 새 애플리케이션 배포"
 
-JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tall -n 1)
+JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
 
 echo "> JAR_NAME 에 실행권한 추가"
 

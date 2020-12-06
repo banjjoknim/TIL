@@ -558,7 +558,7 @@ notifications:
 >
 >echo "> 현재 구동 중인 애플리케이션 pid 확인"
 >
->CURRENT_PID=\$(pgrep -fl springboot2-webservice | grep jar | awk '{print $1}') // ①
+>CURRENT_PID=\$(pgrep -fl \$PROJECT_NAME | grep jar | awk '{print $1}') // ①
 >
 >echo "현재 구동 중인 애플리케이션 pid : $CURRENT_PID"
 >
