@@ -9,3 +9,4 @@
 - [Chapter7. AWS에 데이터베이스 환경을 만들어보자 - AWS RDS](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter7.md)
 - [Chapter8. EC2 서버에 프로젝트를 배포해 보자](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter8.md)
 - [Chapter9. 코드가 푸시되면 자동으로 배포해 보자 - Travis CI 배포 자동화](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter9.md)
+- [Chapter10. 24시간 365일 중단 없는 서비스를 만들자](https://github.com/banjjoknim/TIL/blob/master/WebServiceBySpringBootAndAWS/src/ChapterDescription/Chapter10.md)
