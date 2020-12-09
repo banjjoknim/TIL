@@ -10,3 +10,4 @@
 
 - [04강. Hello World 실행하기](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture04.md)
 - [05강. 테이블 구조 참조하기](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture05.md)
+- [06강. 검색 조건 지정하기](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture06.md)
