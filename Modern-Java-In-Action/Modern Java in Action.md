@@ -15,3 +15,6 @@
 - [Chapter8. 컬렉션 API 개선](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter8/Chapter8.md)
 - [Chapter9. 리팩터링, 테스팅, 디버깅](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter9/Chapter9.md)
 - [Chapter10. 람다를 이용한 도메인 전용 언어](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter10/Chapter10.md)
+
+### Part4. 매일 자바와 함께
+- [Chapter11. null 대신 Optional 클래스](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter11/Chapter11.md)
