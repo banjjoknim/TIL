@@ -17,3 +17,4 @@
 ## 3장. 정렬과 연산
 - [09강. 정렬 - ORDER BY](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture09.md)
 - [10강. 복수의 열을 지정해 정렬하기](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture10.md)
+- [11강. 결과 행 제한하기 - LIMIT](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture11.md)
