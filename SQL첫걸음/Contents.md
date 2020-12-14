@@ -22,3 +22,6 @@
 - [13강. 문자열 연산](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture13.md)
 - [14강. 날짜 연산](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture14.md)
 - [15강. CASE 문으로 데이터 변환하기](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture15.md)
+
+## 4장. 데이터의 추가, 삭제, 갱신
+- [16강. 행 추가하기 - INSERT](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture16.md)
