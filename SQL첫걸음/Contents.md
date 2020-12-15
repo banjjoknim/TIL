@@ -32,3 +32,4 @@
 ## 5장. 집계와 서브쿼리
 - [20강. 행 개수 구하기 - COUNT](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture20.md)
 - [21강. COUNT 이외의 집계함수](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture21.md)
+- [22강. 그룹화 - GROUP BY](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture22.md)
