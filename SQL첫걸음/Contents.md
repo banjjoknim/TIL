@@ -28,3 +28,6 @@
 - [17강. 삭제하기 - DELETE](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture17.md)
 - [18강. 데이터 갱신하기 - UPDATE](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture18.md)
 - [19강. 물리삭제와 논리삭제](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture19.md)
+
+## 5장. 집계와 서브쿼리
+- [20강. 행 개수 구하기 - COUNT](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture20.md)
