@@ -39,3 +39,4 @@
 ## 6장. 데이터베이스 객체 작성과 삭제
 - [25강. 데이터베이스 객체](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture25.md)
 - [26강. 테이블 작성, 삭제, 변경](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture26.md)
+- [27강. 제약](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture27.md)
