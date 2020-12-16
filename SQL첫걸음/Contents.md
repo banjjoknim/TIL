@@ -35,3 +35,6 @@
 - [22강. 그룹화 - GROUP BY](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture22.md)
 - [23강. 서브쿼리](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture23.md)
 - [24강. 상관 서브쿼리](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture24.md)
+
+## 6장. 데이터베이스 객체 작성과 삭제
+- [25강. 데이터베이스 객체](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture25.md)
