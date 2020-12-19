@@ -51,3 +51,4 @@
 
 ## 8장. 데이터베이스 설계
 - [34강. 데이터베이스 설계](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture34.md)
+- [35강. 정규화](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture35.md)
