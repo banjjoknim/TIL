@@ -48,3 +48,6 @@
 - [31강. 집합 연산](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture31.md)
 - [32강. 테이블 결합](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture32.md)
 - [33강. 관계형 모델](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture33.md)
+
+## 8장. 데이터베이스 설계
+- [34강. 데이터베이스 설계](https://github.com/banjjoknim/TIL/blob/master/SQL%EC%B2%AB%EA%B1%B8%EC%9D%8C/Lecture34.md)
