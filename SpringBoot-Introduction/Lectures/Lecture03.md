@@ -42,7 +42,9 @@
 ---
 
 ## 동작 환경 그림
-- 웹 브라우저에서 `hello`로 접근하면 내장 톰캣 서버가 `HelloController`에 존재하는 `hello`메서드의 `hello` url에 매칭되어 `hello` 메서드가 실행된다.
+![동작-환경-그림](https://user-images.githubusercontent.com/68052095/102768026-d5d32380-43c3-11eb-9e8c-e7581a2da836.PNG)
+
+- 웹 브라우저에서 `hello`로 접근하면 내장 톰캣 서버가 `HelloController`에 존재하는 `hello` url이 매핑되어 있는 `hello` 메서드를 찾아서 실행시킨다.
 - 이때 `model`에 키는 `data`, 값은 `hello!!`로 넣는다.
 - 그리고 `hello`(`resources`에 존재하는 `hello`)를 리턴한다.
 - 이것은 `resources/templates/hello`에 접근해서 랜더링(저 화면을 실행시켜라)하라는 의미이다.
