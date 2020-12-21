@@ -10,3 +10,6 @@
 - [정적 컨텐츠](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture05.md)
 - [MVC와 템플릿 엔진](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture06.md)
 - [API](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture07.md)
+
+## 회원 관리 예제 - 백엔드 개발
+- [비즈니스 요구사항 정리](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture08.md)
