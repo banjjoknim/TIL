@@ -9,3 +9,4 @@
 ## 스프링 웹 개발 기초
 - [정적 컨텐츠](https://github.com/banjjoknim/spring-introduction/blob/master/Lectures/Lecture05.md)
 - [MVC와 템플릿 엔진](https://github.com/banjjoknim/spring-introduction/blob/master/Lectures/Lecture06.md)
+- [API](https://github.com/banjjoknim/spring-introduction/blob/master/Lectures/Lecture07.md)
