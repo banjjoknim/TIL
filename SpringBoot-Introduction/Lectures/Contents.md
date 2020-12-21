@@ -13,3 +13,4 @@
 
 ## 회원 관리 예제 - 백엔드 개발
 - [비즈니스 요구사항 정리](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture08.md)
+- [회원 도메인과 리포지토리 만들기](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture09.md)
