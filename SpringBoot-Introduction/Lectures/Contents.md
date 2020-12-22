@@ -20,3 +20,4 @@
 
 ## 스프링 빈과 의존관계
 - [컴포넌트 스캔과 자동 의존관계 설정](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture13.md)
+- [자바 코드로 직접 스프링 빈 등록하기](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture14.md)
