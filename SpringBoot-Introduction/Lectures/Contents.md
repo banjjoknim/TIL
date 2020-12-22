@@ -25,3 +25,4 @@
 ## 회원 관리 예제 - 웹 MVC 개발
 - [회원 웹 기능 - 홈 화면 추가](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture15.md)
 - [회원 웹 기능 - 등록](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture16.md)
+- [회원 웹 기능 - 조회](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture17.md)
