@@ -17,3 +17,6 @@
 - [회원 리포지토리 테스트 케이스 작성](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture10.md)
 - [회원 서비스 개발](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture11.md)
 - [회원 서비스 테스트](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture12.md)
+
+## 스프링 빈과 의존관계
+- [컴포넌트 스캔과 자동 의존관계 설정](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture13.md)
