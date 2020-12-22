@@ -2,14 +2,17 @@ package hello.springintroduction.service;
 
 import hello.springintroduction.domain.Member;
 import hello.springintroduction.repository.MemberRepository;
-import hello.springintroduction.repository.MemoryMemberRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public class MemberService {
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     /*
      * 회원 가입

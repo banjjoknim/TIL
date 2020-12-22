@@ -16,3 +16,4 @@
 - [회원 도메인과 리포지토리 만들기](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture09.md)
 - [회원 리포지토리 테스트 케이스 작성](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture10.md)
 - [회원 서비스 개발](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture11.md)
+- [회원 서비스 테스트](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture12.md)
