@@ -33,3 +33,4 @@
 - [스프링 통합 테스트](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture20.md)
 - [스프링 JdbcTemplate](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture21.md)
 - [JPA](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture22.md)
+- [스프링 데이터 JPA](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture23.md)
