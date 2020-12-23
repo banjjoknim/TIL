@@ -32,3 +32,4 @@
 - [순수 JDBC](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture19.md)
 - [스프링 통합 테스트](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture20.md)
 - [스프링 JdbcTemplate](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture21.md)
+- [JPA](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture22.md)
