@@ -30,3 +30,4 @@
 ## 스프링 DB 접근 기술
 - [H2 데이터베이스 설치](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture18.md)
 - [순수 JDBC](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture19.md)
+- [스프링 통합 테스트](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture20.md)
