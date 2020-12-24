@@ -37,3 +37,4 @@
 
 ## AOP
 - [AOP가 필요한 상황](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture24.md)
+- [AOP 적용](https://github.com/banjjoknim/TIL/blob/master/SpringBoot-Introduction/Lectures/Lecture25.md)
