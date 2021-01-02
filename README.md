@@ -13,3 +13,6 @@
 
 ## Git-GitHub
 - [직접 만든 Git-GitHub 강의 자료](https://github.com/banjjoknim/RectureForGit/blob/master/README.md)
+
+## ETC
+- [Vi / Vim 편집기 사용법](https://github.com/banjjoknim/TIL/blob/master/ETC/Vi%2CVim-%ED%8E%B8%EC%A7%91%EA%B8%B0-%EC%82%AC%EC%9A%A9%EB%B2%95.md)
