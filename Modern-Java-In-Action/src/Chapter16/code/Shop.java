@@ -1,11 +1,10 @@
 package Chapter16.code;
 
 import java.util.Random;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 public class Shop {
-    private Random random = new Random();
+    private static final Random random = new Random();
     private String name;
 
     public Shop(String name) {
@@ -20,8 +19,24 @@ public class Shop {
         }
     }
 
-    public double getPrice(String product) {
-        return calculatePrice(product);
+    public static void randomDelay() {
+        int delay = 500 + random.nextInt(2000);
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getPrice(String product) {
+        double price = calculatePrice(product);
+        Discount.Code code = Discount.Code.values()[random.nextInt(Discount.Code.values().length)];
+        return String.format("%s:%.2f:%s", name, price, code);
+    }
+
+    private double calculatePrice(String product) {
+//        delay();
+        return random.nextDouble() * product.charAt(0) + product.charAt(1);
     }
 
 
@@ -42,10 +57,10 @@ public class Shop {
         return CompletableFuture.supplyAsync(() -> calculatePrice(product));
     }
 
-    private double calculatePrice(String product) {
-        delay();
-        return random.nextDouble() * product.charAt(0) + product.charAt(1);
-    }
+//    private double calculatePrice(String product) {
+//        delay();
+//        return random.nextDouble() * product.charAt(0) + product.charAt(1);
+//    }
 
     private static void doSomethingElse() {
     }

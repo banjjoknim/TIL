@@ -24,4 +24,5 @@
 
 ### Part5. 개선된 자바 동시성
 - [Chapter15. CompletableFuture와 리액티브 프로그래밍 컨셉의 기초](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter15/Chapter15.md)
+- [Chapter16. CompletableFuture : 안정적 비동기 프로그래밍](https://github.com/banjjoknim/TIL/blob/master/Modern-Java-In-Action/src/Chapter16/Chapter16.md)
 
