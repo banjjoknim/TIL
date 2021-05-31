@@ -36,7 +36,7 @@
 ```
 
 ##### 그림 16-1 Future로 시간이 오래 걸리는 작업을 비동기적으로 실행하기
-
+![](https://images.velog.io/images/banjjoknim/post/58fae8ce-afcf-412c-b01a-ed54f6292457/16-1.%20Future%EB%A1%9C%20%EC%8B%9C%EA%B0%84%EC%9D%B4%20%EC%98%A4%EB%9E%98%20%EA%B1%B8%EB%A6%AC%EB%8A%94%20%EC%9E%91%EC%97%85%EC%9D%84%20%EB%B9%84%EB%8F%99%EA%B8%B0%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0.png)
 
 만약 오래 걸리는 작업이 영원히 끝나지 않으면 작업이 끝나지 않는 문제가 있을 수 있으므로 `[예제 16-1]`이 보여주는 것처럼 `get` 메서드를 오버라이딩해서
 우리 스레드가 대기할 최대 타임아웃 시간을 설정하는 것이 좋다.
@@ -341,7 +341,7 @@ Done in 1035 msecs
 - `CompletableFuture`로 각 상점의 정보를 요청할 때 기존 요청 작업이 완료되어야 `join`이 결과를 반환하면서 다음 상점으로 정보를 요청할 수 있기 때문이다.
 
 ##### 그림 16-2 스트림의 게으름 때문에 순차 계산이 일어나는 이유와 순차 계산을 회피하는 방법
-
+![](https://images.velog.io/images/banjjoknim/post/088e5d9b-dba3-4723-bff8-9aa400a43781/16-2.%20%EC%8A%A4%ED%8A%B8%EB%A6%BC%EC%9D%98%20%EA%B2%8C%EC%9C%BC%EB%A6%84%20%EB%95%8C%EB%AC%B8%EC%97%90%20%EC%88%9C%EC%B0%A8%20%EA%B3%84%EC%82%B0%EC%9D%B4%20%EC%9D%BC%EC%96%B4%EB%82%98%EB%8A%94%20%EC%9D%B4%EC%9C%A0%EC%99%80%20%EC%88%9C%EC%B0%A8%20%EA%B3%84%EC%82%B0%EC%9D%84%20%ED%94%BC%ED%95%98%EB%8A%94%20%EB%B0%A9%EB%B2%95.png)
 
 - `[그림 16-2]`의 윗부분은 순차적으로 평가를 진행하는 단일 파이프라인 스트림 처리 과정을 보여준다(점선으로 표시된 부분).
 - 즉, 이전 요청의 처리가 완전히 끝난 다음에 새로 만든 `CompletableFuture`가 처리된다.
@@ -605,7 +605,7 @@ Done in 10095 msecs
 다만 이번에는 `CompletableFuture` 클래스의 기능을 이용해서 이들 동작을 비동기로 만들어야 한다.
 
 ##### 그림 16-3 동기 작업과 비동기 작업 조합하기
-
+![](https://images.velog.io/images/banjjoknim/post/c5a462bd-d28a-4aa8-9778-d4734250dc47/16-3.%20%EB%8F%99%EA%B8%B0%20%EC%9E%91%EC%97%85%EA%B3%BC%20%EB%B9%84%EB%8F%99%EA%B8%B0%20%EC%9E%91%EC%97%85%20%EC%A1%B0%ED%95%A9%ED%95%98%EA%B8%B0.png)
 
 #### 가격 정보 얻기
 - 팩토리 메서드 `supplyAsync`에 람다 표현식을 전달해서 비동기적으로 상점에서 정보를 조회한다.
@@ -668,7 +668,7 @@ Done in 10095 msecs
 `그림 [16-4]`는 `[예제 16-17]`에서 생성된 태스크가 풀의 스레드에서 어떻게 실행되고 결과가 합쳐지는지 보여준다.
 
 ##### 그림 16-4 독립적인 두 개의 비동기 태스크 합치기
-
+![](https://images.velog.io/images/banjjoknim/post/852dfaf6-e426-4313-ace5-f9691f69836c/16-4.%20%EB%8F%85%EB%A6%BD%EC%A0%81%EC%9D%B8%20%EB%91%90%20%EA%B0%9C%EC%9D%98%20%EB%B9%84%EB%8F%99%EA%B8%B0%20%ED%83%9C%EC%8A%A4%ED%81%AC%20%ED%95%A9%EC%B9%98%EA%B8%B0.png)
 
 ### 16.4.5 Future의 리플렉션과 CompletableFuture의 리플렉션
 - `CompletableFuture`는 람다 표현식을 사용한다.
