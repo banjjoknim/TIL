@@ -1,6 +1,4 @@
-package item1;
-
-import java.util.EnumSet;
+package chapter2.item1;
 
 public class Client {
     public static void main(String[] args) {

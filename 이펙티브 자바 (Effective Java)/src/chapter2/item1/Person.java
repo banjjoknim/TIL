@@ -1,4 +1,4 @@
-package item1;
+package chapter2.item1;
 
 public class Person {
     private static final Person COLT = new Person("Colt", 28);

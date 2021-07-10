@@ -47,7 +47,7 @@ public class Person {
 
 public class Client {
     public static void main(String[] args) {
-        Person colt = Person.getColt();
+        Person colt = Person.getColt(); // Person 객체 내부의 상수 객체인 COLT 반환
     }
 }
 ```
@@ -186,9 +186,16 @@ public final class Class<T> implements java.io.Serializable,
 - newType : newInstance와 같으나, 생성할 클래스가 아닌 다른 클래스에 팩터리 메서드를 정의할 때 쓴다. "Type"은 팩터리 메서드가 반환할 객체의 타입이다.
 - type : getType과 newType의 간결한 버전
 
+## 핵심 정리
+
+정적 팩터리 메서드와 public 생성자는 각자의 쓰임새가 있으니 상대적인 장단점을 이해하고 사용하는 것이 좋다. 그렇다고 하더라도 정적 팩터리를 사용하는 게 유리한 경우가 더 많으므로 무작정 public 생성자를
+제공하던 습관이 있다면 고치자.
+
 ---
 
 # 참고자료
 
 - [[Java] Class.forName(String className) 그리고 Service Provider Interface](https://devyongsik.tistory.com/294)*
 - [Java Database Connectivity](https://en.wikipedia.org/wiki/Java_Database_Connectivity)
+- [[구조 패턴] 플라이웨이트 패턴(Flyweight Pattern) 이해 및 예제](https://readystory.tistory.com/137)
+- [[디자인패턴/Design Pattern] Flyweight Pattern / 플라이웨이트 패턴](https://lee1535.tistory.com/106)
