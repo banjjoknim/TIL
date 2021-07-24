@@ -50,4 +50,17 @@ class MemberTest {
         assertThatThrownBy(() -> new Member(name))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"이름을", "변경하면", "잘변경된다"})
+    void 멤버의_이름이_변경된다(String name) {
+        // given
+        Member member = new Member("멤버");
+
+        // when
+        member.changeName(name);
+
+        // then
+        assertThat(member.getName()).isEqualTo(name);
+    }
 }

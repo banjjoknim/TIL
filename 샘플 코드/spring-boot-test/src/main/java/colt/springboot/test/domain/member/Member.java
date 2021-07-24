@@ -31,6 +31,11 @@ public class Member {
         this.name = name;
     }
 
+    public void changeName(String name) {
+        validateName(name);
+        this.name = name;
+    }
+
     private void validateName(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("멤버의 이름은 비어있지 않아야 합니다.");
