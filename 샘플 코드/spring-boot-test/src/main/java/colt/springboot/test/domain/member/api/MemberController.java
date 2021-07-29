@@ -1,5 +1,9 @@
-package colt.springboot.test.domain.member;
+package colt.springboot.test.domain.member.api;
 
+import colt.springboot.test.domain.member.dto.MemberRequest;
+import colt.springboot.test.domain.member.dto.MemberResponse;
+import colt.springboot.test.domain.member.model.Member;
+import colt.springboot.test.domain.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package colt.springboot.test.domain.member;
+package colt.springboot.test.domain.member.dto;
 
 public class MemberResponse {
     private Long id;

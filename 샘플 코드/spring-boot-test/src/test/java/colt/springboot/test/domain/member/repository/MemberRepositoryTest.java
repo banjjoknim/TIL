@@ -1,5 +1,6 @@
-package colt.springboot.test.domain.member;
+package colt.springboot.test.domain.member.repository;
 
+import colt.springboot.test.domain.member.model.Member;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
