@@ -2,7 +2,6 @@ package colt.springboot.test.domain.member.api;
 
 import colt.springboot.test.domain.member.dto.MemberRequest;
 import colt.springboot.test.domain.member.dto.MemberResponse;
-import colt.springboot.test.domain.member.model.Member;
 import colt.springboot.test.domain.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +32,8 @@ public class MemberController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Long> createMember(@RequestBody MemberRequest memberRequest) {
-        Member member = memberService.saveMember(memberRequest);
-        return ResponseEntity.created(URI.create("/members/" + member.getId())).body(member.getId());
+    public ResponseEntity<MemberResponse> createMember(@RequestBody MemberRequest memberRequest) {
+        MemberResponse memberResponse = memberService.saveMember(memberRequest);
+        return ResponseEntity.created(URI.create("/members/" + memberResponse.getId())).body(memberResponse);
     }
 }

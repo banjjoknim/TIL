@@ -32,10 +32,11 @@ public class MemberService {
         return new MemberResponse(member.getId(), member.getName());
     }
 
-    public Member saveMember(MemberRequest memberRequest) {
+    public MemberResponse saveMember(MemberRequest memberRequest) {
         Member member = Member.builder()
                 .name(memberRequest.getName())
                 .build();
-        return memberRepository.save(member);
+        Member save = memberRepository.save(member);
+        return new MemberResponse(save.getId(), save.getName());
     }
 }
