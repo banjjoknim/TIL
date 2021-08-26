@@ -1,12 +1,12 @@
 package colt.springboot.test.domain.member.model;
 
-import lombok.Builder;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
 @Builder
 @Entity
 public class Member {
@@ -17,6 +17,11 @@ public class Member {
     private Long id;
 
     private String name;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "teamId")
+    private Team team;
 
     protected Member() {
     }
@@ -43,13 +48,5 @@ public class Member {
         if (name.length() > LIMIT_NAME_LENGTH) {
             throw new IllegalArgumentException("멤버의 이름은 5글자 미만이어야 합니다.");
         }
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
     }
 }
