@@ -21,6 +21,7 @@ public class Team {
     private String name;
 
     @Builder.Default
+//    @OneToMany(fetch = FetchType.LAZY)
 //    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
