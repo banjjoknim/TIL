@@ -167,4 +167,4 @@ $RECYCLE.BIN/
 
 application-oauth.properties
 
-!gradle/**
+!gradle/wrapper
