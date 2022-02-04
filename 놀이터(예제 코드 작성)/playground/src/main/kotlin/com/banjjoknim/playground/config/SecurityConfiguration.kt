@@ -1,10 +1,13 @@
 package com.banjjoknim.playground.config
 
+import com.banjjoknim.playground.domain.user.User
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
@@ -29,5 +32,40 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
             .loginPage("/loginPage")
             .loginProcessingUrl("/login") // /login url이 호출되면 Security 가 요청을 낚아채서 대신 로그인을 진행해준다.
             .defaultSuccessUrl("/")
+    }
+}
+
+// 시큐리티가 /login 주소 요청이 오면 낚아채서 로그인을 진행해준다.
+// 로그인 진행이 완료되면 시큐리티 session을 만들어준다 (Security ContextHolder)
+// Security ContextHolder에 들어갈 수 있는 객체 타입은 Authentication 이다.
+// Authentication 객체 안에는 User 정보가 있어야 한다. 이때 User 객체 타입은 UserDetails 이다.
+// Security Session -> Authentication -> UserDetails
+class PrincipalDetails(private val user: User) : UserDetails {
+    override fun getAuthorities(): Collection<out GrantedAuthority> {
+        return listOf(GrantedAuthority { user.role })
+    }
+
+    override fun getPassword(): String {
+        return user.password
+    }
+
+    override fun getUsername(): String {
+        return user.username
+    }
+
+    override fun isAccountNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isAccountNonLocked(): Boolean {
+        return true
+    }
+
+    override fun isCredentialsNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isEnabled(): Boolean {
+        return true
     }
 }
