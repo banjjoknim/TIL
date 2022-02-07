@@ -13,5 +13,7 @@ class User(
     var username: String,
     var password: String,
     var email: String,
-    var role: String // ROLE_USER, ROLE_MANAGER, ROLE_ADMIN ...
+    var role: String, // ROLE_USER, ROLE_MANAGER, ROLE_ADMIN ...
+    var provider: String,
+    var providerId: String,
 )
