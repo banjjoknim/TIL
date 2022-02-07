@@ -20,6 +20,10 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
+
+	// OAuth2 로그인을 위해 추가. spring-boot-starter-security 의존성이 있어도 기본적으로 추가되지 않기 때문.
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

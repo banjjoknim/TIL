@@ -13,8 +13,16 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService
+import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Service
 
+/**
+ * OAuth2의 경우, 로그인이 완료된 뒤의 후처리가 필요함. 1. 코드받기(인증), 2. 액세스토큰(권한) 얻기, 3. 액세스 토큰으로 사용자 정보 얻기
+ * 구글 로그인의 경우 코드가 필요 없다. 구글 측에서 우리에게 보내는 Request에 액세스 토큰과 사용자 정보가 모두 포함되어 있다.
+ */
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록되도록 해준다.
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // 스프링 시큐리티 관련 특정 어노테이션에 대한 활성화 설정을 할 수 있다.
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
@@ -22,6 +30,11 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     @Bean // passwordEncoder() 메서드에서 리턴해주는 PasswordEncoder 를 스프링 빈으로 등록한다.
     fun passwordEncoder(): PasswordEncoder { // Security 로 로그인을 하려면 비밀번호는 암호화되어 있어야 하므로 PasswordEncoder 가 필요하다.
         return BCryptPasswordEncoder()
+    }
+
+    @Bean
+    fun oauth2UserService(): OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+        return PrincipalOAuth2UserService()
     }
 
     override fun configure(http: HttpSecurity) {
@@ -37,6 +50,12 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
             .usernameParameter("username") // 기본적으로 인증을 위해 사용자를 찾을 때 username 을 사용하는데, 이에 사용되는 파라미터 이름을 바꿔주고 싶을때 사용한다.
             .loginProcessingUrl("/login") // /login url이 호출되면 Security 가 요청을 낚아채서 대신 로그인을 진행해준다.
             .defaultSuccessUrl("/") // loginPage 의 url을 통해서 로그인을 하면 / 로 보내줄건데, 특정 페이지로 요청해서 로그인하게 되면 그 페이지를 그대로 보여주겠다는 의미.
+            .and()
+            .oauth2Login()
+            .loginPage("/loginPage")
+            .loginProcessingUrl("/login")
+            .userInfoEndpoint()
+            .userService(oauth2UserService())
     }
 }
 
@@ -107,5 +126,22 @@ class PrincipalDetailService(private val userRepository: UserRepository) : UserD
         val user = (userRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("can not found user by username. username: $username"))
         return PrincipalDetails(user)
+    }
+}
+
+/**
+ * 구글로부터 받은 userRequest 데이터에 대한 후처리를 해주는 함수를 정의하는 서비스
+ * 
+ * @see OAuth2UserService
+ * @see DefaultOAuth2UserService
+ */
+@Service
+class PrincipalOAuth2UserService : DefaultOAuth2UserService() {
+    override fun loadUser(userRequest: OAuth2UserRequest): OAuth2User {
+        println("${userRequest.clientRegistration}")
+        println("${userRequest.accessToken}")
+//        println("${userRequest.attributes}") // 5.1 버전 이전일 경우
+        println("${userRequest.additionalParameters}") // 5.1 버전 이후일 경우
+        return super.loadUser(userRequest)
     }
 }
