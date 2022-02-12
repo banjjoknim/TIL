@@ -112,7 +112,15 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
  *     4. ...
  * ```
  */
-class PrincipalDetails(private val user: User) : UserDetails {
+class PrincipalDetails(val user: User) : UserDetails, OAuth2User {
+    override fun getName(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAttributes(): MutableMap<String, Any> {
+        TODO("Not yet implemented")
+    }
+
     override fun getAuthorities(): Collection<out GrantedAuthority> {
         return listOf(GrantedAuthority { user.role })
     }
@@ -165,8 +173,13 @@ class PrincipalDetailService(private val userRepository: UserRepository) : UserD
 /**
  * 구글, 페이스북 등등 OAuth2 를 이용해서 받은 userRequest 데이터에 대한 후처리를 해주는 함수를 정의하는 서비스
  *
+ * 구글 로그인 버튼 클릭 -> 구글 로그인창 -> 로그인 완료 -> 구글에서 code 리턴 ->OAuth-Client 라이브러리가 받아서 AccessToken 요청
+ *
+ * OAuth2UserRequest 정보를 이용해서 loadUser 함수 호출 -> 구글로부터 회원프로필 받아준다.
+ *
  * @see OAuth2UserService
  * @see DefaultOAuth2UserService
+ * @see OAuth2UserRequest
  */
 @Service
 class PrincipalOAuth2UserService : DefaultOAuth2UserService() {
