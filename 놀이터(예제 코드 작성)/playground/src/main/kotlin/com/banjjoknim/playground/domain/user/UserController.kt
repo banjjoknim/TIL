@@ -1,6 +1,7 @@
 package com.banjjoknim.playground.domain.user
 
 import com.banjjoknim.playground.config.security.PrincipalDetails
+import com.banjjoknim.playground.config.security.PrincipalOAuth2UserService
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
@@ -37,17 +38,35 @@ class UserController {
      *
      * 그렇게 하면 PrincipalDetails 타입은 UserDetails, OAuth2User 타입이 되므로 우리는 오직 PrincipalDetails 만 활용하면 된다.
      *
-     * 추가로, @AuthenticationPrincipal 어노테이션으로 세션 정보를 DI 받아서 접근할 수 있다.
+     * 추가로, @AuthenticationPrincipal 어노테이션으로 세션 정보를 DI 받아서 바로 접근할 수 있다.
      *
      * 이는 스프링 시큐리티가 갖고 있는 세션에서 Authentication 객체를 갖고 있기 때문이다.
+     *
+     * 그에 따라 결과적으로는 시큐리티 세션에 존재하는 Authentication 객체를 PrincipalDetails 으로 다운 캐스팅 하지 않아도 된다.
+     * ```
+     *
+     * ```
+     * @AuthenticationPrincipal 어노테이션이 활성화되는 시점?
+     *
+     * PrincipalOAuth2UserService, PrincipalDetailService 를 만들지 않아도(오버라이드 하지 않아도)
+     *
+     * loadUser(), loadUserByUsername() 은 기본적으로 실행되어 대신 스프링 시큐리티가 로그인을 진행해준다.
+     *
+     * 하지만 굳이 오버라이드 하면서 PrincipalOAuth2UserService, PrincipalDetailService 를 만든 이유는 로그인시 PrincipalDetails 객체를 반환하기 위해서다.
+     *
+     * 이는 로그인시 반환되는 객체가 Authentication 객체 내부에 저장되기 때문이며, 이렇게 하는게 더 편하다.
+     *
      * ```
      *
      * @see PrincipalDetails
      * @see AuthenticationPrincipal
+     * @see PrincipalOAuth2UserService
+     * @see PrincipalDetailsService
+     *
      */
-    @GetMapping("/login")
-    fun login(@AuthenticationPrincipal userDetails: PrincipalDetails) {
-        println("userDetailsAttributes : ${userDetails.attributes}")
+    @GetMapping("/login") // OAuth2 로그인 및 일반 로그인 모두 principalDetails 로 세션 정보를 얻어올 수 있다.
+    fun login(@AuthenticationPrincipal principalDetails: PrincipalDetails) { // DI(의존성 주입)
+        println("principalDetailsUser : ${principalDetails.user}")
     }
 
     @GetMapping("/test/login")
@@ -58,7 +77,7 @@ class UserController {
         val principalDetailsFromAuthentication = authentication.principal as PrincipalDetails // 다운 캐스팅
         println("principalDetailsFromAuthentication : ${principalDetailsFromAuthentication.user}")
         println("principalDetailsFromAuthentication : ${principalDetailsFromAuthentication.username}")
-        val principalDetailsFromUserDetails = userDetails as PrincipalDetails
+        val principalDetailsFromUserDetails = userDetails as PrincipalDetails // 다운 캐스팅
         println("principalDetailsFromUserDetails : ${principalDetailsFromUserDetails.user}")
         println("principalDetailsFromUserDetails : ${principalDetailsFromUserDetails.username}")
     }

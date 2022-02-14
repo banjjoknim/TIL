@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service
  */
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록되도록 해준다.
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // 스프링 시큐리티 관련 특정 어노테이션에 대한 활성화 설정을 할 수 있다.
-class SecurityConfiguration : WebSecurityConfigurerAdapter() {
+class SecurityConfiguration(val userRepository: UserRepository) : WebSecurityConfigurerAdapter() {
 
     @Bean // passwordEncoder() 메서드에서 리턴해주는 PasswordEncoder 를 스프링 빈으로 등록한다.
     fun passwordEncoder(): PasswordEncoder { // Security 로 로그인을 하려면 비밀번호는 암호화되어 있어야 하므로 PasswordEncoder 가 필요하다.
@@ -67,7 +67,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
      */
     @Bean
     fun oauth2UserService(): OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-        return PrincipalOAuth2UserService()
+        return PrincipalOAuth2UserService(passwordEncoder(), userRepository)
     }
 
     override fun configure(http: HttpSecurity) {
@@ -112,15 +112,26 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
  *     4. ...
  * ```
  */
-class PrincipalDetails(val user: User) : UserDetails, OAuth2User {
+class PrincipalDetails(
+    val user: User // 컴포지션. 일반 로그인시 사용하는 생성자
+) : UserDetails, OAuth2User {
+
+    private var _attributes: MutableMap<String, Any> = mutableMapOf()
+
+    // OAuth2 로그인시 사용하는 생성자
+    constructor(user: User, attributes: Map<String, Any>) : this(user) {
+        this._attributes = attributes.toMutableMap()
+    }
+
     override fun getName(): String {
-        TODO("Not yet implemented")
+        return "someName" // 크게 중요하지 않다...
     }
 
-    override fun getAttributes(): MutableMap<String, Any> {
-        TODO("Not yet implemented")
+    override fun getAttributes(): Map<String, Any> {
+        return _attributes.toMap()
     }
 
+    // 해당 User 의 권한을 반환하는 함수
     override fun getAuthorities(): Collection<out GrantedAuthority> {
         return listOf(GrantedAuthority { user.role })
     }
@@ -152,42 +163,88 @@ class PrincipalDetails(val user: User) : UserDetails, OAuth2User {
 
 
 /**
+ * ```
  * 스프링 시큐리티 설정에서 loginProcessingUrl("/login") 설정을 해주었기 때문에
  *
  * /login url로 요청이 오면 자동으로 시큐리티가 로그인 과정을 낚아챈다.
  *
  * 이때 UserDetailsService 타입으로 등록되어 있는 빈을 찾아서 해당 빈에 정의된 loadUserByUsername() 을 실행한다.
+ * ```
  *
  * @see DaoAuthenticationProvider
  * @see AbstractUserDetailsAuthenticationProvider
  */
 @Service
 class PrincipalDetailService(private val userRepository: UserRepository) : UserDetailsService {
+    /**
+     * ```
+     * 스프링 시큐리티 세션 내부에 Authentication 객체를 넣어준다. 그리고 Authentication 객체 속에는 UserDetails 객체가 들어있다.
+     *
+     * 추가로, 이 함수가 종료될 때 @AuthenticationPrincipal 어노테이션이 만들어진다.
+     * ```
+     */
     override fun loadUserByUsername(username: String): UserDetails {
         val user = (userRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("can not found user by username. username: $username"))
-        return PrincipalDetails(user)
+        return PrincipalDetails(user) // PrincipalDetails 객체가 스프링 시큐리티 세션 정보에 들어가게 된다.
     }
 }
 
 /**
+ * ```
  * 구글, 페이스북 등등 OAuth2 를 이용해서 받은 userRequest 데이터에 대한 후처리를 해주는 함수를 정의하는 서비스
  *
  * 구글 로그인 버튼 클릭 -> 구글 로그인창 -> 로그인 완료 -> 구글에서 code 리턴 ->OAuth-Client 라이브러리가 받아서 AccessToken 요청
  *
- * OAuth2UserRequest 정보를 이용해서 loadUser 함수 호출 -> 구글로부터 회원프로필 받아준다.
+ * OAuth2UserRequest 정보를 이용해서 loadUser 함수 호출 -> 구글로부터 회원프로필을 받아준다.
+ * ```
  *
  * @see OAuth2UserService
  * @see DefaultOAuth2UserService
  * @see OAuth2UserRequest
  */
 @Service
-class PrincipalOAuth2UserService : DefaultOAuth2UserService() {
+class PrincipalOAuth2UserService(
+    val passwordEncoder: PasswordEncoder,
+    val userRepository: UserRepository
+) :
+    DefaultOAuth2UserService() { // OAuth2 로그인의 후처리를 담당한다.
+
+    /**
+     * ```
+     * 구글, 페이스북 등으로부터 받은 userRequest 데이터에 대한 후처리를 진행해주는 함수
+     *
+     * 추가로, 이 함수가 종료될 때 @AuthenticationPrincipal 어노테이션이 만들어진다.
+     * ```
+     */
     override fun loadUser(userRequest: OAuth2UserRequest): OAuth2User {
         println("${userRequest.clientRegistration}")
         println("${userRequest.accessToken}")
 //        println("${userRequest.attributes}") // 5.1 버전 이전일 경우.
         println("${userRequest.additionalParameters}") // 5.1 버전 이후일 경우.
-        return super.loadUser(userRequest)
+
+        // 강제로 회원가입 진행
+        val oAuth2User = super.loadUser(userRequest)
+        val provider = userRequest.clientRegistration.clientId // google
+        val providerId = oAuth2User.attributes["sub"] // googleId(PK)
+        val username = "${provider}_${providerId}" // OAuth2 로 로그인시, 필요 없지만 그냥 만들어준다.
+        val password = passwordEncoder.encode("비밀번호") // OAuth2 로 로그인시, 필요 없지만 그냥 만들어준다.
+        val email = oAuth2User.attributes["email"]
+        val role = "ROLE_USER"
+
+        // 회원가입 여부 확인 및 저장
+        var user = userRepository.findByUsername(username)
+        require(user != null) { "이미 자동으로 회원가입이 되어 있습니다." }
+        user = User(
+            username = username,
+            password = password,
+            email = email as String,
+            role = role,
+            provider = provider,
+            providerId = providerId as String
+        )
+        userRepository.save(user) // 회원정보 저장
+
+        return PrincipalDetails(user, oAuth2User.attributes) // PrincipalDetails 객체가 스프링 시큐리티 세션 정보에 들어가게 된다.
     }
 }
