@@ -14,3 +14,11 @@ data class CreateUserRequest(
         return User(name = name, email = email, phoneNumber = phoneNumber)
     }
 }
+
+data class RetrieveUserResponse(
+    val name: String,
+    val email: String,
+    val phoneNumber: String
+) {
+    constructor(user: User) : this(user.name, user.email, user.phoneNumber)
+}
