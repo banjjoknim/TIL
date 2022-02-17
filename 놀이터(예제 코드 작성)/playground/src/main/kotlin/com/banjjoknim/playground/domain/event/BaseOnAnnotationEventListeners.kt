@@ -3,6 +3,8 @@ package com.banjjoknim.playground.domain.event
 import org.slf4j.LoggerFactory
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
+import org.springframework.transaction.event.TransactionPhase
+import org.springframework.transaction.event.TransactionalEventListener
 
 /**
  * ```
@@ -58,3 +60,53 @@ class SenderAnnotationEventListener {
         log.info("환영 SMS 발송 성공 : {}", event.phoneNumber)
     }
 }
+
+/**
+ * 트랜잭션 단위를 이벤트에서 관리(제어)하기 위해서 @TransactionalEventListener 를 사용할 수 있다.
+ *
+ * 기본 설정은 TransactionPhase.AFTER_COMMIT 이다. 이 외에도 여러 상태가 있으니 참고하여 설계하는데 사용하도록 하자.
+ *
+ * @see TransactionalEventListener
+ */
+
+@Component
+class AdminTransactionalEventListener {
+    private val log = LoggerFactory.getLogger(this::class.java)
+
+    @EventListener
+    fun onApplicationEvent(event: AdminTransactionalEvent) {
+        throw RuntimeException()
+//        log.info("어드민 서비스 : {}님이 가입했습니다.", event.username)
+    }
+}
+
+@Component
+class CouponTransactionalEventListener {
+    private val log = LoggerFactory.getLogger(this::class.java)
+
+    /**
+     * 아래의 @TransactionalEventListener 로 인해
+     *
+     * 트랜잭션 커밋이 정상적으로 성공한 이후에 이벤트가 실행(처리)된다.
+     */
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    fun onApplicationEvent(event: CouponTransactionalEvent) {
+        log.info("쿠폰 등록 완료 : {}", event.email)
+    }
+}
+
+@Component
+class SenderTransactionalEventListener {
+    private val log = LoggerFactory.getLogger(this::class.java)
+
+    @EventListener
+    fun handleEmail(event: SenderTransactionalEvent) {
+        log.info("환영 이메일 발송 성공 : {}", event.email)
+    }
+
+    @EventListener
+    fun handleSMS(event: SenderTransactionalEvent) {
+        log.info("환영 SMS 발송 성공 : {}", event.phoneNumber)
+    }
+}
+

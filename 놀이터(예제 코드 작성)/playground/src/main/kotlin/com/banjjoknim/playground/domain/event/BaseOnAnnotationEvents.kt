@@ -13,3 +13,9 @@ class AdminAnnotationEvent(val username: String)
 class CouponAnnotationEvent(val email: String)
 
 class SenderAnnotationEvent(val email: String, val phoneNumber: String)
+
+class AdminTransactionalEvent(val username: String)
+
+class CouponTransactionalEvent(val email: String)
+
+class SenderTransactionalEvent(val email: String, val phoneNumber: String)

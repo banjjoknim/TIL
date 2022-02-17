@@ -43,6 +43,15 @@ class UserApi(
         return ResponseEntity.ok().build()
     }
 
+    /**
+     * 트랜잭션 이벤트 리스너 어노테이션을 이용한 이벤트 사용 방식
+     */
+    @PostMapping("/transactional")
+    fun createUserWithTransactionalEventListener(@RequestBody @Valid request: CreateUserRequest): ResponseEntity<Unit> {
+        userServiceBaseOnAnnotationEvent.createUserWithTransactionalEventListener(request)
+        return ResponseEntity.ok().build()
+    }
+
     @GetMapping("/{userId}")
     fun retrieveUser(@PathVariable userId: Long): ResponseEntity<RetrieveUserResponse> {
         val response = userService.retrieveUser(userId)

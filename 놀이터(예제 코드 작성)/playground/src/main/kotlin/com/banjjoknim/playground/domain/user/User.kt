@@ -2,10 +2,13 @@ package com.banjjoknim.playground.domain.user
 
 import com.banjjoknim.playground.domain.event.AdminAnnotationEvent
 import com.banjjoknim.playground.domain.event.AdminInheritanceEvent
+import com.banjjoknim.playground.domain.event.AdminTransactionalEvent
 import com.banjjoknim.playground.domain.event.CouponAnnotationEvent
 import com.banjjoknim.playground.domain.event.CouponInheritanceEvent
+import com.banjjoknim.playground.domain.event.CouponTransactionalEvent
 import com.banjjoknim.playground.domain.event.SenderAnnotationEvent
 import com.banjjoknim.playground.domain.event.SenderInheritanceEvent
+import com.banjjoknim.playground.domain.event.SenderTransactionalEvent
 import org.springframework.context.ApplicationEventPublisher
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -65,5 +68,23 @@ class User(
 
     private fun publishAnnotationSenderEvent(eventPublisher: ApplicationEventPublisher) {
         eventPublisher.publishEvent(SenderAnnotationEvent(email, phoneNumber))
+    }
+
+    fun publishWithTransactionalEventListener(eventPublisher: ApplicationEventPublisher) {
+        publishWithTransactionalCouponEvent(eventPublisher)
+        publishWithTransactionalAdminEvent(eventPublisher)
+        publishWithTransactionalSenderEvent(eventPublisher)
+    }
+
+    private fun publishWithTransactionalAdminEvent(eventPublisher: ApplicationEventPublisher) {
+        eventPublisher.publishEvent(AdminTransactionalEvent(name))
+    }
+
+    private fun publishWithTransactionalCouponEvent(eventPublisher: ApplicationEventPublisher) {
+        eventPublisher.publishEvent(CouponTransactionalEvent(email))
+    }
+
+    private fun publishWithTransactionalSenderEvent(eventPublisher: ApplicationEventPublisher) {
+        eventPublisher.publishEvent(SenderTransactionalEvent(email, phoneNumber))
     }
 }
