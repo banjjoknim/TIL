@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.user
+package com.banjjoknim.playground.domain.user
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping

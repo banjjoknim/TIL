@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.user
+package com.banjjoknim.playground.domain.user
 
 import javax.persistence.Column
 import javax.persistence.Entity

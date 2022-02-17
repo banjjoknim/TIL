@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.user
+package com.banjjoknim.playground.domain.user
 
 import javax.validation.constraints.NotBlank
 
