@@ -27,9 +27,15 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity.badRequest().body(errors)
     }
 
-    @ExceptionHandler(value = [Exception::class])
-    fun handleException(ex: Exception): ResponseEntity<Unit> {
+    @ExceptionHandler(value = [NoSuchElementException::class])
+    fun handleNoSuchElement(ex: NoSuchElementException): ResponseEntity<String> {
         logger.error("message", ex)
-        return ResponseEntity.internalServerError().build()
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
+    }
+
+    @ExceptionHandler(value = [Exception::class])
+    fun handleException(ex: Exception): ResponseEntity<String> {
+        logger.error("message", ex)
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.message)
     }
 }
