@@ -1,12 +1,15 @@
 package com.banjjoknim.playground.domain.user
 
 import com.banjjoknim.playground.domain.event.AdminAnnotationEvent
+import com.banjjoknim.playground.domain.event.AdminAsyncEvent
 import com.banjjoknim.playground.domain.event.AdminInheritanceEvent
 import com.banjjoknim.playground.domain.event.AdminTransactionalEvent
 import com.banjjoknim.playground.domain.event.CouponAnnotationEvent
+import com.banjjoknim.playground.domain.event.CouponAsyncEvent
 import com.banjjoknim.playground.domain.event.CouponInheritanceEvent
 import com.banjjoknim.playground.domain.event.CouponTransactionalEvent
 import com.banjjoknim.playground.domain.event.SenderAnnotationEvent
+import com.banjjoknim.playground.domain.event.SenderAsyncEvent
 import com.banjjoknim.playground.domain.event.SenderInheritanceEvent
 import com.banjjoknim.playground.domain.event.SenderTransactionalEvent
 import org.springframework.context.ApplicationEventPublisher
@@ -86,5 +89,23 @@ class User(
 
     private fun publishWithTransactionalSenderEvent(eventPublisher: ApplicationEventPublisher) {
         eventPublisher.publishEvent(SenderTransactionalEvent(email, phoneNumber))
+    }
+
+    fun publishWithAsyncEventListener(eventPublisher: ApplicationEventPublisher) {
+        publishWithAsyncCouponEvent(eventPublisher)
+        publishWithAsyncAdminEvent(eventPublisher)
+        publishWithAsyncSenderEvent(eventPublisher)
+    }
+
+    private fun publishWithAsyncAdminEvent(eventPublisher: ApplicationEventPublisher) {
+        eventPublisher.publishEvent(AdminAsyncEvent(name))
+    }
+
+    private fun publishWithAsyncCouponEvent(eventPublisher: ApplicationEventPublisher) {
+        eventPublisher.publishEvent(CouponAsyncEvent(email))
+    }
+
+    private fun publishWithAsyncSenderEvent(eventPublisher: ApplicationEventPublisher) {
+        eventPublisher.publishEvent(SenderAsyncEvent(email, phoneNumber))
     }
 }

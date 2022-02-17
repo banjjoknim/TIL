@@ -2,6 +2,7 @@ package com.banjjoknim.playground.domain.event
 
 import org.slf4j.LoggerFactory
 import org.springframework.context.event.EventListener
+import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.springframework.transaction.event.TransactionPhase
 import org.springframework.transaction.event.TransactionalEventListener
@@ -106,6 +107,57 @@ class SenderTransactionalEventListener {
 
     @EventListener
     fun handleSMS(event: SenderTransactionalEvent) {
+        log.info("환영 SMS 발송 성공 : {}", event.phoneNumber)
+    }
+}
+
+@Component
+class AdminAsyncEventListener {
+    private val log = LoggerFactory.getLogger(this::class.java)
+
+    @EventListener
+    fun onApplicationEvent(event: AdminAsyncEvent) {
+        log.info("어드민 서비스 : {}님이 가입했습니다.", event.username)
+    }
+}
+
+@Component
+class CouponAsyncEventListener {
+    private val log = LoggerFactory.getLogger(this::class.java)
+
+    @EventListener
+    fun onApplicationEvent(event: CouponAsyncEvent) {
+        log.info("쿠폰 등록 완료 : {}", event.email)
+    }
+}
+
+@Component
+class SenderAsyncEventListener {
+    private val log = LoggerFactory.getLogger(this::class.java)
+
+    /**
+     * 비동기로 설정하기 위해 @Async 어노테이션을 붙였다.
+     *
+     * 비동기로 설정했기 때문에 다른 쓰레드에서 이벤트가 실행된다.
+     *
+     * 그에 따라 예외가 발생해도 나머지 로직(회원 저장, 이벤트)은 제대로 처리된다(다른 쓰레드에서 예외가 발생한 것이기 때문에).
+     *
+     */
+    @Async
+    @EventListener
+    fun handleEmail(event: SenderAsyncEvent) {
+        throw RuntimeException()
+//        log.info("환영 이메일 발송 성공 : {}", event.email)
+    }
+
+    /**
+     * 비동기로 설정하기 위해 @Async 어노테이션을 붙였다.
+     *
+     * 비동기로 설정했기 때문에 다른 쓰레드에서 이벤트가 실행된다.
+     */
+    @Async
+    @EventListener
+    fun handleSMS(event: SenderAsyncEvent) {
         log.info("환영 SMS 발송 성공 : {}", event.phoneNumber)
     }
 }

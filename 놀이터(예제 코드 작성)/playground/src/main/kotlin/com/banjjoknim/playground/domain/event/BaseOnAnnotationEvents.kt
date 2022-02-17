@@ -19,3 +19,9 @@ class AdminTransactionalEvent(val username: String)
 class CouponTransactionalEvent(val email: String)
 
 class SenderTransactionalEvent(val email: String, val phoneNumber: String)
+
+class AdminAsyncEvent(val username: String)
+
+class CouponAsyncEvent(val email: String)
+
+class SenderAsyncEvent(val email: String, val phoneNumber: String)

@@ -21,4 +21,10 @@ class UserServiceBaseOnAnnotationEvent(
         userRepository.save(user)
         user.publishWithTransactionalEventListener(eventPublisher)
     }
+
+    fun createUserWithAsyncEventListener(request: CreateUserRequest) {
+        val user = request.toUser()
+        userRepository.save(user)
+        user.publishWithAsyncEventListener(eventPublisher)
+    }
 }

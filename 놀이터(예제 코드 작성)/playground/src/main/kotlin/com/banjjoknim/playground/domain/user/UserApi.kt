@@ -52,6 +52,15 @@ class UserApi(
         return ResponseEntity.ok().build()
     }
 
+    /**
+     * 비동기 이벤트 리스너를 이용한 이벤트 사용 방식
+     */
+    @PostMapping("/async")
+    fun createUserWithAsyncEventListener(@RequestBody @Valid request: CreateUserRequest): ResponseEntity<Unit> {
+        userServiceBaseOnAnnotationEvent.createUserWithAsyncEventListener(request)
+        return ResponseEntity.ok().build()
+    }
+
     @GetMapping("/{userId}")
     fun retrieveUser(@PathVariable userId: Long): ResponseEntity<RetrieveUserResponse> {
         val response = userService.retrieveUser(userId)
