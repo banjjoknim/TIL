@@ -13,7 +13,8 @@ import javax.validation.Valid
 @RestController
 class UserApi(
     private val userService: UserService,
-    private val userServiceBaseOnInheritanceEvent: UserServiceBaseOnInheritanceEvent
+    private val userServiceBaseOnInheritanceEvent: UserServiceBaseOnInheritanceEvent,
+    private val userServiceBaseOnAnnotationEvent: UserServiceBaseOnAnnotationEvent
 ) {
     /**
      * 의존성을 모두 갖고 서비스 내에서 서비스를 호출하는 방식
@@ -30,6 +31,15 @@ class UserApi(
     @PostMapping("/inheritance")
     fun createUserWithInheritanceEvent(@RequestBody @Valid request: CreateUserRequest): ResponseEntity<Unit> {
         userServiceBaseOnInheritanceEvent.createUser(request)
+        return ResponseEntity.ok().build()
+    }
+
+    /**
+     * 어노테이션 기반의 이벤트 사용 방식
+     */
+    @PostMapping("/annotation")
+    fun createUserWithAnnotationEvent(@RequestBody @Valid request: CreateUserRequest): ResponseEntity<Unit> {
+        userServiceBaseOnAnnotationEvent.createUser(request)
         return ResponseEntity.ok().build()
     }
 

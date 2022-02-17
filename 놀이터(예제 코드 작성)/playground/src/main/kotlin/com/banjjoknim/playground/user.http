@@ -18,5 +18,15 @@ Content-Type: application/json
   "phoneNumber": "010-1234-5678"
 }
 
+### 어노테이션 기반의 이벤트를 사용하는 방식
+POST http://localhost:8080/users/annotation
+Content-Type: application/json
+
+{
+  "name": "banjjoknim",
+  "email": "banjjoknim@github.com",
+  "phoneNumber": "010-1234-5678"
+}
+
 ###
 GET http://localhost:8080/users/1

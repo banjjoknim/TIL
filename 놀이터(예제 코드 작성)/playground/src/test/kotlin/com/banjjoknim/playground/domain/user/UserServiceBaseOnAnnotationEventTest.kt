@@ -1,25 +1,21 @@
 package com.banjjoknim.playground.domain.user
 
-import com.banjjoknim.playground.domain.event.AdminInheritanceEvent
-import com.banjjoknim.playground.domain.event.CouponInheritanceEvent
-import com.banjjoknim.playground.domain.event.SenderInheritanceEvent
-import org.assertj.core.api.Assertions.assertThat
+import com.banjjoknim.playground.domain.event.AdminAnnotationEvent
+import com.banjjoknim.playground.domain.event.CouponAnnotationEvent
+import com.banjjoknim.playground.domain.event.SenderAnnotationEvent
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentCaptor
-import org.mockito.BDDMockito.any
-import org.mockito.BDDMockito.given
-import org.mockito.BDDMockito.then
-import org.mockito.BDDMockito.times
+import org.mockito.BDDMockito
 import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
-import org.springframework.context.ApplicationEvent
 import org.springframework.context.ApplicationEventPublisher
 
 @ExtendWith(MockitoExtension::class)
-class UserServiceBaseOnInheritanceEventTest {
+class UserServiceBaseOnAnnotationEventTest {
 
     @Mock
     private lateinit var userRepository: UserRepository
@@ -30,16 +26,16 @@ class UserServiceBaseOnInheritanceEventTest {
     /**
      * 발행된 이벤트를 캡쳐해서 데이터를 저장할 수 있다.
      *
-     * 이때, ApplicationEvent 를 상속받은 객체를 이벤트 객체로 사용하므로 ArgumentCaptor 의 제네릭을 ApplicationEvent 로 지정한다.
+     * 이때, 순수한 자바 객체를 이벤트 객체로 사용하므로 ArgumentCaptor 의 제네릭을 제네릭을 Any(Object)로 지정한다.
      */
     @Captor
-    private lateinit var eventPublisherCaptor: ArgumentCaptor<ApplicationEvent>
+    private lateinit var eventPublisherCaptor: ArgumentCaptor<Any>
 
-    private lateinit var userServiceBaseOnInheritanceEvent: UserServiceBaseOnInheritanceEvent
+    private lateinit var userServiceBaseOnAnnotationEvent: UserServiceBaseOnAnnotationEvent
 
     @BeforeEach
     fun setup() {
-        userServiceBaseOnInheritanceEvent = UserServiceBaseOnInheritanceEvent(userRepository, eventPublisher)
+        userServiceBaseOnAnnotationEvent = UserServiceBaseOnAnnotationEvent(userRepository, eventPublisher)
     }
 
     /**
@@ -47,18 +43,18 @@ class UserServiceBaseOnInheritanceEventTest {
      */
     @Test
     fun `회원 생성시 이벤트의 총 발행 횟수와 각각의 이벤트의 타입을 검사한다`() {
-        given(userRepository.save(any()))
+        BDDMockito.given(userRepository.save(BDDMockito.any()))
             .willReturn(User(name = "banjjoknim", email = "banjjoknim@github.com", phoneNumber = "010-1234-5678"))
         val request =
             CreateUserRequest(name = "banjjoknim", email = "banjjoknim@github.com", phoneNumber = "010-1234-5678")
 
-        userServiceBaseOnInheritanceEvent.createUser(request)
+        userServiceBaseOnAnnotationEvent.createUser(request)
 
-        then(eventPublisher).should(times(3)).publishEvent(eventPublisherCaptor.capture())
+        BDDMockito.then(eventPublisher).should(BDDMockito.times(3)).publishEvent(eventPublisherCaptor.capture())
         // 캡쳐한 이벤트는 순차적으로 저장되므로 아래와 같이 검증할 수도 있다.
         val events = eventPublisherCaptor.allValues
-        assertThat(events[0]).isInstanceOf(AdminInheritanceEvent::class.java)
-        assertThat(events[1]).isInstanceOf(CouponInheritanceEvent::class.java)
-        assertThat(events[2]).isInstanceOf(SenderInheritanceEvent::class.java)
+        Assertions.assertThat(events[0]).isInstanceOf(AdminAnnotationEvent::class.java)
+        Assertions.assertThat(events[1]).isInstanceOf(CouponAnnotationEvent::class.java)
+        Assertions.assertThat(events[2]).isInstanceOf(SenderAnnotationEvent::class.java)
     }
 }

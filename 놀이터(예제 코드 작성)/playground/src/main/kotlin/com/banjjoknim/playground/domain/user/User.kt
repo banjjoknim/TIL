@@ -1,7 +1,10 @@
 package com.banjjoknim.playground.domain.user
 
+import com.banjjoknim.playground.domain.event.AdminAnnotationEvent
 import com.banjjoknim.playground.domain.event.AdminInheritanceEvent
+import com.banjjoknim.playground.domain.event.CouponAnnotationEvent
 import com.banjjoknim.playground.domain.event.CouponInheritanceEvent
+import com.banjjoknim.playground.domain.event.SenderAnnotationEvent
 import com.banjjoknim.playground.domain.event.SenderInheritanceEvent
 import org.springframework.context.ApplicationEventPublisher
 import javax.persistence.Column
@@ -28,21 +31,39 @@ class User(
     /**
      * 상속 기반의 이벤트 사용
      */
-    fun publishEvent(eventPublisher: ApplicationEventPublisher) {
-        publishAdminEvent(eventPublisher)
-        publishCouponEvent(eventPublisher)
-        publishSenderEvent(eventPublisher)
+    fun publishInheritanceEvent(eventPublisher: ApplicationEventPublisher) {
+        publishInheritanceAdminEvent(eventPublisher)
+        publishInheritanceCouponEvent(eventPublisher)
+        publishInheritanceSenderEvent(eventPublisher)
     }
 
-    private fun publishAdminEvent(eventPublisher: ApplicationEventPublisher) {
+    private fun publishInheritanceAdminEvent(eventPublisher: ApplicationEventPublisher) {
         eventPublisher.publishEvent(AdminInheritanceEvent(this, name))
     }
 
-    private fun publishCouponEvent(eventPublisher: ApplicationEventPublisher) {
+    private fun publishInheritanceCouponEvent(eventPublisher: ApplicationEventPublisher) {
         eventPublisher.publishEvent(CouponInheritanceEvent(this, email))
     }
 
-    private fun publishSenderEvent(eventPublisher: ApplicationEventPublisher) {
+    private fun publishInheritanceSenderEvent(eventPublisher: ApplicationEventPublisher) {
         eventPublisher.publishEvent(SenderInheritanceEvent(this, email, phoneNumber))
+    }
+
+    fun publishAnnotationEvent(eventPublisher: ApplicationEventPublisher) {
+        publishAnnotationAdminEvent(eventPublisher)
+        publishAnnotationCouponEvent(eventPublisher)
+        publishAnnotationSenderEvent(eventPublisher)
+    }
+
+    private fun publishAnnotationAdminEvent(eventPublisher: ApplicationEventPublisher) {
+        eventPublisher.publishEvent(AdminAnnotationEvent(name))
+    }
+
+    private fun publishAnnotationCouponEvent(eventPublisher: ApplicationEventPublisher) {
+        eventPublisher.publishEvent(CouponAnnotationEvent(email))
+    }
+
+    private fun publishAnnotationSenderEvent(eventPublisher: ApplicationEventPublisher) {
+        eventPublisher.publishEvent(SenderAnnotationEvent(email, phoneNumber))
     }
 }
