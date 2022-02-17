@@ -12,11 +12,24 @@ import javax.validation.Valid
 @RequestMapping("/users")
 @RestController
 class UserApi(
-    private val userService: UserService
+    private val userService: UserService,
+    private val userServiceBaseOnInheritanceEvent: UserServiceBaseOnInheritanceEvent
 ) {
+    /**
+     * 의존성을 모두 갖고 서비스 내에서 서비스를 호출하는 방식
+     */
     @PostMapping("")
     fun createUser(@RequestBody @Valid request: CreateUserRequest): ResponseEntity<Unit> {
         userService.createUser(request)
+        return ResponseEntity.ok().build()
+    }
+
+    /**
+     * 상속 기반의 이벤트 사용 방식
+     */
+    @PostMapping("/inheritance")
+    fun createUserWithInheritanceEvent(@RequestBody @Valid request: CreateUserRequest): ResponseEntity<Unit> {
+        userServiceBaseOnInheritanceEvent.createUser(request)
         return ResponseEntity.ok().build()
     }
 

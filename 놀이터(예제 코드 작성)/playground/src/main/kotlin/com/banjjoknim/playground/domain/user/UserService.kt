@@ -7,6 +7,9 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * 의존성을 모두 갖고 서비스 내에서 서비스를 호출하는 방식
+ */
 @Transactional
 @Service
 class UserService(

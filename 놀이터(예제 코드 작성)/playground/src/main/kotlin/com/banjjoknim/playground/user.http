@@ -1,0 +1,22 @@
+### 고전적인 방식
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "banjjoknim",
+  "email": "banjjoknim@github.com",
+  "phoneNumber": "010-1234-5678"
+}
+
+### 상속 기반의 이벤트를 사용하는 방식
+POST http://localhost:8080/users/inheritance
+Content-Type: application/json
+
+{
+  "name": "banjjoknim",
+  "email": "banjjoknim@github.com",
+  "phoneNumber": "010-1234-5678"
+}
+
+###
+GET http://localhost:8080/users/1
