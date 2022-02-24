@@ -6,6 +6,14 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 
+/**
+ * ```
+ * AbstractAggregateRoot<T> 를 이용하면 쉽게 이벤트를 구현할 수 있다.
+ *
+ * 단, 명시적으로 AggregateRootRepository<T, ID> 에서 save()가 호출되어야 이벤트가 발행된다.
+ * ```
+ * @see AbstractAggregateRoot
+ */
 @Entity
 class AggregateRootUser(
     @Id
