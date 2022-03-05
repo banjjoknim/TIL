@@ -225,7 +225,7 @@ class PrincipalOAuth2UserService(
 
         // 강제로 회원가입 진행
         val oAuth2User = super.loadUser(userRequest)
-        val provider = userRequest.clientRegistration.clientId // google
+        val provider = userRequest.clientRegistration.registrationId // google
         val providerId = oAuth2User.attributes["sub"] // googleId(PK)
         val username = "${provider}_${providerId}" // OAuth2 로 로그인시, 필요 없지만 그냥 만들어준다.
         val password = passwordEncoder.encode("비밀번호") // OAuth2 로 로그인시, 필요 없지만 그냥 만들어준다.
