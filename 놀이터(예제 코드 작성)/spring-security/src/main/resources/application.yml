@@ -6,6 +6,13 @@ spring:
           google:
             client-id: my-google-client-id
             client-secret: my-google-client-secret
+            scope:
+              - email
+              - profile
+
           facebook:
             client-id: my-facebook-client-id
             client-secret: my-facebook-client-secret
+            scope:
+              - email
+              - public_profile
