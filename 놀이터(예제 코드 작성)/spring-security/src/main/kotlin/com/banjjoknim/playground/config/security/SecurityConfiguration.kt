@@ -1,5 +1,6 @@
 package com.banjjoknim.playground.config.security
 
+import com.banjjoknim.playground.domain.auth.OAuth2Type
 import com.banjjoknim.playground.domain.user.User
 import com.banjjoknim.playground.domain.user.UserRepository
 import org.springframework.context.annotation.Bean
@@ -238,12 +239,15 @@ class PrincipalOAuth2UserService(
         println("${userRequest.additionalParameters}") // 5.1 버전 이후일 경우.
 
         // 강제로 회원가입 진행
+        val oAuth2Type = OAuth2Type.findByProvider(userRequest.clientRegistration.registrationId)
         val oAuth2User = super.loadUser(userRequest)
-        val provider = userRequest.clientRegistration.clientId // google
-        val providerId = oAuth2User.attributes["sub"] // googleId(PK)
+        val oAuth2UserInfo = oAuth2Type.createOAuth2UserInfo(oAuth2User.attributes)
+
+        val provider = oAuth2UserInfo.getProvider() // 값의 유무로 일반 로그인, OAuth2 로그인을 구분한다.
+        val providerId = oAuth2UserInfo.getProviderId()
         val username = "${provider}_${providerId}" // OAuth2 로 로그인시, 필요 없지만 그냥 만들어준다.
         val password = passwordEncoder.encode("비밀번호") // OAuth2 로 로그인시, 필요 없지만 그냥 만들어준다.
-        val email = oAuth2User.attributes["email"]
+        val email = oAuth2UserInfo.getEmail()
         val role = "ROLE_USER"
 
         // 회원가입 여부 확인 및 저장
@@ -252,10 +256,10 @@ class PrincipalOAuth2UserService(
         user = User(
             username = username,
             password = password,
-            email = email as String,
+            email = email,
             role = role,
             provider = provider,
-            providerId = providerId as String
+            providerId = providerId
         )
         userRepository.save(user) // 회원정보 저장
 
