@@ -29,6 +29,20 @@ import org.springframework.stereotype.Service
  * 구글과 페이스북 측에서 우리에게 보내는 Request에 액세스 토큰과 사용자 정보등의 OAUth2 정보가 모두 포함되어 있다.
  *
  * 하지만 네이버, 카카오는 스프링 부트에서 기본적인 정보를 제공하지 않기 때문에 따로 해당 정보를 제공하는 클래스를 작성해야 한다.
+ *
+ * 우리는 OAuth2-Client 라는 라이브러리를 사용하고 있다.
+ *
+ * OAuth2-Client 라이브러리는 구글, 페이스북, 깃허브 등의 Provider를 기본적으로 제공해주지만, 네이버 카카오는 제공해주지 않는다.
+ *
+ * 이는 각 나라별로 OAuth2 를 지원해주는 서드 파티가 제공하는 attribute 가 모두 다르기 때문이다. 그래서 현실적으로 모든 곳을 지원해줄 수가 없다.
+ *
+ * OAuth2-Client 는 OAuth2ClientProperties 라는 클래스를 통한 자동 설정을 지원해주고 있다.
+ *
+ * OAuth2는 여러가지 방식이 있다. Authorization Code Grant Type 방식 등등..
+ *
+ * @see org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties
+ * @see org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientPropertiesRegistrationAdapter
+ * @see org.springframework.security.config.oauth2.client.CommonOAuth2Provider
  */
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록되도록 해준다.
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // 스프링 시큐리티 관련 특정 어노테이션에 대한 활성화 설정을 할 수 있다.
@@ -171,8 +185,8 @@ class PrincipalDetails(
  * 이때 UserDetailsService 타입으로 등록되어 있는 빈을 찾아서 해당 빈에 정의된 loadUserByUsername() 을 실행한다.
  * ```
  *
- * @see DaoAuthenticationProvider
- * @see AbstractUserDetailsAuthenticationProvider
+ * @see org.springframework.security.authentication.dao.DaoAuthenticationProvider
+ * @see org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider
  */
 @Service
 class PrincipalDetailService(private val userRepository: UserRepository) : UserDetailsService {
@@ -199,9 +213,9 @@ class PrincipalDetailService(private val userRepository: UserRepository) : UserD
  * OAuth2UserRequest 정보를 이용해서 loadUser 함수 호출 -> 구글로부터 회원프로필을 받아준다.
  * ```
  *
- * @see OAuth2UserService
- * @see DefaultOAuth2UserService
- * @see OAuth2UserRequest
+ * @see org.springframework.security.oauth2.client.userinfo.OAuth2UserService
+ * @see org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
+ * @see org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
  */
 @Service
 class PrincipalOAuth2UserService(
