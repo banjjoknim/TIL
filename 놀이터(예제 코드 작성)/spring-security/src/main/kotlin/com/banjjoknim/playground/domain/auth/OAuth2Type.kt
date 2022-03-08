@@ -5,7 +5,8 @@ enum class OAuth2Type(
     private val createUserInfo: (attributes: Map<String, Any?>) -> OAuth2UserInfo
 ) {
     GOOGLE("google", { attributes -> GoogleUserInfo(attributes) }),
-    FACEBOOK("facebook", { attributes -> FacebookUserInfo(attributes) });
+    FACEBOOK("facebook", { attributes -> FacebookUserInfo(attributes) }),
+    NAVER("naver", { attributes -> NaverUserInfo(attributes) });
 
     fun createOAuth2UserInfo(attributes: Map<String, Any?>): OAuth2UserInfo {
         return createUserInfo(attributes)
