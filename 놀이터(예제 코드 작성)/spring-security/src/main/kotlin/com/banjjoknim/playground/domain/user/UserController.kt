@@ -64,16 +64,13 @@ class UserController {
      * @see PrincipalDetailsService
      *
      */
-    @GetMapping("/login") // OAuth2 로그인 및 일반 로그인 모두 principalDetails 로 세션 정보를 얻어올 수 있다.
+    @GetMapping("/login") // OAuth2 로그인 및 일반 로그인 모두 principalDetails 로 세션 정보를 얻어올 수 있다(다운 캐스팅을 하지 않아도 된다!).
     fun login(@AuthenticationPrincipal principalDetails: PrincipalDetails) { // DI(의존성 주입)
         println("principalDetailsUser : ${principalDetails.user}")
     }
 
     @GetMapping("/test/login")
-    fun testLogin(
-        authentication: Authentication,
-        @AuthenticationPrincipal userDetails: UserDetails
-    ) { // DI(의존성 주입)
+    fun testLogin(authentication: Authentication, @AuthenticationPrincipal userDetails: UserDetails) { // DI(의존성 주입)
         val principalDetailsFromAuthentication = authentication.principal as PrincipalDetails // 다운 캐스팅
         println("principalDetailsFromAuthentication : ${principalDetailsFromAuthentication.user}")
         println("principalDetailsFromAuthentication : ${principalDetailsFromAuthentication.username}")
@@ -83,10 +80,7 @@ class UserController {
     }
 
     @GetMapping("/test/oauth2/login")
-    fun testOAuth2Login(
-        authentication: Authentication,
-        @AuthenticationPrincipal oauth: OAuth2User
-    ) { // DI(의존성 주입)
+    fun testOAuth2Login(authentication: Authentication, @AuthenticationPrincipal oauth: OAuth2User) { // DI(의존성 주입)
         val oAuth2User = authentication.principal as OAuth2User // 다운 캐스팅
         println("authentication : ${oAuth2User.attributes}") // OAuth2Service 의 super.loadUser(userRequest).attributes 와 같다.
         println("oAuth2User : ${oauth.attributes}")
