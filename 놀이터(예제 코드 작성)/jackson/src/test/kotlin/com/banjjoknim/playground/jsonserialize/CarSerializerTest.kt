@@ -1,5 +1,9 @@
 package com.banjjoknim.playground.jsonserialize
 
+import com.banjjoknim.playground.jackson.jsonserialize.CarNameSerializer
+import com.banjjoknim.playground.jackson.jsonserialize.CarPriceSerializer
+import com.banjjoknim.playground.jackson.jsonserialize.CarSerializer
+import com.banjjoknim.playground.model.Car
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule

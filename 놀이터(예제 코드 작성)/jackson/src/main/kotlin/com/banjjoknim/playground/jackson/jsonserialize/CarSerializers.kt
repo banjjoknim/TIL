@@ -1,5 +1,6 @@
-package com.banjjoknim.playground.jsonserialize
+package com.banjjoknim.playground.jackson.jsonserialize
 
+import com.banjjoknim.playground.model.Car
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
