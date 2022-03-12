@@ -4,6 +4,7 @@ import com.banjjoknim.playground.jackson.jsonserialize.CarNameSerializer
 import com.banjjoknim.playground.jackson.jsonserialize.CarPriceSerializer
 import com.banjjoknim.playground.jackson.jsonserialize.CarSerializer
 import com.banjjoknim.playground.model.Car
+import com.banjjoknim.playground.model.Owner
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -27,7 +28,8 @@ class CarSerializerTest {
     private lateinit var mapper: ObjectMapper
 
     companion object {
-        private val car = Car("banjjoknim", 10_000_000)
+        private val owner = Owner("ban", 30)
+        private val car = Car("banjjoknim", 10_000_000, owner)
     }
 
     @BeforeEach
@@ -43,14 +45,14 @@ class CarSerializerTest {
         val result = mapper.writeValueAsString(car)
 
         // then
-        assertThat(result).isEqualTo("""{"name":"banjjoknim","price":10000000}""")
+        assertThat(result).isEqualTo("""{"name":"banjjoknim","price":10000000,"owner":{"name":"ban","age":30}}""")
     }
 
     @DisplayName("등록된 커스텀 직렬화기의 동작을 테스트한다")
     @Nested
     inner class CarSerializerTestCases {
         @Test
-        fun `모든 필드를 직렬화한다`() {
+        fun `자동차의 모든 필드만 직렬화한다`() {
             // given
             val module = SimpleModule()
             module.addSerializer(Car::class.java, CarSerializer())
@@ -64,7 +66,7 @@ class CarSerializerTest {
         }
 
         @Test
-        fun `이름만 직렬화한다`() {
+        fun `자동차의 이름만 직렬화한다`() {
             // given
             val module = SimpleModule()
             module.addSerializer(Car::class.java, CarNameSerializer())
@@ -78,7 +80,7 @@ class CarSerializerTest {
         }
 
         @Test
-        fun `가격만 직렬화한다`() {
+        fun `자동차의 가격만 직렬화한다`() {
             // given
             val module = SimpleModule()
             module.addSerializer(Car::class.java, CarPriceSerializer())
