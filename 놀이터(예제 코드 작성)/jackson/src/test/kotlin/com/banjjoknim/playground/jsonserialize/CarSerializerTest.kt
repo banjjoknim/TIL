@@ -1,5 +1,7 @@
 package com.banjjoknim.playground.jsonserialize
 
+import com.banjjoknim.playground.jackson.jsonserialize.CarNameOwnerNameSerializer
+import com.banjjoknim.playground.jackson.jsonserialize.CarNameOwnerSerializer
 import com.banjjoknim.playground.jackson.jsonserialize.CarNameSerializer
 import com.banjjoknim.playground.jackson.jsonserialize.CarPriceSerializer
 import com.banjjoknim.playground.jackson.jsonserialize.CarSerializer
@@ -91,6 +93,34 @@ class CarSerializerTest {
 
             // then
             assertThat(result).isEqualTo("""{"price":10000000}""")
+        }
+
+        @Test
+        fun `자동차의 이름과 오너의 모든 필드를 직렬화한다`() {
+            // given
+            val module = SimpleModule()
+            module.addSerializer(Car::class.java, CarNameOwnerSerializer())
+            mapper.registerModule(module)
+
+            // when
+            val result = mapper.writeValueAsString(car)
+
+            // then
+            assertThat(result).isEqualTo("""{"name":"banjjoknim","owner":{"name":"ban","age":30}}""")
+        }
+
+        @Test
+        fun `자동차의 이름과 오너의 이름만 직렬화한다`() {
+            // given
+            val module = SimpleModule()
+            module.addSerializer(Car::class.java, CarNameOwnerNameSerializer())
+            mapper.registerModule(module)
+
+            // when
+            val result = mapper.writeValueAsString(car)
+
+            // then
+            assertThat(result).isEqualTo("""{"name":"banjjoknim","owner":{"name":"ban"}}""")
         }
     }
 }
