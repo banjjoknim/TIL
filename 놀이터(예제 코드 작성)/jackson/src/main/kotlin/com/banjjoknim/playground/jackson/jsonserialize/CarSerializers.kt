@@ -1,8 +1,12 @@
 package com.banjjoknim.playground.jackson.jsonserialize
 
 import com.banjjoknim.playground.jackson.common.Car
+import com.banjjoknim.playground.jackson.common.Secret
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.introspect.Annotated
+import com.fasterxml.jackson.databind.introspect.AnnotatedMember
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 
 /**
@@ -16,9 +20,12 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer
  *
  * JsonSerializer<T> 만 확장할 경우엔 애노테이션 정보를 얻을 수 없다. 추가적으로 ContextualSerializer 인터페이스를 구현해주면 createContextual() 메서드를 구현해줘야 하는데 두번째 인자로 넘어오는 BeanProperty 를 이용해 애노테이션 정보를 구할 수 있다.
  *
+ * ContexutalSerializer 를 사용하는 방법은 [TestContextualSerialization](https://github.com/FasterXML/jackson-databind/blob/master/src/test/java/com/fasterxml/jackson/databind/contextual/TestContextualSerialization.java) 참고하도록 한다.
+ *
  * Custom Serializer 가 JsonSerializer<T> 와 ContextualSerialier 를 모두 구현할 경우 createContextual() 함수가 먼저 호출된다.
  *
  * @see com.fasterxml.jackson.databind.ser.std.StdSerializer
+ * @see com.fasterxml.jackson.databind.ser.std.StringSerializer
  * @see com.fasterxml.jackson.databind.ser.ContextualSerializer
  */
 class CarSerializer : StdSerializer<Car>(Car::class.java) {
@@ -62,5 +69,42 @@ class CarNameOwnerNameSerializer : StdSerializer<Car>(Car::class.java) {
         gen.writeObjectFieldStart("owner")
         gen.writeStringField("name", value.owner.name)
         gen.writeEndObject()
+    }
+}
+
+class UsingJsonSerializeAnnotationCarSerializer : StdSerializer<String>(String::class.java) {
+    override fun serialize(value: String, gen: JsonGenerator, provider: SerializerProvider) {
+        gen.writeString("****")
+    }
+}
+
+class SecretAnnotationSerializer : StdSerializer<String>(String::class.java) {
+    override fun serialize(value: String, gen: JsonGenerator, provider: SerializerProvider) {
+        gen.writeString("****")
+    }
+}
+
+class SecretAnnotationIntrospector : JacksonAnnotationIntrospector() {
+    /**
+     *
+     * `@JsonIgnore` 를 적용했을 때 무시할지 여부를 판단하는 함수이다.
+     *
+     * 따라서 직렬화 / 역직렬화시 무시하고 싶은 프로퍼티가 있다면 이 함수를 override 하면 된다.
+     */
+    override fun hasIgnoreMarker(m: AnnotatedMember): Boolean {
+        return super.hasIgnoreMarker(m)
+    }
+
+    /**
+     * 특정 프로퍼티에 대해 어떤 Serializer 를 사용할 것인지 결정하는 함수이다.
+     *
+     * 따라서 특정 조건에 따라 직렬화를 하고싶다면 이 함수를 override 하면 된다.
+     */
+    override fun findSerializer(a: Annotated): Any? {
+        val annotation = a.getAnnotation(Secret::class.java)
+        if (annotation != null) {
+            return SecretAnnotationSerializer()
+        }
+        return super.findSerializer(a) // 기존 JacksonAnnotationIntrospector 의 것을 사용한다.
     }
 }

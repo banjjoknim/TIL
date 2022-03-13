@@ -1,11 +1,9 @@
-package com.banjjoknim.playground.jsonserialize
+package com.banjjoknim.playground.jackson.jsonserialize
 
-import com.banjjoknim.playground.jackson.jsonserialize.CarNameOwnerNameSerializer
-import com.banjjoknim.playground.jackson.jsonserialize.CarNameOwnerSerializer
-import com.banjjoknim.playground.jackson.jsonserialize.CarNameSerializer
-import com.banjjoknim.playground.jackson.jsonserialize.CarPriceSerializer
-import com.banjjoknim.playground.jackson.jsonserialize.CarSerializer
 import com.banjjoknim.playground.jackson.common.Car
+import com.banjjoknim.playground.jackson.common.CarUsingJsonSerializeAnnotation
+import com.banjjoknim.playground.jackson.common.CarUsingNoAnnotation
+import com.banjjoknim.playground.jackson.common.CarUsingSecretAnnotation
 import com.banjjoknim.playground.jackson.common.Owner
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
@@ -25,13 +23,16 @@ import org.junit.jupiter.api.Test
  * @see com.fasterxml.jackson.databind.ser.std.BeanSerializerBase
  * @see com.fasterxml.jackson.databind.ser.BeanPropertyWriter
  */
-class CarSerializerTest {
+class CarSerializersTest {
 
     private lateinit var mapper: ObjectMapper
 
     companion object {
         private val owner = Owner("ban", 30)
         private val car = Car("banjjoknim", 10_000_000, owner)
+        private val carUsingNoAnnotation = CarUsingNoAnnotation()
+        private val carUsingJsonSerializeAnnotation = CarUsingJsonSerializeAnnotation()
+        private val carUsingSecretAnnotation = CarUsingSecretAnnotation()
     }
 
     @BeforeEach
@@ -121,6 +122,40 @@ class CarSerializerTest {
 
             // then
             assertThat(result).isEqualTo("""{"name":"banjjoknim","owner":{"name":"ban"}}""")
+        }
+
+        @Test
+        fun `아무 어노테이션도 적용하지 않고 직렬화한다`() {
+            // given
+
+            // when
+            val actual = mapper.writeValueAsString(carUsingNoAnnotation)
+
+            // then
+            assertThat(actual).isEqualTo("""{"name":"banjjoknim","secret":"secret","price":10000000,"owner":{"name":"ban","age":30}}""")
+        }
+
+        @Test
+        fun `@JsonSerialize 어노테이션을 적용하여 직렬화한다`() {
+            // given
+
+            // when
+            val actual = mapper.writeValueAsString(carUsingJsonSerializeAnnotation)
+
+            // then
+            assertThat(actual).isEqualTo("""{"name":"banjjoknim","secret":"****","price":10000000,"owner":{"name":"ban","age":30}}""")
+        }
+
+        @Test
+        fun `@Secret 어노테이션을 적용하여 직렬화한다`() {
+            // given
+            mapper.setAnnotationIntrospector(SecretAnnotationIntrospector())
+
+            // when
+            val actual = mapper.writeValueAsString(carUsingSecretAnnotation)
+
+            // then
+            assertThat(actual).isEqualTo("""{"name":"banjjoknim","secret":"****","price":10000000,"owner":{"name":"ban","age":30}}""")
         }
     }
 }
