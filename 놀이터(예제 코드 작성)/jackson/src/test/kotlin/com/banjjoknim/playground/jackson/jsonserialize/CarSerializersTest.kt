@@ -5,6 +5,7 @@ import com.banjjoknim.playground.jackson.common.CarUsingJsonSerializeAnnotation
 import com.banjjoknim.playground.jackson.common.CarUsingNoAnnotation
 import com.banjjoknim.playground.jackson.common.CarUsingSecretAnnotation
 import com.banjjoknim.playground.jackson.common.Owner
+import com.fasterxml.jackson.databind.AnnotationIntrospector
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -156,6 +157,82 @@ class CarSerializersTest {
 
             // then
             assertThat(actual).isEqualTo("""{"name":"banjjoknim","secret":"****","price":10000000,"owner":{"name":"ban","age":30}}""")
+        }
+
+        /**
+         *
+         * Kotlin + Spring Boot 를 사용한다면 `com.fasterxml.jackson.module:jackson-module-kotlin` 의존성을 사용할 것이다.
+         *
+         * 이를 사용하면 기본 생성자 없이도 `@RequestBody` 에서 json 을 객체로 역직렬화 할 수 있다.
+         *
+         * `com.fasterxml.jackson.module:jackson-module-kotlin` 에서 이러한 역할을 해주는 것이 KotlinAnnotationIntrospector 이다.
+         *
+         * 하지만 새로운 AnnotationIntrospector 를 등록하면 KotlinAnnotationIntrospector 가 무시되어 기본생성자 없이는 `@RequestBody` 객체를 만들지 못하게 된다.
+         *
+         * 따라서 아래와 같이 기존의 AnnotationIntrospector 도 등록해주어야 한다.
+         *
+         * 이는 AnnotationIntrospector.Pair 도우미 클래스를 사용해서 할 수 있다.
+         *
+         * 이때, 순서대로 기본 Introspector, 보조 Introspector 로 등록된다.
+         *
+         * [AnnotationIntrospector](https://github.com/FasterXML/jackson-docs/wiki/AnnotationIntrospector)
+         *
+         * @see com.fasterxml.jackson.databind.ObjectMapper
+         * @see com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair
+         * @see com.fasterxml.jackson.databind.AnnotationIntrospector
+         * @see com.fasterxml.jackson.module.kotlin.KotlinAnnotationIntrospector
+         */
+        @Test
+        fun `Kotlin + Spring Boot를 사용하면 기본적으로 3가지의 AnnotationIntrospector 가 ObjectMapper 에 존재한다`() {
+            // given
+            val originalAnnotationIntrospector = mapper.serializationConfig.annotationIntrospector
+
+            // when
+            val allIntrospectorNames = mapper.serializationConfig.annotationIntrospector.allIntrospectors()
+                .map { annotationIntrospector -> annotationIntrospector::class.simpleName }
+
+            // then
+            assertThat(originalAnnotationIntrospector.allIntrospectors()).hasSize(3)
+            assertThat(allIntrospectorNames[0]).isEqualTo("KotlinAnnotationIntrospector")
+            assertThat(allIntrospectorNames[1]).isEqualTo("JacksonAnnotationIntrospector")
+            assertThat(allIntrospectorNames[2]).isEqualTo("KotlinNamesAnnotationIntrospector")
+        }
+
+        @Test
+        fun `Kotlin + Spring Boot 를 사용할 시 ObjectMapper 에 새로운 AnnotationIntrospector 를 추가하면 KotlinAnnotationIntrospector 가 무시된다`() {
+            // given
+            val originalAnnotationIntrospector = mapper.serializationConfig.annotationIntrospector
+
+            // when
+            mapper.setAnnotationIntrospector(SecretAnnotationIntrospector())
+            val allIntrospectorNames = mapper.serializationConfig.annotationIntrospector.allIntrospectors()
+                .map { annotationIntrospector -> annotationIntrospector::class.simpleName }
+
+            // then
+            assertThat(originalAnnotationIntrospector.allIntrospectors()).hasSize(3)
+            assertThat(allIntrospectorNames).hasSize(1)
+            assertThat(allIntrospectorNames[0]).isEqualTo("SecretAnnotationIntrospector")
+        }
+
+        @Test
+        fun `Kotlin + Spring Boot 를 사용할 시 ObjectMapper 에 새로운 AnnotationIntrospector 를 추가할 때 Pair 로 추가하면 KotlinAnnotationIntrospector 가 무시되지 않는다`() {
+            // given
+            val originalAnnotationIntrospector = mapper.serializationConfig.annotationIntrospector
+
+            // when
+            mapper.setAnnotationIntrospector(
+                AnnotationIntrospector.pair(SecretAnnotationIntrospector(), originalAnnotationIntrospector) // 내부 구현은 아래와 같다.
+//                AnnotationIntrospectorPair(SecretAnnotationIntrospector(), originalAnnotationIntrospector)
+            )
+            val allIntrospectorNames = mapper.serializationConfig.annotationIntrospector.allIntrospectors()
+                .map { annotationIntrospector -> annotationIntrospector::class.simpleName }
+
+            // then
+            assertThat(allIntrospectorNames).hasSize(4)
+            assertThat(allIntrospectorNames[0]).isEqualTo("SecretAnnotationIntrospector")
+            assertThat(allIntrospectorNames[1]).isEqualTo("KotlinAnnotationIntrospector")
+            assertThat(allIntrospectorNames[2]).isEqualTo("JacksonAnnotationIntrospector")
+            assertThat(allIntrospectorNames[3]).isEqualTo("KotlinNamesAnnotationIntrospector")
         }
     }
 }
