@@ -26,7 +26,7 @@ data class CarUsingJsonSerializeAnnotation(
 
 data class CarUsingSecretAnnotation(
     val name: String = "banjjoknim",
-    @field:Secret
+    @field:Secret("****")
     val secret: String = "secret",
     val price: Int = 10000000,
     val owner: Owner = Owner()

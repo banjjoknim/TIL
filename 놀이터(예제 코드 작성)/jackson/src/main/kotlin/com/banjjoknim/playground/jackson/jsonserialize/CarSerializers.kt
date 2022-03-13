@@ -78,12 +78,19 @@ class UsingJsonSerializeAnnotationCarSerializer : StdSerializer<String>(String::
     }
 }
 
-class SecretAnnotationSerializer : StdSerializer<String>(String::class.java) {
-    override fun serialize(value: String, gen: JsonGenerator, provider: SerializerProvider) {
-        gen.writeString("****")
-    }
-}
-
+/**
+ * AnnotationIntrospector 를 상속한 JacksonAnnotationIntrospector 은 Jackson 라이브러리가 직렬화/역직렬화시 `JacksonAnnotation` 정보를 어떻게 처리할지에 대한 정보가 정의되어 있는 클래스다.
+ *
+ * 따라서 어노테이션별로 어떻게 처리할지 재정의하고 싶다면 이 녀석을 override 해준뒤 ObjectMapper 에 등록해주면 된다.
+ *
+ * 등록할 때는 `ObjectMapper#setAnnotationIntrospector()` 를 사용한다.
+ *
+ * [FasterXML - AnnotationIntrospector](https://github.com/FasterXML/jackson-docs/wiki/AnnotationIntrospector)
+ *
+ * @see com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector#
+ * @see com.fasterxml.jackson.databind.ObjectMapper
+ *
+ */
 class SecretAnnotationIntrospector : JacksonAnnotationIntrospector() {
     /**
      *
@@ -96,15 +103,25 @@ class SecretAnnotationIntrospector : JacksonAnnotationIntrospector() {
     }
 
     /**
+     * `@JsonSerailize` 가 붙은 어노테이션의 처리를 재정의할 때 override 하는 함수이다.
+     *
+     * 자세한 내용은 JacksonAnnotationIntrospector#findSerializer() 의 구현을 살펴보도록 한다.
+     *
      * 특정 프로퍼티에 대해 어떤 Serializer 를 사용할 것인지 결정하는 함수이다.
      *
-     * 따라서 특정 조건에 따라 직렬화를 하고싶다면 이 함수를 override 하면 된다.
+     * 따라서 특정 조건에 따라 직렬화 처리에 사용할 Serializer 를 정의하고 싶다면 이 함수를 override 하면 된다.
      */
     override fun findSerializer(a: Annotated): Any? {
         val annotation = a.getAnnotation(Secret::class.java)
         if (annotation != null) {
-            return SecretAnnotationSerializer()
+            return SecretAnnotationSerializer(annotation.substituteValue)
         }
         return super.findSerializer(a) // 기존 JacksonAnnotationIntrospector 의 것을 사용한다.
+    }
+}
+
+class SecretAnnotationSerializer(private val substituteValue: String) : StdSerializer<String>(String::class.java) {
+    override fun serialize(value: String, gen: JsonGenerator, provider: SerializerProvider) {
+        gen.writeString(substituteValue)
     }
 }
