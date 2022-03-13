@@ -1,7 +1,9 @@
 package com.banjjoknim.playground.jackson.jsonserialize
 
 import com.banjjoknim.playground.jackson.common.Car
-import com.banjjoknim.playground.jackson.common.CarUsingJsonSerializeAnnotation
+import com.banjjoknim.playground.jackson.common.CarUsingContextualSerializerWithNoSecretAnnotation
+import com.banjjoknim.playground.jackson.common.CarUsingContextualSerializerWithSecretAnnotation
+import com.banjjoknim.playground.jackson.common.CarUsingJsonSerializeAnnotationCarSerializer
 import com.banjjoknim.playground.jackson.common.CarUsingNoAnnotation
 import com.banjjoknim.playground.jackson.common.CarUsingSecretAnnotation
 import com.banjjoknim.playground.jackson.common.Owner
@@ -32,7 +34,11 @@ class CarSerializersTest {
         private val owner = Owner("ban", 30)
         private val car = Car("banjjoknim", 10_000_000, owner)
         private val carUsingNoAnnotation = CarUsingNoAnnotation()
-        private val carUsingJsonSerializeAnnotation = CarUsingJsonSerializeAnnotation()
+        private val carUsingJsonSerializeAnnotationCarSerializer = CarUsingJsonSerializeAnnotationCarSerializer()
+        private val carUsingContextualSerializerWithSecretAnnotation =
+            CarUsingContextualSerializerWithSecretAnnotation()
+        private val carUsingContextualSerializerWithNoSecretAnnotation =
+            CarUsingContextualSerializerWithNoSecretAnnotation()
         private val carUsingSecretAnnotation = CarUsingSecretAnnotation()
     }
 
@@ -141,10 +147,24 @@ class CarSerializersTest {
             // given
 
             // when
-            val actual = mapper.writeValueAsString(carUsingJsonSerializeAnnotation)
+            val actual = mapper.writeValueAsString(carUsingJsonSerializeAnnotationCarSerializer)
 
             // then
             assertThat(actual).isEqualTo("""{"name":"banjjoknim","secret":"****","price":10000000,"owner":{"name":"ban","age":30}}""")
+        }
+
+        @Test
+        fun `ContextualSerializer 를 상속 받은 구현체를 이용해서 직렬화한다`() {
+            // given
+
+            // when
+            val actualWithSecretAnnotation = mapper.writeValueAsString(carUsingContextualSerializerWithSecretAnnotation)
+            val actualWithNoSecretAnnotation =
+                mapper.writeValueAsString(carUsingContextualSerializerWithNoSecretAnnotation)
+
+            // then
+            assertThat(actualWithSecretAnnotation).isEqualTo("""{"name":"banjjoknim","secret":"hello world!!","price":10000000,"owner":{"name":"ban","age":30}}""")
+            assertThat(actualWithNoSecretAnnotation).isEqualTo("""{"name":"banjjoknim","secret":"this is default value in ContextualCarSerializer","price":10000000,"owner":{"name":"ban","age":30}}""")
         }
 
         @Test
@@ -239,7 +259,10 @@ class CarSerializersTest {
 
             // when
             mapper.setAnnotationIntrospector(
-                AnnotationIntrospector.pair(SecretAnnotationIntrospector(), originalAnnotationIntrospector) // 내부 구현은 아래와 같다.
+                AnnotationIntrospector.pair(
+                    SecretAnnotationIntrospector(),
+                    originalAnnotationIntrospector
+                ) // 내부 구현은 아래와 같다.
 //                AnnotationIntrospectorPair(SecretAnnotationIntrospector(), originalAnnotationIntrospector)
             )
             val allIntrospectorNames = mapper.serializationConfig.annotationIntrospector.allIntrospectors()

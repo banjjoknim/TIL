@@ -4,6 +4,8 @@ import com.banjjoknim.playground.jackson.common.Car
 import com.banjjoknim.playground.jackson.common.Secret
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.BeanDescription
+import com.fasterxml.jackson.databind.BeanProperty
+import com.fasterxml.jackson.databind.JsonSerializer
 import com.fasterxml.jackson.databind.SerializationConfig
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.introspect.Annotated
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier
+import com.fasterxml.jackson.databind.ser.ContextualSerializer
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 
 /**
@@ -80,6 +83,24 @@ class CarNameOwnerNameSerializer : StdSerializer<Car>(Car::class.java) {
 class UsingJsonSerializeAnnotationCarSerializer : StdSerializer<String>(String::class.java) {
     override fun serialize(value: String, gen: JsonGenerator, provider: SerializerProvider) {
         gen.writeString("****")
+    }
+}
+
+class ContextualCarSerializer(
+    private val substituteValue: String = "this is default value in ContextualCarSerializer"
+) : StdSerializer<String>(String::class.java), ContextualSerializer {
+    override fun serialize(value: String, gen: JsonGenerator, provider: SerializerProvider) {
+        gen.writeString(substituteValue)
+    }
+
+    override fun createContextual(provider: SerializerProvider, property: BeanProperty): JsonSerializer<*> {
+        val annotation = property.getAnnotation(Secret::class.java)
+        if (annotation != null) {
+            return ContextualCarSerializer(annotation.substituteValue)
+        }
+        return ContextualCarSerializer()
+//        JsonMappingException: Can not write a field name, expecting a value (through reference chain: com.banjjoknim.playground.jackson.common.CarUsingContextualSerializerWithNoSecretAnnotation["secret"])
+//        return provider.findKeySerializer(property.type, property)
     }
 }
 
