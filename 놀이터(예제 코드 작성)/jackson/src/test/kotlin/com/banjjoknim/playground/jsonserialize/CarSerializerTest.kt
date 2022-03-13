@@ -5,8 +5,8 @@ import com.banjjoknim.playground.jackson.jsonserialize.CarNameOwnerSerializer
 import com.banjjoknim.playground.jackson.jsonserialize.CarNameSerializer
 import com.banjjoknim.playground.jackson.jsonserialize.CarPriceSerializer
 import com.banjjoknim.playground.jackson.jsonserialize.CarSerializer
-import com.banjjoknim.playground.model.Car
-import com.banjjoknim.playground.model.Owner
+import com.banjjoknim.playground.jackson.common.Car
+import com.banjjoknim.playground.jackson.common.Owner
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule

@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.model
+package com.banjjoknim.playground.jackson.common
 
 data class Car(
     val name: String,

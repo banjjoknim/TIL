@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.model
+package com.banjjoknim.playground.jackson.common
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.PROPERTY)

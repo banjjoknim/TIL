@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.model
+package com.banjjoknim.playground.jackson.common
 
 import com.fasterxml.jackson.annotation.JacksonAnnotation
 
