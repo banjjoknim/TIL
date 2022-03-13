@@ -1,5 +1,6 @@
 package com.banjjoknim.playground.jackson.common
 
+import com.banjjoknim.playground.jackson.jsonserialize.ContextualCarSerializer
 import com.banjjoknim.playground.jackson.jsonserialize.UsingJsonSerializeAnnotationCarSerializer
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 
@@ -16,9 +17,26 @@ data class CarUsingNoAnnotation(
     val owner: Owner = Owner()
 )
 
-data class CarUsingJsonSerializeAnnotation(
+data class CarUsingJsonSerializeAnnotationCarSerializer(
     val name: String = "banjjoknim",
     @JsonSerialize(using = UsingJsonSerializeAnnotationCarSerializer::class)
+    val secret: String = "secret",
+    val price: Int = 10000000,
+    val owner: Owner = Owner()
+)
+
+data class CarUsingContextualSerializerWithSecretAnnotation(
+    val name: String = "banjjoknim",
+    @JsonSerialize(using = ContextualCarSerializer::class)
+    @field:Secret("hello world!!")
+    val secret: String = "secret",
+    val price: Int = 10000000,
+    val owner: Owner = Owner()
+)
+
+data class CarUsingContextualSerializerWithNoSecretAnnotation(
+    val name: String = "banjjoknim",
+    @JsonSerialize(using = ContextualCarSerializer::class)
     val secret: String = "secret",
     val price: Int = 10000000,
     val owner: Owner = Owner()
