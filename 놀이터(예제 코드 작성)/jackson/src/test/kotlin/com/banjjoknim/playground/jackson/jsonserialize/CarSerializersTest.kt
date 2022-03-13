@@ -148,7 +148,7 @@ class CarSerializersTest {
         }
 
         @Test
-        fun `@Secret 어노테이션을 적용하여 직렬화한다`() {
+        fun `@Secret 어노테이션, AnnotationIntrospector 을 적용하여 직렬화한다`() {
             // given
             mapper.setAnnotationIntrospector(SecretAnnotationIntrospector())
 
@@ -157,6 +157,24 @@ class CarSerializersTest {
 
             // then
             assertThat(actual).isEqualTo("""{"name":"banjjoknim","secret":"****","price":10000000,"owner":{"name":"ban","age":30}}""")
+        }
+
+        @Test
+        fun `@Secret 어노테이션, BeanSerializerModifier 를 적용하여 직렬화한다`() {
+            // given
+            val module = object : SimpleModule() {
+                override fun setupModule(context: SetupContext) {
+                    super.setupModule(context)
+                    context.addBeanSerializerModifier(SecretBeanSerializerModifier())
+                }
+            }
+            mapper.registerModule(module)
+
+            // when
+            val actual = mapper.writeValueAsString(carUsingSecretAnnotation)
+
+            // then
+            assertThat(actual).isEqualTo("""{"name":"banjjoknim","price":10000000,"owner":{"name":"ban","age":30}}""")
         }
 
         /**

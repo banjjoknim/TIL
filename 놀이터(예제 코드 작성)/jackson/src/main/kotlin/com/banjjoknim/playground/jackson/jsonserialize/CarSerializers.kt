@@ -3,10 +3,15 @@ package com.banjjoknim.playground.jackson.jsonserialize
 import com.banjjoknim.playground.jackson.common.Car
 import com.banjjoknim.playground.jackson.common.Secret
 import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.BeanDescription
+import com.fasterxml.jackson.databind.SerializationConfig
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.introspect.Annotated
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector
+import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.databind.ser.BeanPropertyWriter
+import com.fasterxml.jackson.databind.ser.BeanSerializerModifier
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 
 /**
@@ -123,5 +128,31 @@ class SecretAnnotationIntrospector : JacksonAnnotationIntrospector() {
 class SecretAnnotationSerializer(private val substituteValue: String) : StdSerializer<String>(String::class.java) {
     override fun serialize(value: String, gen: JsonGenerator, provider: SerializerProvider) {
         gen.writeString(substituteValue)
+    }
+}
+
+/**
+ * 직렬화될 프로퍼티를 수정하도록 하는 방법이다.
+ *
+ * BeanSerializerModifier#changeProperties() 를 재정의한 뒤,
+ *
+ * SimpleModule 을 이용해서 ObjectMapper 에 등록한다.
+ *
+ * 아래처럼 하면 직렬화 대상에서 완전히 제외된다(`@JsonIgnore`와 동일한 효과).
+ *
+ * @see com.fasterxml.jackson.databind.ser.BeanSerializerModifier
+ * @see com.fasterxml.jackson.databind.module.SimpleModule
+ */
+class SecretBeanSerializerModifier : BeanSerializerModifier() {
+    override fun changeProperties(
+        config: SerializationConfig,
+        beanDesc: BeanDescription,
+        beanProperties: MutableList<BeanPropertyWriter>
+    ): MutableList<BeanPropertyWriter> {
+        SimpleModule()
+        return beanProperties
+            .filter { property -> property.getAnnotation(Secret::class.java) == null }
+            .toMutableList()
+//        return super.changeProperties(config, beanDesc, beanProperties)
     }
 }
