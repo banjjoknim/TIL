@@ -41,9 +41,18 @@ import org.springframework.stereotype.Service
  *
  * OAuth2는 여러가지 방식이 있다. Authorization Code Grant Type 방식 등등..
  *
+ * `@EnableGlobalMethodSecurity` 어노테이션을 사용하면 스프링 시큐리티 관련 특정 어노테이션에 대한 활성화 설정을 할 수 있다.
+ * [spring-security-method-security](https://www.baeldung.com/spring-security-method-security) 참고.
+ *
  * @see org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties
  * @see org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientPropertiesRegistrationAdapter
  * @see org.springframework.security.config.oauth2.client.CommonOAuth2Provider
+ * @see org.springframework.security.access.prepost.PreAuthorize
+ * @see org.springframework.security.access.prepost.PostAuthorize
+ * @see org.springframework.security.access.prepost.PreFilter
+ * @see org.springframework.security.access.prepost.PostFilter
+ * @see org.springframework.security.access.annotation.Secured
+ * @see javax.annotation.security.RolesAllowed
  */
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록되도록 해준다.
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // 스프링 시큐리티 관련 특정 어노테이션에 대한 활성화 설정을 할 수 있다.
@@ -147,7 +156,7 @@ class PrincipalDetails(
     }
 
     // 해당 User 의 권한을 반환하는 함수
-    override fun getAuthorities(): Collection<out GrantedAuthority> {
+    override fun getAuthorities(): Collection<GrantedAuthority> {
         return listOf(GrantedAuthority { user.role })
     }
 
