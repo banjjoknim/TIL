@@ -1,5 +1,6 @@
 package com.banjjoknim.playground.config.security
 
+import com.banjjoknim.playground.config.filter.AuthorizationFilter
 import com.banjjoknim.playground.config.filter.CustomFilter3
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -31,6 +32,7 @@ class JwtSecurityConfiguration(
 
         // 우리가 원하는 위치에 Filter 를 등록한다. 만약 Spring Security Filter 보다도 먼저 실행되게 하고 싶다면 SecurityContextPersistenceFilter 보다 먼저 실행되도록 아래처럼 등록해주면 된다.
         http.addFilterBefore(CustomFilter3(), SecurityContextPersistenceFilter::class.java)
+        http.addFilterBefore(AuthorizationFilter(), SecurityContextPersistenceFilter::class.java)
 
         http.csrf().disable()
         // 기본적으로 웹은 STATELESS 인데, STATEFUL 처럼 쓰기 위해서 세션과 쿠키를 만든다. 이때, 그걸(세션과 쿠키) 사용하지 않도록 설정하는 것이다.
