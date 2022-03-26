@@ -19,6 +19,7 @@ class JwtSecurityConfiguration(
 ) : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
+        // 기본적으로 웹은 STATELESS 인데, STATEFUL 처럼 쓰기 위해서 세션과 쿠키를 만든다. 이때, 그걸(세션과 쿠키) 사용하지 않도록 설정하는 것이다.
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션을 사용하지 않겠다는 설정. 토큰 기반에서는 기본 설정이다. 상태가 없는 서버를 만든다.
             .and()
             .addFilter(corsFilter) // filter 에 Bean 으로 등록해준 CorsFilter 를 추가한다. 따라서 모든 요청은 추가된 CorsFilter 를 거치게 된다. 이렇게 하면 내 서버는 CORS 정책에서 벗어날 수 있다(Cross-origin 요청이 와도 다 허용될 것이다).
