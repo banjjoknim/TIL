@@ -1,9 +1,11 @@
 package com.banjjoknim.playground.config.security
 
+import com.banjjoknim.playground.config.filter.CustomFilter3
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.web.context.SecurityContextPersistenceFilter
 import org.springframework.web.filter.CorsFilter
 
 /**
@@ -11,6 +13,11 @@ import org.springframework.web.filter.CorsFilter
  *
  * 토큰 기반(JWT)을 사용한 설정에서는 기본이며, 상태가 없는 서버를 만들 때 사용한다.
  *
+ * ```kotlin
+ * Spring Filter Chain 에 존재하는 BasicAuthenticationFilter의 동작 이전에 MySecurityFilter1 을 추가한다. 하지만 반드시 SecurityFilter 에 Filter 를 추가할 필요는 없다.
+ *
+ * http.addFilterBefore(MySecurityFilter1(), BasicAuthenticationFilter::class.java)
+ * ```
  * @see org.springframework.security.config.http.SessionCreationPolicy
  */
 @EnableWebSecurity // 시큐리티 활성화 -> 시큐리티 설정을 기본 스프링 필터체인에 등록한다.
@@ -18,6 +25,13 @@ class JwtSecurityConfiguration(
     private val corsFilter: CorsFilter // CorsConfiguration 에서 Bean 으로 등록해준 CorsFilter 를 Spring 으로부터 DI 받는다.
 ) : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
+
+        // Spring Filter Chain 에 존재하는 BasicAuthenticationFilter의 동작 이전에 MySecurityFilter1 을 추가한다. 하지만 반드시 SecurityFilter 에 Filter 를 추가할 필요는 없다.
+//        http.addFilterBefore(MySecurityFilter1(), BasicAuthenticationFilter::class.java)
+
+        // 우리가 원하는 위치에 Filter 를 등록한다. 만약 Spring Security Filter 보다도 먼저 실행되게 하고 싶다면 SecurityContextPersistenceFilter 보다 먼저 실행되도록 아래처럼 등록해주면 된다.
+        http.addFilterBefore(CustomFilter3(), SecurityContextPersistenceFilter::class.java)
+
         http.csrf().disable()
         // 기본적으로 웹은 STATELESS 인데, STATEFUL 처럼 쓰기 위해서 세션과 쿠키를 만든다. 이때, 그걸(세션과 쿠키) 사용하지 않도록 설정하는 것이다.
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션을 사용하지 않겠다는 설정. 토큰 기반에서는 기본 설정이다. 상태가 없는 서버를 만든다.
