@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.config
+package com.banjjoknim.playground.config.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
