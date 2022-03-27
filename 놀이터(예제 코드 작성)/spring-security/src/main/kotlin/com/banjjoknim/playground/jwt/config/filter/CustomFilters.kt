@@ -33,7 +33,7 @@ class CustomFilter3 : Filter {
     }
 }
 
-class AuthorizationFilter : Filter {
+class CustomAuthorizationFilter : Filter {
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
         val httpServletRequest = request as HttpServletRequest
         val httpServletResponse = response as HttpServletResponse

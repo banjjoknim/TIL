@@ -44,7 +44,7 @@ import org.springframework.web.filter.CorsFilter
  * @see org.springframework.web.bind.annotation.CrossOrigin
  */
 @Configuration
-class CorsConfiguration {
+class CorsFilterConfiguration {
 
     /**
      * Spring 에서 관리하는 Bean 으로 등록한 CorsFilter 를 Security Filter 에 등록해주어야 한다.

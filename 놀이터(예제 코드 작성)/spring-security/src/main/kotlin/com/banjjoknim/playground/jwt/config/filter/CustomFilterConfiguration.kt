@@ -40,7 +40,7 @@ import org.springframework.context.annotation.Configuration
  * @see org.springframework.security.web.FilterChainProxy
  */
 @Configuration
-class FilterConfiguration {
+class CustomFilterConfiguration {
 
     @Bean
     fun customFilter1(): FilterRegistrationBean<CustomFilter1> {
