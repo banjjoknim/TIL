@@ -59,7 +59,9 @@ class JwtSecurityConfiguration(
             .formLogin().disable() // Form 태그 방식 로그인을 사용하지 않는다.
             .httpBasic().disable() // HttpBasic 방식 로그인을 사용하지 않는다.
 
-            .addFilter(JwtAuthenticationFilter(authenticationManager())) // formLogin().disable() 로 인해 직접 만든 필터를 등록해주어야 Security 가 UserDetailsService 를 호출할 수 있다. 이때, AuthenticationManager 라는 녀석과 함께 등록해주어야 한다.
+            // formLogin().disable() 로 인해 직접 만든 필터를 등록해주어야 Security 가 UserDetailsService 를 호출할 수 있다.
+            // 이때, WebSecurityConfigurerAdapter 에 포함되어 있는 AuthenticationManager 라는 녀석과 함께 등록해주어야 한다.
+            .addFilter(JwtAuthenticationFilter(authenticationManager()))
 
             .authorizeRequests()
             .antMatchers("/api/v1/user/**").hasAnyRole("USER", "MANAGER", "ADMIN")
@@ -70,7 +72,7 @@ class JwtSecurityConfiguration(
 }
 
 class PrincipalDetails(
-    private val user: JwtUser
+    val user: JwtUser
 ) : UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority> {
         val authorities = mutableListOf<GrantedAuthority>()
