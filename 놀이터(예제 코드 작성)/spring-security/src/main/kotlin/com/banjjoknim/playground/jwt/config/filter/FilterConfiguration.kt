@@ -35,7 +35,7 @@ import org.springframework.context.annotation.Configuration
  * ```
  *
  * @see org.springframework.boot.web.servlet.FilterRegistrationBean
- * @see com.banjjoknim.playground.config.security.JwtSecurityConfiguration
+ * @see com.banjjoknim.playground.jwt.config.security.JwtSecurityConfiguration
  * @see org.springframework.web.filter.DelegatingFilterProxy
  * @see org.springframework.security.web.FilterChainProxy
  */

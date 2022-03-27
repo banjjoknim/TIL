@@ -51,7 +51,7 @@ class CorsConfiguration {
      *
      * 단순히 Bean 으로만 등록해서는 동작하지 않는다.
      *
-     * @see com.banjjoknim.playground.config.security.JwtSecurityConfiguration
+     * @see com.banjjoknim.playground.jwt.config.security.JwtSecurityConfiguration
      */
     @Bean
     fun corsFilter(): CorsFilter {

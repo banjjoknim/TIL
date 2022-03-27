@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse
 
 /**
  * @see javax.servlet.Filter
- * @see com.banjjoknim.playground.config.security.JwtSecurityConfiguration
+ * @see com.banjjoknim.playground.jwt.config.security.JwtSecurityConfiguration
  */
 class CustomFilter1 : Filter {
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
