@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.domain.auth
+package com.banjjoknim.playground.daooauth.domain.auth
 
 class GoogleUserInfo(
     /**

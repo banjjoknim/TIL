@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.config.filter
+package com.banjjoknim.playground.jwt.config.filter
 
 import org.springframework.http.HttpMethod
 import javax.servlet.Filter

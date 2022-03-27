@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.domain.home
+package com.banjjoknim.playground.jwt.domain.home
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping

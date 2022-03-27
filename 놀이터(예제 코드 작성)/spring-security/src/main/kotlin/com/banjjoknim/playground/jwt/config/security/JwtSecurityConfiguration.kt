@@ -1,7 +1,7 @@
-package com.banjjoknim.playground.config.security
+package com.banjjoknim.playground.jwt.config.security
 
-import com.banjjoknim.playground.config.filter.AuthorizationFilter
-import com.banjjoknim.playground.config.filter.CustomFilter3
+import com.banjjoknim.playground.jwt.config.filter.AuthorizationFilter
+import com.banjjoknim.playground.jwt.config.filter.CustomFilter3
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter

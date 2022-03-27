@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.domain.user
+package com.banjjoknim.playground.jwt.domain.user
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue

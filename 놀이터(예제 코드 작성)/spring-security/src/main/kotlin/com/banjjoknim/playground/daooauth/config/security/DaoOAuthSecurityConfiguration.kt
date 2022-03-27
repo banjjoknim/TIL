@@ -1,8 +1,8 @@
-package com.banjjoknim.playground.config.security
+package com.banjjoknim.playground.daooauth.config.security
 
-import com.banjjoknim.playground.domain.auth.OAuth2Type
-import com.banjjoknim.playground.domain.user.User
-import com.banjjoknim.playground.domain.user.UserRepository
+import com.banjjoknim.playground.daooauth.domain.auth.OAuth2Type
+import com.banjjoknim.playground.daooauth.domain.user.User
+import com.banjjoknim.playground.daooauth.domain.user.UserRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity

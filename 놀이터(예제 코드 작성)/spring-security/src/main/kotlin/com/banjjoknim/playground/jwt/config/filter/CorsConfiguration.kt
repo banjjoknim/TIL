@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.config.security
+package com.banjjoknim.playground.jwt.config.filter
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

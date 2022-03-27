@@ -1,4 +1,4 @@
-package com.banjjoknim.playground.domain.auth
+package com.banjjoknim.playground.daooauth.domain.auth
 
 enum class OAuth2Type(
     private val provider: String,
