@@ -5,6 +5,7 @@ import com.banjjoknim.playground.jwt.config.filter.CustomFilter3
 import com.banjjoknim.playground.jwt.config.filter.JwtAuthenticationFilter
 import com.banjjoknim.playground.jwt.domain.user.JwtUser
 import com.banjjoknim.playground.jwt.domain.user.JwtUserRepository
+import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -13,6 +14,8 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.context.SecurityContextPersistenceFilter
 import org.springframework.stereotype.Service
 import org.springframework.web.filter.CorsFilter
@@ -33,8 +36,13 @@ import org.springframework.web.filter.CorsFilter
 class JwtSecurityConfiguration(
     private val corsFilter: CorsFilter // CorsConfiguration 에서 Bean 으로 등록해준 CorsFilter 를 Spring 으로부터 DI 받는다.
 ) : WebSecurityConfigurerAdapter() {
-    override fun configure(http: HttpSecurity) {
 
+    @Bean
+    fun passwordEncoder(): PasswordEncoder {
+        return BCryptPasswordEncoder()
+    }
+
+    override fun configure(http: HttpSecurity) {
         // Spring Filter Chain 에 존재하는 BasicAuthenticationFilter의 동작 이전에 MySecurityFilter1 을 추가한다. 하지만 반드시 SecurityFilter 에 Filter 를 추가할 필요는 없다.
 //        http.addFilterBefore(MySecurityFilter1(), BasicAuthenticationFilter::class.java)
 
