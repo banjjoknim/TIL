@@ -1,13 +1,17 @@
 package com.banjjoknim.playground.jwt.config.filter
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
 import com.banjjoknim.playground.jwt.config.security.PrincipalDetails
 import com.banjjoknim.playground.jwt.domain.user.JwtUser
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import java.util.Date
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -115,12 +119,35 @@ class JwtAuthenticationFilter(
      * 자세한 내용은 AbstractAuthenticationProcessingFilter#successfulAuthentication() 에 달린 javadoc 을 참고하도록 하자.
      *
      * 따라서, 여기서 JWT 토큰을 만들어서 Request 요청한 사용자에게 JWT 토큰을 응답해주면 된다(선택사항).
+     *
+     * 기존의 username, password 방식의 로그인을 사용할 경우, 스프링 시큐리티는 세션이 유효할 경우 인증이 필요한 페이지의 권한을 체크해서 알아서 인증이 필요한 페이지로 이동시켜준다.
+     *
+     * 기존의 서버는 세션의 유효성 검증을 할 때 Session.getAttribute("세션값 확인") 와 같은 방식으로 확인하기만 하면 된다.
+     *
+     * 하지만 토큰 방식을 사용하게되면, 세션ID도 만들지 않고, 쿠키도 응답에 제공해주지 않는다(세션에 데이터를 담아둘게 아니다).
+     *
+     * 대신, JWT 토큰을 생성하고 클라이언트쪽으로 JWT 토큰을 응답해준다. 따라서 요청할 때마다 JWT 토큰을 가지고 요청해야 한다.
+     *
+     * 따라서 서버는 JWT 토큰이 유효한지를 판단해야하는데, 이 부분에 대한 필터를 따로 만들어주어야 한다.
      */
     override fun successfulAuthentication(
         request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain,
         authResult: Authentication
     ) {
-        println("successfulAuthentication 실행됨 : ${(authResult.principal as PrincipalDetails).user.username}의 인증이 완료되었다는 뜻.")
+        val principalDetails = authResult.principal as PrincipalDetails
+        println("successfulAuthentication 실행됨 : ${principalDetails.user.username}의 인증이 완료되었다는 뜻.")
+        val jwtExpireSecond = 1000 * 60 * 10
+
+        // RSA 방식은 아니다. Hash 암호 방식.
+        val jwtToken = JWT.create()
+            .withSubject("banjjoknim 토큰")
+            .withExpiresAt(Date(System.currentTimeMillis() + jwtExpireSecond))
+            .withClaim("id", principalDetails.user.id)
+            .withClaim("username", principalDetails.user.username)
+            .sign(Algorithm.HMAC512("banjjoknim")) // 서버에서만 알고 있는 비밀 키를 사용한다.
+
+        response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer $jwtToken")
+
         super.successfulAuthentication(request, response, chain, authResult)
     }
 }
