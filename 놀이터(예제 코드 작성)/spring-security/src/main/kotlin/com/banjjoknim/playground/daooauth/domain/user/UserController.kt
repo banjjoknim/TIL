@@ -1,7 +1,7 @@
-package com.banjjoknim.playground.domain.user
+package com.banjjoknim.playground.daooauth.domain.user
 
-import com.banjjoknim.playground.config.security.PrincipalDetails
-import com.banjjoknim.playground.config.security.PrincipalOAuth2UserService
+import com.banjjoknim.playground.daooauth.config.security.PrincipalDetails
+import com.banjjoknim.playground.daooauth.config.security.PrincipalOAuth2UserService
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
