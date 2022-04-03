@@ -2,6 +2,7 @@ package com.banjjoknim.playground.jwt.config.filter
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.banjjoknim.playground.jwt.config.security.JwtSecurityProperties
 import com.banjjoknim.playground.jwt.config.security.PrincipalDetails
 import com.banjjoknim.playground.jwt.domain.user.JwtUserRepository
 import org.springframework.http.HttpHeaders
@@ -47,8 +48,8 @@ class JwtAuthorizationFilter(
         }
 
         // JWT 토큰을 검증해서 정상적인 사용자인지 검사한다.
-        val jwtToken = jwtHeader.replace("Bearer ", "")
-        val jwtVerifier = JWT.require(Algorithm.HMAC512("banjjoknim")).build()
+        val jwtToken = jwtHeader.replace(JwtSecurityProperties.BEARER_TOKEN_PREFIX, "")
+        val jwtVerifier = JWT.require(Algorithm.HMAC512(JwtSecurityProperties.SECRET)).build()
         val username = jwtVerifier.verify(jwtToken).getClaim("username").asString()
 
         // username 이 null 이 아니라면 서명이 정상적으로 된 것이다.
@@ -58,7 +59,7 @@ class JwtAuthorizationFilter(
                 ?: throw IllegalArgumentException("can not found jwtUser. username: $username")
             val principalDetails = PrincipalDetails(jwtUser)
 
-            // Authentication 객체를 강제로 만든다. password 의 경우는 null 을 사용해도 무방하다. 우리가 임의로 Authentication 객체를 만들기 때문이다.
+            // Authentication 객체를 강제로 만든다. password 의 경우는 null 을 사용해도 무방하다. 우리가 직접 Authentication 객체를 만들기 때문이다.
             // 이게 가능한 이유는, username 이 null 이 아니기 때문인데, username 이 null 이 아니라는 것은 인증이 정상적으로 진행되었다는 뜻이기 때문.
             // 단, 이렇게 Authentication 객체를 만들 때는 권한을 직접 알려주어야(지정해주어야) 한다.
             // 즉, JWT 토큰 서명을 통해서 서명이 정상이면 Authentication 객체를 만들어준다.

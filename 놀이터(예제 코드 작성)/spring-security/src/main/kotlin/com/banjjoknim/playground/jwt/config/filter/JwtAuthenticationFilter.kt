@@ -2,6 +2,7 @@ package com.banjjoknim.playground.jwt.config.filter
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.banjjoknim.playground.jwt.config.security.JwtSecurityProperties
 import com.banjjoknim.playground.jwt.config.security.PrincipalDetails
 import com.banjjoknim.playground.jwt.domain.user.JwtUser
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -136,15 +137,14 @@ class JwtAuthenticationFilter(
     ) {
         val principalDetails = authResult.principal as PrincipalDetails
         println("successfulAuthentication 실행됨 : ${principalDetails.user.username}의 인증이 완료되었다는 뜻.")
-        val jwtExpireSecond = 1000 * 60 * 10
 
         // RSA 방식은 아니다. Hash 암호 방식.
         val jwtToken = JWT.create()
             .withSubject("banjjoknim 토큰")
-            .withExpiresAt(Date(System.currentTimeMillis() + jwtExpireSecond))
+            .withExpiresAt(Date(System.currentTimeMillis() + JwtSecurityProperties.EXPIRATION_TIME_SECONDS))
             .withClaim("id", principalDetails.user.id)
             .withClaim("username", principalDetails.user.username)
-            .sign(Algorithm.HMAC512("banjjoknim")) // 서버에서만 알고 있는 비밀 키를 사용한다.
+            .sign(Algorithm.HMAC512(JwtSecurityProperties.SECRET)) // 서버에서만 알고 있는 비밀 키를 사용한다.
 
         response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer $jwtToken")
 
