@@ -1,4 +1,4 @@
-package com.banjjoknim.playground
+package com.banjjoknim.cleanarchitecture
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
