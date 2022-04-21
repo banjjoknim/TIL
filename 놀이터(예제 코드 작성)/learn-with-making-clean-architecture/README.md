@@ -3,6 +3,18 @@
 - [《만들면서 배우는 클린 아키텍처》 홈페이지](https://wikibook.co.kr/clean-architecture/)
 - [《만들면서 배우는 클린 아키텍처》 예제 코드](https://github.com/wikibook/clean-architecture)
 
+## 요구사항
+
+- 회원은 닉네임을 가진다.
+- 닉네임은 10글자 이내여야 한다.
+- 닉네임은 공백이 아니어야 한다.
+
+## 구현
+
+- 책에서는 계좌 송금 예제를 사용했지만, 회원의 닉네임을 변경하는 예제로 좀 더 심플하게 구성했다.
+- 책에서는 `Command` 등의 단어를 사용했지만, 본 예제 코드에서는 `Request`, `Response` 등의 단어로 대체했다.
+- 책에서는 `adapter.out.persistence` 내부에 `Entity`가 포함되어 있었지만, 본 예제 코드에서는 `domain.entity` 패키지 내부로 옮겼다.
+
 ## 정리
 
 ### 계층형 아키텍처
@@ -22,6 +34,7 @@
 - [알리스테어 콕번 - 헥사고날 아키텍처 블로그 원문](https://alistair.cockburn.us/hexagonal-architecture/)
 
 ![Hexagonal Architecture](images/Hexagonal Architecture.png)
+![Hexagonal Architecture Process](images/Hexagonal%20Architecture%20Process.png)
 
 - `포트(port)와 어댑터(adapter) 아키텍처`라고도 불린다.
     - `포트(port)`는 인터페이스로, 계층간 경계를 지정하는 역할을 한다.
