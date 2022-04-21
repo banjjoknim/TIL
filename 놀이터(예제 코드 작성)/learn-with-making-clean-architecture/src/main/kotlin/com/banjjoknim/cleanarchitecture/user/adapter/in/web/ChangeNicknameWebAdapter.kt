@@ -1,8 +1,8 @@
 package com.banjjoknim.cleanarchitecture.user.adapter.`in`.web
 
-import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameCommand
-import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknamePort
-import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameResult
+import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameRequest
+import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameResponse
+import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameWebPort
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/users")
 @RestController
 class ChangeNicknameWebAdapter(
-    private val changeNicknamePort: ChangeNicknamePort
+    private val changeNicknameWebPort: ChangeNicknameWebPort
 ) {
     @PostMapping("")
-    fun changeNickname(@RequestBody changeNicknameCommand: ChangeNicknameCommand): ChangeNicknameResult {
-        return changeNicknamePort.changeNickname(changeNicknameCommand)
+    fun changeNickname(@RequestBody changeNicknameRequest: ChangeNicknameRequest): ChangeNicknameResponse {
+        return changeNicknameWebPort.changeNickname(changeNicknameRequest)
     }
 }
