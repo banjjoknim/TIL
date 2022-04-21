@@ -1,7 +1,7 @@
-package com.banjjoknim.cleanarchitecture.user.adapter.out.persistence
+package com.banjjoknim.cleanarchitecture.user.domain.entity
 
-import com.banjjoknim.cleanarchitecture.user.domain.Nickname
-import com.banjjoknim.cleanarchitecture.user.domain.User
+import com.banjjoknim.cleanarchitecture.user.domain.model.Nickname
+import com.banjjoknim.cleanarchitecture.user.domain.model.User
 import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.Id

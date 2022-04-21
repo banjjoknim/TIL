@@ -1,4 +1,4 @@
-package com.banjjoknim.cleanarchitecture.user.domain
+package com.banjjoknim.cleanarchitecture.user.domain.model
 
 class User(
     var id: Long = 0L,

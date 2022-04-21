@@ -1,7 +1,7 @@
 package com.banjjoknim.cleanarchitecture.user.adapter.out.persistence
 
 import com.banjjoknim.cleanarchitecture.user.application.port.out.LoadUserPersistencePort
-import com.banjjoknim.cleanarchitecture.user.domain.User
+import com.banjjoknim.cleanarchitecture.user.domain.model.User
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 

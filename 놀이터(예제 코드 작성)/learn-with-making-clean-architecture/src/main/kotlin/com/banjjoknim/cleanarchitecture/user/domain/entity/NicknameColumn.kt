@@ -1,4 +1,4 @@
-package com.banjjoknim.cleanarchitecture.user.adapter.out.persistence
+package com.banjjoknim.cleanarchitecture.user.domain.entity
 
 import javax.persistence.Column
 import javax.persistence.Embeddable
