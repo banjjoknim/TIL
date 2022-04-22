@@ -14,6 +14,7 @@
 - 책에서는 계좌 송금 예제를 사용했지만, 회원의 닉네임을 변경하는 예제로 좀 더 심플하게 구성했다.
 - 책에서는 `Command` 등의 단어를 사용했지만, 본 예제 코드에서는 `Request`, `Response` 등의 단어로 대체했다.
 - 책에서는 `adapter.out.persistence` 내부에 `Entity`가 포함되어 있었지만, 본 예제 코드에서는 `domain.entity` 패키지 내부로 옮겼다.
+- 책에서는 `domain` 이라는 패키지 명을 사용했지만, 본 예제 코드에서는 `pojo` 라는 패키지 명으로 대체했다.
 
 ## 정리
 
@@ -239,3 +240,15 @@
 - 영속성 관심사나 외부 시스템에 대한 의존성 등의 변화로부터 자유롭게 도메인 코드를 개발할 수 있다.
 - 만약 도메인 코드가 애플리케이션에서 가장 중요한 것이 아니라면 이 아키텍처 스타일은 필요하지 않을 것이다.
 
+## 참고자료
+
+- [Best way to dynamically load adapters in hexagonal architecture?](https://stackoverflow.com/questions/50436649/best-way-to-dynamically-load-adapters-in-hexagonal-architecture)
+- [hexagonal architecture with spring data](https://stackoverflow.com/questions/46509252/hexagonal-architecture-with-spring-data)
+- [Ports-And-Adapters](https://www.dossier-andreas.net/software_architecture/ports_and_adapters.html)
+- [Ports And Adapters Architecture](http://wiki.c2.com/?PortsAndAdaptersArchitecture)
+- [Hexagonal architecture with Domain, Presenter & Entity segregation on Spring WebFlux](https://medium.com/javarevisited/hexagonal-architecture-with-domain-presenter-entity-segregation-on-spring-webflux-ef053a495bdc)
+- [지속 가능한 소프트웨어 설계 패턴: 포트와 어댑터 아키텍처 적용하기](https://engineering.linecorp.com/ko/blog/port-and-adapter-architecture/)
+- [JPA Week3 Entity Mapping / Hexagonal Architecture](https://www.slideshare.net/ssuser8f4c99/jpa-week3-entity-mapping-hexagonal-architecture-250068805)
+- [Hexagonal Architecture Articles](https://jmgarridopaz.github.io/content/articles.html)
+- [Domain-Driven Design and the Hexagonal Architecture](https://vaadin.com/learn/tutorials/ddd/ddd_and_hexagonal)
+- [The Pattern: Ports and Adapters (‘’Object Structural’’)](https://alistair.cockburn.us/hexagonal-architecture/)
