@@ -1,4 +1,4 @@
-package com.banjjoknim.cleanarchitecture.user.domain.model
+package com.banjjoknim.cleanarchitecture.user.pojo
 
 data class Nickname(val value: String) {
     init {

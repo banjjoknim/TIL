@@ -1,7 +1,7 @@
-package com.banjjoknim.cleanarchitecture.user.domain.model
+package com.banjjoknim.cleanarchitecture.user.pojo
 
-import com.banjjoknim.cleanarchitecture.user.domain.entity.NicknameColumn
-import com.banjjoknim.cleanarchitecture.user.domain.entity.UserEntity
+import com.banjjoknim.cleanarchitecture.user.adapter.out.persistence.NicknameColumn
+import com.banjjoknim.cleanarchitecture.user.adapter.out.persistence.UserEntity
 
 class User(
     var id: Long = 0L,

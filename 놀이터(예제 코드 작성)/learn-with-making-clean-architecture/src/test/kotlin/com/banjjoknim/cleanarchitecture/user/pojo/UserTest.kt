@@ -1,7 +1,5 @@
-package com.banjjoknim.cleanarchitecture.user.domain
+package com.banjjoknim.cleanarchitecture.user.pojo
 
-import com.banjjoknim.cleanarchitecture.user.domain.model.Nickname
-import com.banjjoknim.cleanarchitecture.user.domain.model.User
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

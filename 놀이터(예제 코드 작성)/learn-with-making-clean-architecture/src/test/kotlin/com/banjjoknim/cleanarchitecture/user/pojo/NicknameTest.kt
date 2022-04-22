@@ -1,6 +1,5 @@
-package com.banjjoknim.cleanarchitecture.user.domain
+package com.banjjoknim.cleanarchitecture.user.pojo
 
-import com.banjjoknim.cleanarchitecture.user.domain.model.Nickname
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
