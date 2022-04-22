@@ -17,7 +17,7 @@ class ChangeNicknameService(
     override fun changeNickname(changeNicknameRequest: ChangeNicknameRequest): ChangeNicknameResponse {
         val user = loadUserPersistencePort.loadUser(changeNicknameRequest.userId)
         user.changeNickname(changeNicknameRequest.newNickname)
-        upsertUserPersistencePort.upsert(user)
+        upsertUserPersistencePort.upsertUser(user)
         return ChangeNicknameResponse(user.id)
     }
 }

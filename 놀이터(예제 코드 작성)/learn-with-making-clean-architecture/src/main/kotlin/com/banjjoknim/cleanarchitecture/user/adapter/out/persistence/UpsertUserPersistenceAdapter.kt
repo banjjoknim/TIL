@@ -6,9 +6,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class UpsertUserPersistenceAdapter(
+    private val userMapper: UserMapper,
     private val userEntityRepository: UserEntityRepository
 ): UpsertUserPersistencePort {
-    override fun upsert(user: User) {
-        userEntityRepository.save(user.toDomainEntity())
+    override fun upsertUser(user: User) {
+        val userEntity = userMapper.mapToDomainEntity(user)
+        userEntityRepository.save(userEntity)
     }
 }

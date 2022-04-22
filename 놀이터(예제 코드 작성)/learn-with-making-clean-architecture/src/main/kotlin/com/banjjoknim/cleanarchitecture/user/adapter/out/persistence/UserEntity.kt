@@ -1,7 +1,5 @@
 package com.banjjoknim.cleanarchitecture.user.adapter.out.persistence
 
-import com.banjjoknim.cleanarchitecture.user.pojo.Nickname
-import com.banjjoknim.cleanarchitecture.user.pojo.User
 import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -17,8 +15,4 @@ class UserEntity(
     val id: Long = 0L,
     @Embedded
     var nickname: NicknameColumn
-) {
-    fun toDomainModel(): User {
-        return User(id, Nickname(nickname.value))
-    }
-}
+)
