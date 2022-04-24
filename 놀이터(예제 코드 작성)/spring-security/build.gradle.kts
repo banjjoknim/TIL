@@ -24,6 +24,10 @@ dependencies {
 	// OAuth2 로그인을 위해 추가. spring-boot-starter-security 의존성이 있어도 기본적으로 추가되지 않기 때문.
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
+	// https://mvnrepository.com/artifact/com.auth0/java-jwt
+	// JWT 사용을 위해 라이브러리 추가. 2022.03.25 기준 최신 바로 전 버전.
+	implementation("com.auth0:java-jwt:3.18.3")
+
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
