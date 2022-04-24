@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -38,29 +40,33 @@ class ChangeNicknameWebAdapterTest {
             .build()
     }
 
-    @Test
-    fun `닉네임을 변경한다`() {
-        every { changeNicknameUseCase.changeNickname(any()) } returns ChangeNicknameResponseData(1L)
-        val request = ChangeNicknameRequest(1L, "banjjoknim")
+    @DisplayName("닉네임 변경 테스트 케이스")
+    @Nested
+    inner class ChangeNicknameTestCases {
+        @Test
+        fun `닉네임을 변경한다`() {
+            every { changeNicknameUseCase.changeNickname(any()) } returns ChangeNicknameResponseData(1L)
+            val request = ChangeNicknameRequest(1L, "banjjoknim")
 
-        mockmvc.post("/users") {
-            contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(request)
-        }.andExpect {
-            content { json("""{"userId":1}""") }
-            status { isOk() }
+            mockmvc.post("/users") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }.andExpect {
+                content { json("""{"userId":1}""") }
+                status { isOk() }
+            }
         }
-    }
 
-    @Test
-    fun `잘못된 닉네임 변경 요청에 BadRequest 응답을 반환한다`() {
-        val request = ChangeNicknameRequest(1L, "banjjoknim!!")
+        @Test
+        fun `잘못된 닉네임 변경 요청에 BadRequest 응답을 반환한다`() {
+            val request = ChangeNicknameRequest(1L, "banjjoknim!!")
 
-        mockmvc.post("/users") {
-            contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(request)
-        }.andExpect {
-            status { isBadRequest() }
+            mockmvc.post("/users") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }.andExpect {
+                status { isBadRequest() }
+            }
         }
     }
 }
