@@ -1,7 +1,7 @@
 package com.banjjoknim.cleanarchitecture.user.application.service
 
-import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameRequest
-import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameResponse
+import com.banjjoknim.cleanarchitecture.user.adapter.`in`.web.ChangeNicknameRequest
+import com.banjjoknim.cleanarchitecture.user.adapter.`in`.web.ChangeNicknameResponse
 import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameUseCase
 import com.banjjoknim.cleanarchitecture.user.application.port.out.LoadUserPersistencePort
 import com.banjjoknim.cleanarchitecture.user.application.port.out.UpsertUserPersistencePort

@@ -1,7 +1,5 @@
 package com.banjjoknim.cleanarchitecture.user.adapter.`in`.web
 
-import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameRequest
-import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameResponse
 import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameUseCase
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
