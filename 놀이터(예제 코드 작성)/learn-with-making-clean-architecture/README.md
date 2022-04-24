@@ -3,6 +3,7 @@
 - [《만들면서 배우는 클린 아키텍처》 홈페이지](https://wikibook.co.kr/clean-architecture/)
 - [《만들면서 배우는 클린 아키텍처》 예제 코드](https://github.com/wikibook/clean-architecture)
 
+
 ## 요구사항
 
 - 회원은 닉네임을 가진다.
@@ -253,3 +254,4 @@
 - [Hexagonal Architecture Articles](https://jmgarridopaz.github.io/content/articles.html)
 - [Domain-Driven Design and the Hexagonal Architecture](https://vaadin.com/learn/tutorials/ddd/ddd_and_hexagonal)
 - [The Pattern: Ports and Adapters (‘’Object Structural’’)](https://alistair.cockburn.us/hexagonal-architecture/)
+
