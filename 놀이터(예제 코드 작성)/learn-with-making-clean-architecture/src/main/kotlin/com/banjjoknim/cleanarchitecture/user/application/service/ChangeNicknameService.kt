@@ -1,7 +1,7 @@
 package com.banjjoknim.cleanarchitecture.user.application.service
 
-import com.banjjoknim.cleanarchitecture.user.adapter.`in`.web.ChangeNicknameRequest
-import com.banjjoknim.cleanarchitecture.user.adapter.`in`.web.ChangeNicknameResponse
+import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameRequestData
+import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameResponseData
 import com.banjjoknim.cleanarchitecture.user.application.port.`in`.ChangeNicknameUseCase
 import com.banjjoknim.cleanarchitecture.user.application.port.out.LoadUserPersistencePort
 import com.banjjoknim.cleanarchitecture.user.application.port.out.UpsertUserPersistencePort
@@ -14,10 +14,10 @@ class ChangeNicknameService(
     private val loadUserPersistencePort: LoadUserPersistencePort,
     private val upsertUserPersistencePort: UpsertUserPersistencePort
 ) : ChangeNicknameUseCase {
-    override fun changeNickname(changeNicknameRequest: ChangeNicknameRequest): ChangeNicknameResponse {
-        val user = loadUserPersistencePort.loadUser(changeNicknameRequest.userId)
-        user.changeNickname(changeNicknameRequest.newNickname)
+    override fun changeNickname(data: ChangeNicknameRequestData): ChangeNicknameResponseData {
+        val user = loadUserPersistencePort.loadUser(data.userId)
+        user.changeNickname(data.newNickname)
         upsertUserPersistencePort.upsertUser(user)
-        return ChangeNicknameResponse(user.id)
+        return ChangeNicknameResponseData(user.id)
     }
 }

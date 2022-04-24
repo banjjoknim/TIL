@@ -13,6 +13,8 @@ class ChangeNicknameWebAdapter(
 ) {
     @PostMapping("")
     fun changeNickname(@RequestBody changeNicknameRequest: ChangeNicknameRequest): ChangeNicknameResponse {
-        return changeNicknameWebPort.changeNickname(changeNicknameRequest)
+        val requestData = changeNicknameRequest.toData()
+        val responseData = changeNicknameWebPort.changeNickname(requestData)
+        return ChangeNicknameResponse(responseData.userId)
     }
 }
