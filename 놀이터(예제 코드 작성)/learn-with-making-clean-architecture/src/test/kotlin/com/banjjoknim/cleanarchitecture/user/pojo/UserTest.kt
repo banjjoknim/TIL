@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test
 
 class UserTest {
 
-    @DisplayName("회원 이름 변경 테스트 케이스")
+
+    @DisplayName("회원 닉네임 변경 테스트 케이스")
     @Nested
     inner class ChangeNicknameTestCases {
         @Test
