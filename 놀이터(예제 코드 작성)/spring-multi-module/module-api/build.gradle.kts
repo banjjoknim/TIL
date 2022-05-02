@@ -26,4 +26,6 @@ dependencies {
     runtimeOnly("mysql:mysql-connector-java")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.mockk:mockk:1.12.3")
+    testImplementation("com.ninja-squad:springmockk:3.1.1")
 }
