@@ -1,5 +1,6 @@
 package com.banjjoknim.graphqlkotlin.person
 
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.server.operations.Query
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,6 +18,7 @@ class PersonQuery(
     private val personRepository: PersonRepository
 ) : Query {
 
+    @GraphQLDescription("get Person Instance")
     fun getPerson(name: String): Person = Person(name)
 
     /**
@@ -31,6 +33,7 @@ class PersonQuery(
      * If you are using custom data fetcher make sure that you extend SpringDataFetcher instead of the base FunctionDataFetcher to keep this functionallity.
      * ```
      */
+    @GraphQLDescription("find Person Instance")
     fun findPerson(@GraphQLIgnore @Autowired personRepository: PersonRepository, name: String): Person? {
         return personRepository.findPerson(name)
     }
