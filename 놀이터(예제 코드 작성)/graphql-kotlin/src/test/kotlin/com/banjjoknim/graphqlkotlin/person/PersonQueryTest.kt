@@ -36,6 +36,7 @@ class PersonQueryTest(
                 .exchange()
                 .expectBody().json("""{"data":{"getPerson":{"name":"colt"}}}""")
                 .consumeWith {
+//                    assertThat(something...)
                     println(it.responseHeaders)
                 }
         }
@@ -65,6 +66,7 @@ class PersonQueryTest(
                 .exchange()
                 .expectBody().json("""{"data":{"findPerson":{"name":"banjjoknim"}}}""")
                 .consumeWith {
+//                    assertThat(something...)
                     println(it.responseHeaders)
                 }
         }
@@ -89,6 +91,7 @@ class PersonQueryTest(
                 .exchange()
                 .expectBody().json("""{"data":{"findPerson":null}}""")
                 .consumeWith {
+//                    assertThat(something...)
                     println(it.responseHeaders)
                 }
         }
