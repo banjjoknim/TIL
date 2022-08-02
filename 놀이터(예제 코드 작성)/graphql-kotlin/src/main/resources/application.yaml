@@ -1,0 +1,10 @@
+# At a minimum, in order for graphql-kotlin-spring-server to automatically configure your GraphQL web server
+#
+# you need to specify a list of supported packages that can be scanned for exposing your schema objects through reflections.
+#
+# You can do this through the spring application config or by overriding the SchemaGeneratorConfig bean.
+#
+# See customization below.
+graphql:
+  packages:
+    - "com.banjjoknim.graphqlkotlin"
