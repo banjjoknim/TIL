@@ -9,3 +9,6 @@
 - [Configuration Properties](https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring-server/spring-properties)
 - [Subscriptions](https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring-server/spring-subscriptions)
 - [MVN Repository - GraphQL Kotlin Spring Server](https://mvnrepository.com/artifact/com.expediagroup/graphql-kotlin-spring-server)
+- [Contextual Data](https://opensource.expediagroup.com/graphql-kotlin/docs/schema-generator/execution/contextual-data/)
+- [Federation Tracing](https://opensource.expediagroup.com/graphql-kotlin/docs/schema-generator/federation/federation-tracing/)
+- [Configuration Properties](https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring-server/spring-properties/)
