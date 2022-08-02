@@ -24,6 +24,8 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+
+	implementation("com.expediagroup", "graphql-kotlin-spring-server", "6.0.0")
 }
 
 tasks.withType<KotlinCompile> {
