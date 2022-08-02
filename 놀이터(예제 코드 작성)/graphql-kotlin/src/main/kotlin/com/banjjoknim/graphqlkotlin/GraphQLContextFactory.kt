@@ -23,7 +23,9 @@ import org.springframework.web.reactive.function.server.ServerRequest
  */
 @Component
 class GraphQLContextFactory : DefaultSpringGraphQLContextFactory() {
-    override suspend fun generateContextMap(request: ServerRequest): Map<*, Any> = super.generateContextMap(request) + mapOf(
-        "myCustomValue" to (request.headers().firstHeader("MyHeader") ?: "defaultContext")
-    )
+    override suspend fun generateContextMap(request: ServerRequest): Map<*, Any> {
+        return super.generateContextMap(request) + mapOf(
+            "myCustomValue" to (request.headers().firstHeader("MyHeader") ?: "defaultContext")
+        )
+    }
 }
