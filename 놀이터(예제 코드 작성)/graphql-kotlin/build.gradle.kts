@@ -26,6 +26,7 @@ dependencies {
 	testImplementation("io.projectreactor:reactor-test")
 
 	implementation("com.expediagroup", "graphql-kotlin-spring-server", "6.0.0")
+	implementation("com.graphql-java:graphql-java-extended-scalars:18.1")
 }
 
 tasks.withType<KotlinCompile> {
