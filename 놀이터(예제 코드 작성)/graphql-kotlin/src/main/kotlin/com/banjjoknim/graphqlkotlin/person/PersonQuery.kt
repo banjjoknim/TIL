@@ -2,9 +2,11 @@ package com.banjjoknim.graphqlkotlin.person
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.expediagroup.graphql.generator.annotations.GraphQLName
 import com.expediagroup.graphql.server.operations.Query
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import kotlin.random.Random
 
 @Component
 class PersonQuery(
@@ -37,4 +39,8 @@ class PersonQuery(
     fun findPerson(@GraphQLIgnore @Autowired personRepository: PersonRepository, name: String): Person? {
         return personRepository.findPerson(name)
     }
+
+    @GraphQLDescription("@GraphQLName example")
+    @GraphQLName("somePerson")
+    fun randomPerson(name: String): Person = Person(name = name, age = Random.nextLong())
 }
