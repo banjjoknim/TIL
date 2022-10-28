@@ -16,3 +16,7 @@
 ## 참고자료 
 - [Introduction to Spring Cloud OpenFeign](https://www.baeldung.com/spring-cloud-openfeign)
 - [Spring Cloud OpenFeign](https://spring.io/projects/spring-cloud-openfeign)
+- [우아한 Feign 적용기](https://techblog.woowahan.com/2630/)
+- [Feign 좀 더 나아가기](https://techblog.woowahan.com/2657/)
+- [GitHub - OpenFeign/feign](https://github.com/OpenFeign/feign)
+- [Java Jackson JSON Library](https://kwonnam.pe.kr/wiki/java/jackson)
