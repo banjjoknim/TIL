@@ -14,4 +14,8 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     show-sql: true
-
+logging:
+  level:
+    com:
+      banjjoknim:
+        springcloudopenfeign: DEBUG
