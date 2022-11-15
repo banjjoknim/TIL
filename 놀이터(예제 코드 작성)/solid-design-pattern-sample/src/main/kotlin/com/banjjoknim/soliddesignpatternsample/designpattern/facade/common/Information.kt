@@ -1,0 +1,3 @@
+package com.banjjoknim.soliddesignpatternsample.designpattern.facade.common
+
+interface Information
