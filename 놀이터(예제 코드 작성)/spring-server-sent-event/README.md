@@ -5,9 +5,7 @@
 - [Spring initializr](https://start.spring.io/) 에서 프로젝트 생성.
 - 아래 사진은 프로젝트 구성 Dependencies.
 - `Spring Web` 환경은 `Netty(WebFlux)` 와 `Tomcat(WebMvc)` 기반이 존재하며, 두 가지 의존성이 모두 존재할 경우 `Tomcat(WebMvc)` 이 우선순위를 갖는다.
-    - 따라서 `WebFlux` 환경을 테스트하고자 한다면 `build.gradle.kts`
-      의 `implementation("org.springframework.boot:spring-boot-starter-webflux")`
-      의존성을 주석처리 하도록 한다.
+- 각각의 의존성을 분리하여 `WebFlux` 환경과 `WebMvc` 환경으로 모듈을 생성하였음.
 
 ![img.png](img.png)
 
