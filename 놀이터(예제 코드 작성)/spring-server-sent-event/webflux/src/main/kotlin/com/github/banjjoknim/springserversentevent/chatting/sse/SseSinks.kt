@@ -7,6 +7,9 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Sinks
 import java.time.LocalDateTime
 
+/**
+ * [Spring WebFlux (Flux): how to publish dynamically](https://stackoverflow.com/questions/51370463/spring-webflux-flux-how-to-publish-dynamically) 참조.
+ */
 @Component
 object SseSinks {
     private val logger = KLogging().logger
