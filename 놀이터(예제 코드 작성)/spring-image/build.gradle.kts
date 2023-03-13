@@ -21,6 +21,10 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	// webp
+	// https://mvnrepository.com/artifact/org.sejda.imageio/webp-imageio
+	implementation("org.sejda.imageio:webp-imageio:0.1.6")
 }
 
 tasks.withType<KotlinCompile> {
