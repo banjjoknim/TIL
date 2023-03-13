@@ -18,3 +18,7 @@ data class UploadMultiImageRequest(
 data class UploadMultiImageResponse(
     val nameAndPaths: List<UploadImageResponse>
 )
+
+data class DeleteImageResponse(
+    val path: String,
+)
