@@ -25,6 +25,9 @@ data class DeleteImageResponse(
 
 data class CreateImageThumbnailRequest(
     val originImageFile: MultipartFile,
+    /**
+     * jpg, jpeg, png, webp
+     */
     val thumbnailType: String,
     val thumbnailMaxWidth: Int,
     val thumbnailMaxHeight: Int,
