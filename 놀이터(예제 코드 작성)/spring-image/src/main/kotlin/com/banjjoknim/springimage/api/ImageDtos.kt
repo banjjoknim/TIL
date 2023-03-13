@@ -22,3 +22,15 @@ data class UploadMultiImageResponse(
 data class DeleteImageResponse(
     val path: String,
 )
+
+data class CreateImageThumbnailRequest(
+    val originImageFile: MultipartFile,
+    val thumbnailType: String,
+    val thumbnailMaxWidth: Int,
+    val thumbnailMaxHeight: Int,
+    val targetPath: String,
+)
+
+data class CreateThumbnailImageResponse(
+    val path: String,
+)
