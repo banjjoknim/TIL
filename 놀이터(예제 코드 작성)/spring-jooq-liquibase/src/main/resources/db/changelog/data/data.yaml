@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      author: banjjoknim
+      id: create_table_order
+      changes:
+        - sqlFile:
+            path: create_table_order.sql
+            dbms: h2
+            relativeToChangelogFile: true
+  - changeSet:
+      author: banjjoknim
+      id: insert_into_order
+      changes:
+        - sqlFile:
+            path: insert_into_order.sql
+            dbms: h2
+            relativeToChangelogFile: true
