@@ -2,6 +2,27 @@
 
 ## JOOQ
 
+### Docs.
+
+- [The jOOQ User Manual](https://www.jooq.org/doc/3.14/manual/)
+- [jOOQ as a SQL builder without code generation](https://www.jooq.org/doc/3.14/manual/getting-started/use-cases/jooq-as-a-sql-builder-without-codegeneration/)
+- [jOOQ as a SQL builder with code generation](https://www.jooq.org/doc/3.14/manual/getting-started/use-cases/jooq-as-a-sql-builder-with-code-generation/)
+- [Configuration and setup of the generator](https://www.jooq.org/doc/3.14/manual/code-generation/codegen-configuration/)
+- [Running the code generator with Gradle](https://www.jooq.org/doc/3.14/manual/code-generation/codegen-gradle/)
+- [Jdbc](https://www.jooq.org/doc/3.14/manual/code-generation/codegen-advanced/codegen-config-jdbc/)
+- [KotlinGenerator](https://www.jooq.org/doc/3.14/manual/code-generation/kotlingenerator/)
+- [etiennestuder/gradle-jooq-plugin](https://github.com/etiennestuder/gradle-jooq-plugin)
+    - [Working with Configurations using the Gradle Kotlin DSL](https://github.com/etiennestuder/gradle-jooq-plugin/blob/main/KotlinDSL.md)
+
+#### Trouble Shooting
+
+- Spring Boot의 버전에 맞춰서 `MySQL Driver, jooqGenerator ...`등의 Dependency 를 추가해주어야 한다. 그렇지 않으면 `./gradlew generateJooq` 명령어
+  실행시 `MySQL Driver` 를 찾지 못해서 실패한다.
+    - [Spring Boot 2.7.9 - Dependency Versions](https://docs.spring.io/spring-boot/docs/2.7.9/reference/html/dependency-versions.html)
+    - [Spring Boot 2.7 Release Notes#MySQL_JDBC_Driver](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.7-Release-Notes#mysql-jdbc-driver)
+- `./gradlew generateJooq` 실행시 `java.lang.ClassNotFoundException: jakarta.xml.bind.annotation.XmlSchema` 발생하는 경우
+    - [java.lang.ClassNotFoundException: jakarta.xml.bind.annotation.XmlSchema](https://github.com/etiennestuder/gradle-jooq-plugin/issues/209)
+
 ## Liquibase
 
 ### Docs.
