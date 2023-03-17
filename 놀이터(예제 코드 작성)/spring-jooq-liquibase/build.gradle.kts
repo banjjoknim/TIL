@@ -65,8 +65,7 @@ jooq {
 					name = "org.jooq.codegen.KotlinGenerator"
 					database.apply {
 						name = "org.jooq.meta.h2.H2Database"
-						includes = ".*"
-						excludes = ""
+						inputSchema = "PUBLIC"
 					}
 					target.apply {
 						packageName = "com.jooq.entity"
