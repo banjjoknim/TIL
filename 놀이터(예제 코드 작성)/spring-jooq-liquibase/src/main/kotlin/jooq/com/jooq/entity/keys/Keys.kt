@@ -5,7 +5,9 @@ package com.jooq.entity.keys
 
 
 import com.jooq.entity.tables.Databasechangeloglock
+import com.jooq.entity.tables.Order
 import com.jooq.entity.tables.records.DatabasechangeloglockRecord
+import com.jooq.entity.tables.records.OrderRecord
 
 import org.jooq.UniqueKey
 import org.jooq.impl.DSL
@@ -18,3 +20,4 @@ import org.jooq.impl.Internal
 // -------------------------------------------------------------------------
 
 val PK_DATABASECHANGELOGLOCK: UniqueKey<DatabasechangeloglockRecord> = Internal.createUniqueKey(Databasechangeloglock.DATABASECHANGELOGLOCK, DSL.name("PK_DATABASECHANGELOGLOCK"), arrayOf(Databasechangeloglock.DATABASECHANGELOGLOCK.ID), true)
+val CONSTRAINT_4: UniqueKey<OrderRecord> = Internal.createUniqueKey(Order.ORDER, DSL.name("CONSTRAINT_4"), arrayOf(Order.ORDER.ORDER_ID), true)

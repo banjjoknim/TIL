@@ -5,6 +5,7 @@ package com.jooq.entity.tables
 
 
 import com.jooq.entity.Public
+import com.jooq.entity.keys.CONSTRAINT_4
 import com.jooq.entity.tables.records.OrderRecord
 
 import java.time.LocalDateTime
@@ -19,6 +20,7 @@ import org.jooq.Schema
 import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.TableOptions
+import org.jooq.UniqueKey
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
 import org.jooq.impl.SQLDataType
@@ -109,6 +111,7 @@ open class Order(
     constructor(child: Table<out Record>, key: ForeignKey<out Record, OrderRecord>): this(Internal.createPathAlias(child, key), child, key, ORDER, null)
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getIdentity(): Identity<OrderRecord, Int?> = super.getIdentity() as Identity<OrderRecord, Int?>
+    override fun getPrimaryKey(): UniqueKey<OrderRecord> = CONSTRAINT_4
     override fun `as`(alias: String): Order = Order(DSL.name(alias), this)
     override fun `as`(alias: Name): Order = Order(alias, this)
 
