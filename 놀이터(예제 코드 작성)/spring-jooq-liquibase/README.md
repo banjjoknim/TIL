@@ -14,6 +14,18 @@
 - [etiennestuder/gradle-jooq-plugin](https://github.com/etiennestuder/gradle-jooq-plugin)
     - [Working with Configurations using the Gradle Kotlin DSL](https://github.com/etiennestuder/gradle-jooq-plugin/blob/main/KotlinDSL.md)
 
+---
+
+- [The DSLContext API](https://www.jooq.org/doc/3.16/manual/sql-building/dsl-context/)
+- [Connection vs. DataSource](https://www.jooq.org/doc/3.16/manual/sql-building/dsl-context/connection-vs-datasource/)
+- [ExecuteListeners](https://www.jooq.org/doc/3.16/manual/sql-execution/execute-listeners/)
+- [Optimistic locking](https://www.jooq.org/doc/latest/manual/sql-execution/crud-with-updatablerecords/optimistic-locking/)
+- [Exception handling](https://www.jooq.org/doc/3.16/manual/sql-execution/exception-handling/)
+- [The UPDATE statement](https://www.jooq.org/doc/3.16/manual/sql-building/sql-statements/update-statement/)
+- [SQL execution](https://www.jooq.org/doc/3.16/manual/sql-execution/)
+- [RecordMapper](https://www.jooq.org/doc/3.16/manual/sql-execution/fetching/recordmapper/)
+- [SAVEPOINT statement](https://www.jooq.org/doc/3.18/manual/sql-building/transactional-statements/savepoint-statement/)
+
 #### Trouble Shooting
 
 - Spring Boot의 버전에 맞춰서 `MySQL Driver, jooqGenerator ...`등의 Dependency 를 추가해주어야 한다. 그렇지 않으면 `./gradlew generateJooq` 명령어
@@ -36,3 +48,9 @@
     - [Change Types/Miscellaneous - Using the sqlFile Change Type](https://docs.liquibase.com/change-types/sql-file.html)
     - [Change Types/Miscellaneous - include](https://docs.liquibase.com/change-types/include.html)
     - [Change Types/Miscellaneous - includeAll](https://docs.liquibase.com/change-types/includeall.html)
+
+## Etc.
+
+### Spring
+
+- [org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/datasource/TransactionAwareDataSourceProxy.html)
