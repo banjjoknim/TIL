@@ -50,7 +50,8 @@ jooq {
 	edition.set(nu.studer.gradle.jooq.JooqEdition.OSS)  // default (can be omitted)
 	configurations {
 		create("main") {  // name of the jOOQ configuration
-			generateSchemaSourceOnCompilation.set(true)  // default (can be omitted)
+			generateSchemaSourceOnCompilation.set(false)
+//			generateSchemaSourceOnCompilation.set(true)  // default (can be omitted). 기본값 true
 
 			// H2 Code Generation 설정
 			jooqConfiguration.apply {
