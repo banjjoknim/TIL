@@ -23,3 +23,11 @@ databaseChangeLog:
             path: create_table_order2.sql
             dbms: h2
             relativeToChangelogFile: true
+  - changeSet:
+      author: banjjoknim
+      id: insert_into_order2
+      changes:
+        - sqlFile:
+            path: insert_into_order2.sql
+            dbms: h2
+            relativeToChangelogFile: true
