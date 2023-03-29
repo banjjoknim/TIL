@@ -53,6 +53,14 @@ jooq {
 			generateSchemaSourceOnCompilation.set(false)
 //			generateSchemaSourceOnCompilation.set(true)  // default (can be omitted). 기본값 true
 
+			/**
+			 * 대부분의 설정은 org.jooq.meta.jaxb 패키지를 참조하도록 한다.
+			 * @see nu.studer.gradle.jooq.JooqConfig
+			 * @see org.jooq.meta.jaxb.Configuration
+			 * @see org.jooq.meta.jaxb.Logging
+			 * @see org.jooq.meta.jaxb.Jdbc
+			 * @see org.jooq.meta.jaxb.Generator
+			 */
 			// H2 Code Generation 설정
 			jooqConfiguration.apply {
 				logging = org.jooq.meta.jaxb.Logging.WARN
@@ -66,7 +74,8 @@ jooq {
 					name = "org.jooq.codegen.KotlinGenerator"
 					database.apply {
 						name = "org.jooq.meta.h2.H2Database"
-						inputSchema = "PUBLIC"
+						inputSchema = "PUBLIC" // h2 Database의 Schema 이름은 `PUBLIC` 임.
+						isOutputSchemaToDefault = true // A flag to indicate that the outputSchema should be the "default" schema, which generates schema-less, unqualified tables, procedures, etc.
 					}
 					target.apply {
 						packageName = "com.jooq.entity"
