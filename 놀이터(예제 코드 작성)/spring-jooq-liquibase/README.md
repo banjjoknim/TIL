@@ -54,3 +54,6 @@
 ### Spring
 
 - [org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/datasource/TransactionAwareDataSourceProxy.html)
+- [SpringBoot How-to Guides - Logging](https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.logging)
+- [Spring Logback Extensions](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.logging.logback-extensions)
+- [A Guide To Logback](https://www.baeldung.com/logback)
