@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator
+import java.sql.SQLException
 import java.time.LocalDateTime
 import javax.sql.DataSource
 
@@ -115,10 +117,19 @@ class JooqPersistentContextConfiguration(
         }
 
         override fun exception(ctx: ExecuteContext) {
-            if (ctx.sqlException() != null) {
-                ctx.sqlException()?.printStackTrace()
-                val exceptionMessage = ctx.sqlException()?.message ?: "sql error has occured, but has not message."
-                ctx.exception(RuntimeException(exceptionMessage))
+            val sqlDialect = ctx.configuration().dialect()
+            val translator = SQLErrorCodeSQLExceptionTranslator(sqlDialect.name)
+            ctx.exception(
+                translator.translate(
+                    "Access database using JOOQ",
+                    ctx.sql(),
+                    ctx.sqlException() ?: SQLException("not found SQLException")
+                )
+            )
+//            if (ctx.sqlException() != null) {
+//                ctx.sqlException()?.printStackTrace()
+//                val exceptionMessage = ctx.sqlException()?.message ?: "sql error has occured, but has not message."
+//                ctx.exception(RuntimeException(exceptionMessage))
 //                val dialect = ctx.configuration().dialect()
 //                val translator = if (dialect != null) {
 //                    SQLErrorCodeSQLExceptionTranslator(dialect.name)
@@ -126,7 +137,7 @@ class JooqPersistentContextConfiguration(
 //                    SQLStateSQLExceptionTranslator()
 //                }
 //                ctx.exception(translator.translate("JOOQ", ctx.sql(), ctx.sqlException()!!))
-            }
+//            }
         }
     }
 }
