@@ -26,6 +26,10 @@
 - [RecordMapper](https://www.jooq.org/doc/3.16/manual/sql-execution/fetching/recordmapper/)
 - [SAVEPOINT statement](https://www.jooq.org/doc/3.18/manual/sql-building/transactional-statements/savepoint-statement/)
 
+---
+
+- [Mocking Connection](https://www.jooq.org/doc/3.16/manual/sql-execution/mocking-connection/)
+
 #### Trouble Shooting
 
 - Spring Boot의 버전에 맞춰서 `MySQL Driver, jooqGenerator ...`등의 Dependency 를 추가해주어야 한다. 그렇지 않으면 `./gradlew generateJooq` 명령어
@@ -49,6 +53,10 @@
     - [Change Types/Miscellaneous - include](https://docs.liquibase.com/change-types/include.html)
     - [Change Types/Miscellaneous - includeAll](https://docs.liquibase.com/change-types/includeall.html)
 
+### Trouble Shooting
+
+- [Table creation fails with H2 v2 when a change set specifies](https://github.com/liquibase/liquibase/issues/3250)
+
 ## Etc.
 
 ### Spring
@@ -58,3 +66,6 @@
 - [Spring Logback Extensions](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.logging.logback-extensions)
 - [A Guide To Logback](https://www.baeldung.com/logback)
 - [Introduction to Jooq with Spring](https://www.baeldung.com/jooq-with-spring)
+- [Testing in Spring Boot](https://www.baeldung.com/spring-boot-testing)
+- [@JooqTest](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/test/autoconfigure/jooq/JooqTest.html)
+- [5.9. Transaction Management](https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html#testcontext-tx)
