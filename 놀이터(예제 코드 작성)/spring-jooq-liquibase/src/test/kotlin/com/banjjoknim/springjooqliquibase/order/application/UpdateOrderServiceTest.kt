@@ -1,7 +1,6 @@
 package com.banjjoknim.springjooqliquibase.order.application
 
-import com.banjjoknim.springjooqliquibase.order.api.CreateOrderRequest
-import com.jooq.entity.tables.pojos.Order
+import com.banjjoknim.springjooqliquibase.order.api.UpdateOrderRequest
 import com.jooq.entity.tables.references.ORDER
 import org.assertj.core.api.Assertions.assertThat
 import org.jooq.DSLContext
@@ -10,37 +9,37 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.springframework.context.annotation.Import
-import org.springframework.test.context.jdbc.Sql
 
 /**
  * @see org.springframework.boot.test.autoconfigure.jooq.JooqTest
  * @see com.banjjoknim.springjooqliquibase.TestJooqPersistentContextConfiguration
  */
 //@Import(TestJooqPersistentContextConfiguration::class) // 테스트 설정 사용. 주석시 실제 설정 사용.
-@DisplayName("주문 정보 생성 테스트")
-@Import(value = [CreateOrderService::class])
+@DisplayName("주문 정보 수정 테스트")
+@Import(value = [UpdateOrderService::class])
 @JooqTest
-class CreateOrderServiceTest(
+class UpdateOrderServiceTest(
     @Autowired
     private val dsl: DSLContext,
     @Autowired
-    private val createOrderService: CreateOrderService,
+    private val updateOrderService: UpdateOrderService,
 ) {
 
-    @Sql(statements = ["INSERT INTO `ORDER` (`product_name`, `product_price`) values ('필통', 10000)"])
-    @DisplayName("주문 정보를 생성한다.")
+    @DisplayName("주문 정보를 수정한다")
     @Test
-    fun `주문 정보를 생성한다`() {
+    fun `주문 정보를 수정한다`() {
         // given
-        val request = CreateOrderRequest(productName = "볼펜", productPrice = 2000)
+        val orderId = 1
+        val beforeOrder = dsl.fetchOne(ORDER, ORDER.ORDER_ID.eq(orderId))
 
         // when
-        val response = createOrderService.createOrder(request)
-        val orders = dsl.fetch(ORDER)
-            .into(Order::class.java)
+        val request = UpdateOrderRequest(orderId = orderId, productName = "4B연필", productPrice = 3000)
+        val response = updateOrderService.updateOrder(request)
 
         // then
+        val afterOrder = dsl.fetchOne(ORDER, ORDER.ORDER_ID.eq(orderId))
         assertThat(response.affectedCount).isEqualTo(1)
-        assertThat(orders).hasSize(3)
+        assertThat(afterOrder?.productName).isEqualTo("4B연필")
+        assertThat(afterOrder).isNotEqualTo(beforeOrder)
     }
 }
