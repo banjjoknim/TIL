@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      author: banjjoknim
+      id: liquibase-init
+      changes:
+        - sqlFile:
+            path: liquibase-init.sql
+            dbms: h2
+            relativeToChangelogFile: true
