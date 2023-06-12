@@ -7,7 +7,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.connection.RedisPassword
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
-import org.springframework.data.redis.core.RedisTemplate
 
 @Configuration
 class RedisConfiguration {
@@ -20,13 +19,6 @@ class RedisConfiguration {
 
     @Value("\${spring.redis.password}")
     private lateinit var redisPassword: RedisPassword
-
-    @Bean
-    fun redisTemplate(): RedisTemplate<String, String> {
-        val redisTemplate = RedisTemplate<String, String>()
-        redisTemplate.setConnectionFactory(redisConnectionFactory())
-        return redisTemplate
-    }
 
     @Bean
     fun redisConnectionFactory(): RedisConnectionFactory {
