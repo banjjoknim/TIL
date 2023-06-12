@@ -9,8 +9,7 @@ import org.springframework.data.redis.core.RedisCallback
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.redis.listener.PatternTopic
 import org.springframework.data.redis.listener.RedisMessageListenerContainer
-import org.springframework.integration.redis.util.RedisLockRegistry
-import org.springframework.integration.support.locks.LockRegistry
+import java.util.concurrent.TimeUnit
 import javax.annotation.PostConstruct
 
 @Configuration
@@ -38,29 +37,33 @@ class RedisNotifyKeyspaceConfiguration(
         val container = RedisMessageListenerContainer()
         container.setConnectionFactory(redisConnectionFactory)
         container.addMessageListener(
-            SimpleRedisKeyExpireEventListener(redisLockRegistry()),
+            SimpleRedisKeyExpireEventListener(redisTemplate),
             PatternTopic(REDIS_NOTIFY_KEY_EXPIRE_EVENT_TOPIC_PATTERN)
         )
         return container
     }
-
-    private fun redisLockRegistry(): LockRegistry {
-        return RedisLockRegistry(redisConnectionFactory, "simple-redis-lock")
-    }
 }
 
 class SimpleRedisKeyExpireEventListener(
-    private val redisLockRegistry: LockRegistry,
+    private val redisTemplate: StringRedisTemplate,
 ) : MessageListener {
+
+    companion object {
+        private const val REDIS_LOCK_TIME_OUT_SECONDS = 60L
+    }
+
     override fun onMessage(message: Message, pattern: ByteArray?) {
-        val messageBody = String(message.body)
-        val lock = redisLockRegistry.obtain(messageBody)
+        val messageKey = String(message.body)
+        val lockKey = "simple-redis-lock-$messageKey"
+        val operations = redisTemplate.opsForValue()
+        val isLockAcquired = operations.setIfAbsent(lockKey, "isLock", REDIS_LOCK_TIME_OUT_SECONDS, TimeUnit.SECONDS)
         try {
-            if (lock.tryLock()) {
-                println("get message from redis: $messageBody")
+            when (isLockAcquired) {
+                true -> println("get message from redis: $messageKey")
+                else -> {}
             }
         } finally {
-            lock.unlock()
+            redisTemplate.delete(lockKey)
         }
     }
 }
