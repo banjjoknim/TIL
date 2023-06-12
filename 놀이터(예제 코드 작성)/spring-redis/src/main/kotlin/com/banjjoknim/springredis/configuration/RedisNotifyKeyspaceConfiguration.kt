@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisCallback
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.redis.listener.PatternTopic
 import org.springframework.data.redis.listener.RedisMessageListenerContainer
+import java.util.concurrent.TimeUnit
 import javax.annotation.PostConstruct
 
 @Configuration
@@ -39,7 +40,28 @@ class RedisNotifyKeyspaceConfiguration(
             SimpleRedisKeyExpireEventListener(),
             PatternTopic(REDIS_NOTIFY_KEY_EXPIRE_EVENT_TOPIC_PATTERN)
         )
+        container.configureDistributeLock()
         return container
+    }
+
+    private fun RedisMessageListenerContainer.configureDistributeLock() {
+        this.setTaskExecutor { task ->
+            val lockKey = "eventProcessingLock"
+            val lockValue = "lockValue"
+            val lockTimeoutSeconds = 60L // Timeout for the lock in seconds
+
+            val result = redisTemplate.opsForValue().setIfAbsent(lockKey, lockValue)
+            if (result == true) {
+                // Acquired the lock, process the event
+                try {
+                    redisTemplate.expire(lockKey, lockTimeoutSeconds, TimeUnit.SECONDS)
+                    task.run()
+                } finally {
+                    // Release the lock
+                    redisTemplate.delete(lockKey)
+                }
+            }
+        }
     }
 }
 
