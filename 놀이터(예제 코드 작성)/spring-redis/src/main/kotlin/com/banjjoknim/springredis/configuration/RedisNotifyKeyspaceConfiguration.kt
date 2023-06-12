@@ -9,7 +9,8 @@ import org.springframework.data.redis.core.RedisCallback
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.redis.listener.PatternTopic
 import org.springframework.data.redis.listener.RedisMessageListenerContainer
-import java.util.concurrent.TimeUnit
+import org.springframework.integration.redis.util.RedisLockRegistry
+import org.springframework.integration.support.locks.LockRegistry
 import javax.annotation.PostConstruct
 
 @Configuration
@@ -37,36 +38,29 @@ class RedisNotifyKeyspaceConfiguration(
         val container = RedisMessageListenerContainer()
         container.setConnectionFactory(redisConnectionFactory)
         container.addMessageListener(
-            SimpleRedisKeyExpireEventListener(),
+            SimpleRedisKeyExpireEventListener(redisLockRegistry()),
             PatternTopic(REDIS_NOTIFY_KEY_EXPIRE_EVENT_TOPIC_PATTERN)
         )
-        container.configureDistributeLock()
         return container
     }
 
-    private fun RedisMessageListenerContainer.configureDistributeLock() {
-        this.setTaskExecutor { task ->
-            val lockKey = "eventProcessingLock"
-            val lockValue = "lockValue"
-            val lockTimeoutSeconds = 60L // Timeout for the lock in seconds
-
-            val result = redisTemplate.opsForValue().setIfAbsent(lockKey, lockValue)
-            if (result == true) {
-                // Acquired the lock, process the event
-                try {
-                    redisTemplate.expire(lockKey, lockTimeoutSeconds, TimeUnit.SECONDS)
-                    task.run()
-                } finally {
-                    // Release the lock
-                    redisTemplate.delete(lockKey)
-                }
-            }
-        }
+    private fun redisLockRegistry(): LockRegistry {
+        return RedisLockRegistry(redisConnectionFactory, "simple-redis-lock")
     }
 }
 
-class SimpleRedisKeyExpireEventListener : MessageListener {
+class SimpleRedisKeyExpireEventListener(
+    private val redisLockRegistry: LockRegistry,
+) : MessageListener {
     override fun onMessage(message: Message, pattern: ByteArray?) {
-        println("get message from redis: ${String(message.body)}")
+        val messageBody = String(message.body)
+        val lock = redisLockRegistry.obtain(messageBody)
+        try {
+            if (lock.tryLock()) {
+                println("get message from redis: $messageBody")
+            }
+        } finally {
+            lock.unlock()
+        }
     }
 }
