@@ -1,5 +1,6 @@
 package com.banjjoknim.springredis.configuration.redis
 
+import com.banjjoknim.springredis.configuration.redis.support.RedisLockManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.Message
@@ -9,11 +10,11 @@ import org.springframework.data.redis.core.RedisCallback
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.redis.listener.PatternTopic
 import org.springframework.data.redis.listener.RedisMessageListenerContainer
-import java.util.concurrent.TimeUnit
 import javax.annotation.PostConstruct
 
 @Configuration
 class RedisNotifyKeyspaceConfiguration(
+    private val redisLockManager: RedisLockManager,
     private val redisTemplate: StringRedisTemplate,
     private val redisConnectionFactory: RedisConnectionFactory,
 ) {
@@ -37,7 +38,7 @@ class RedisNotifyKeyspaceConfiguration(
         val container = RedisMessageListenerContainer()
         container.setConnectionFactory(redisConnectionFactory)
         container.addMessageListener(
-            SimpleRedisKeyExpireEventListener(redisTemplate),
+            SimpleRedisKeyExpireEventListener(redisLockManager),
             PatternTopic(REDIS_NOTIFY_KEY_EXPIRE_EVENT_TOPIC_PATTERN)
         )
         return container
@@ -45,25 +46,19 @@ class RedisNotifyKeyspaceConfiguration(
 }
 
 class SimpleRedisKeyExpireEventListener(
-    private val redisTemplate: StringRedisTemplate,
+    private val redisLockManager: RedisLockManager,
 ) : MessageListener {
-
-    companion object {
-        private const val REDIS_LOCK_TIME_OUT_SECONDS = 60L
-    }
 
     override fun onMessage(message: Message, pattern: ByteArray?) {
         val messageKey = String(message.body)
-        val lockKey = "simple-redis-lock-$messageKey"
-        val operations = redisTemplate.opsForValue()
-        val isLockAcquired = operations.setIfAbsent(lockKey, "isLock", REDIS_LOCK_TIME_OUT_SECONDS, TimeUnit.SECONDS)
+        val isLockAcquired = redisLockManager.acquireLock(messageKey)
         try {
             when (isLockAcquired) {
-                true -> println("get message from redis: $messageKey")
-                else -> {}
+                true -> println("get message has success from redis. key: $messageKey")
+                else -> println("acquire lock has failed. lock is already occupied. key: $messageKey")
             }
         } finally {
-            redisTemplate.delete(lockKey)
+            redisLockManager.releaseLock(messageKey)
         }
     }
 }
