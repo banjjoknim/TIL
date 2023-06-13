@@ -1,4 +1,4 @@
-package com.banjjoknim.springredis.configuration
+package com.banjjoknim.springredis.configuration.redis
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
