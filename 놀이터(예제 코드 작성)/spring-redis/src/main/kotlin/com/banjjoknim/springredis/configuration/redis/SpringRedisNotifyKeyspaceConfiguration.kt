@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct
 
 @Profile("spring-redis")
 @Configuration
-class RedisNotifyKeyspaceConfiguration(
+class SpringRedisNotifyKeyspaceConfiguration(
     private val redisLockManager: RedisLockManager,
     private val redisTemplate: StringRedisTemplate,
     private val redisConnectionFactory: RedisConnectionFactory,
