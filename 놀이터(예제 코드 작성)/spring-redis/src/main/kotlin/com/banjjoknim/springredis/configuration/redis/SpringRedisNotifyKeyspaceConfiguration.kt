@@ -1,11 +1,10 @@
 package com.banjjoknim.springredis.configuration.redis
 
 import com.banjjoknim.springredis.configuration.redis.support.RedisLockManager
+import com.banjjoknim.springredis.configuration.redis.support.SimpleSpringRedisKeyExpireEventListener
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
-import org.springframework.data.redis.connection.Message
-import org.springframework.data.redis.connection.MessageListener
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.core.RedisCallback
 import org.springframework.data.redis.core.StringRedisTemplate
@@ -40,27 +39,9 @@ class SpringRedisNotifyKeyspaceConfiguration(
         val container = RedisMessageListenerContainer()
         container.setConnectionFactory(redisConnectionFactory)
         container.addMessageListener(
-            SimpleRedisKeyExpireEventListener(redisLockManager),
+            SimpleSpringRedisKeyExpireEventListener(redisLockManager),
             PatternTopic(REDIS_NOTIFY_KEY_EXPIRE_EVENT_TOPIC_PATTERN)
         )
         return container
-    }
-}
-
-class SimpleRedisKeyExpireEventListener(
-    private val redisLockManager: RedisLockManager,
-) : MessageListener {
-
-    override fun onMessage(message: Message, pattern: ByteArray?) {
-        val messageKey = String(message.body)
-        val isLockAcquired = redisLockManager.acquireLock(messageKey)
-        try {
-            when (isLockAcquired) {
-                true -> println("get message has success from redis. key: $messageKey")
-                else -> println("acquire lock has failed. lock is already occupied. key: $messageKey")
-            }
-        } finally {
-            redisLockManager.releaseLock(messageKey)
-        }
     }
 }
