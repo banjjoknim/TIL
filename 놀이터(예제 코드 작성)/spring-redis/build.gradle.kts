@@ -28,6 +28,9 @@ dependencies {
 //	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 //	testImplementation("io.projectreactor:reactor-test")
+
+	// redisson
+	implementation("org.redisson:redisson:3.22.1")
 }
 
 tasks.withType<KotlinCompile> {
