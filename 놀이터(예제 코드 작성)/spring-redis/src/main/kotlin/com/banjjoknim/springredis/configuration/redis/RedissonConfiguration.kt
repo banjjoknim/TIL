@@ -2,6 +2,7 @@ package com.banjjoknim.springredis.configuration.redis
 
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient
+import org.redisson.client.codec.StringCodec
 import org.redisson.config.Config
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -24,6 +25,7 @@ class RedissonConfiguration {
     @Bean
     fun redissonClient(): RedissonClient {
         val config = Config()
+            .setCodec(StringCodec.INSTANCE)
         val serverConfig = config.useSingleServer()
             .setAddress("redis://$redisHost:$redisPort")
         if (redisPassword.isNotBlank()) {

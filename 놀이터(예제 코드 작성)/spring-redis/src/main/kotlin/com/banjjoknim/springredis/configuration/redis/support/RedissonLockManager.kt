@@ -13,17 +13,19 @@ class RedissonLockManager(
 
     companion object {
         private const val REDIS_LOCK_KEY_PREFIX = "simple-redis-lock"
-        private const val REDIS_LOCK_TIME_OUT_SECONDS = 60L
+        private const val REDIS_LOCK_TIME_OUT_SECONDS = 30L
+        private const val REDIS_LOCK_LEASE_TIME_SECONDS = 60L
     }
 
     override fun acquireLock(messageKey: String): Boolean {
         val lockKey = "${REDIS_LOCK_KEY_PREFIX}-$messageKey"
         val lock = redissonClient.getLock(lockKey)
-        return lock.tryLock(REDIS_LOCK_TIME_OUT_SECONDS, TimeUnit.SECONDS)
+        return lock.tryLock(REDIS_LOCK_TIME_OUT_SECONDS, REDIS_LOCK_LEASE_TIME_SECONDS, TimeUnit.SECONDS)
     }
 
     override fun releaseLock(messageKey: String): Boolean {
-        val lock = redissonClient.getLock(messageKey)
+        val lockKey = "${REDIS_LOCK_KEY_PREFIX}-$messageKey"
+        val lock = redissonClient.getLock(lockKey)
         lock.unlock()
         return lock.isLocked
     }
