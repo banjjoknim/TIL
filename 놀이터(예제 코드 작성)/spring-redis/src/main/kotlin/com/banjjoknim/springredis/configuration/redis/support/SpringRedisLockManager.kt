@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit
 class SpringRedisLockManager(
     private val redisTemplate: StringRedisTemplate,
 ) : RedisLockManager {
+
     companion object {
         private const val REDIS_LOCK_KEY_PREFIX = "simple-redis-lock"
         private const val REDIS_LOCK_TIME_OUT_SECONDS = 60L
