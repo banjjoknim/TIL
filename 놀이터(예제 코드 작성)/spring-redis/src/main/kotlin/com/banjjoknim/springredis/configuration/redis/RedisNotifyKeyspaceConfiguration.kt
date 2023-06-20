@@ -3,6 +3,7 @@ package com.banjjoknim.springredis.configuration.redis
 import com.banjjoknim.springredis.configuration.redis.support.RedisLockManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.data.redis.connection.Message
 import org.springframework.data.redis.connection.MessageListener
 import org.springframework.data.redis.connection.RedisConnectionFactory
@@ -12,6 +13,7 @@ import org.springframework.data.redis.listener.PatternTopic
 import org.springframework.data.redis.listener.RedisMessageListenerContainer
 import javax.annotation.PostConstruct
 
+@Profile("spring-redis")
 @Configuration
 class RedisNotifyKeyspaceConfiguration(
     private val redisLockManager: RedisLockManager,
