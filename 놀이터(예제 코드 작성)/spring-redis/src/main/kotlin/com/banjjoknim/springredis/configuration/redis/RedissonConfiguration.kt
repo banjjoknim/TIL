@@ -22,6 +22,24 @@ class RedissonConfiguration {
     @Value("\${spring.redis.password}")
     private lateinit var redisPassword: String
 
+    /**
+     * @see org.redisson.Redisson
+     * @see org.redisson.api.RedissonClient
+     * @see org.redisson.config.Config
+     * @see org.redisson.config.RedissonNodeConfig
+     * @see org.redisson.config.RedissonNodeFileConfig
+     *
+     * @see org.redisson.config.BaseConfig
+     * @see org.redisson.config.BaseMasterSlaveServersConfig
+     * @see org.redisson.config.SingleServerConfig
+     * @see org.redisson.config.ClusterServersConfig
+     * @see org.redisson.config.SentinelServersConfig
+     * @see org.redisson.config.ReplicatedServersConfig
+     * @see org.redisson.config.MasterSlaveServersConfig
+     *
+     * @see org.redisson.client.codec.Codec
+     * @see org.redisson.client.codec.StringCodec
+     */
     @Bean
     fun redissonClient(): RedissonClient {
         val config = Config()
