@@ -1,21 +1,25 @@
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
-import {startStandaloneServer} from "@apollo/server/standalone";
-import {ApolloServer} from "@apollo/server";
-import typeDefs from "./typeDefs.js";
-import resolvers from "./resolvers.js";
+import {ApolloServer} from '@apollo/server';
+import {startStandaloneServer} from '@apollo/server/standalone';
+import {ApolloGateway} from '@apollo/gateway';
+import {readFileSync} from 'fs';
+
+const supergraphSdl = readFileSync('./supergraph.graphql').toString();
+
+// Initialize an ApolloGateway instance and pass it
+// the supergraph schema as a string
+
+const gateway = new ApolloGateway({
+    supergraphSdl,
+});
+
+
+// Pass the ApolloGateway to the ApolloServer constructor
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    gateway,
 });
 
-// Passing an ApolloServer instance to the `startStandaloneServer` function:
-//  1. creates an Express app
-//  2. installs your ApolloServer instance as middleware
-//  3. prepares your app to handle incoming requests
-const {url} = await startStandaloneServer(server, {
-    listen: {port: 4000},
-});
 
-console.log(`🚀  Server ready at: ${url}`);
+// Note the top-level `await`!
+const {url} = await startStandaloneServer(server);
+console.log(`🚀  Server ready at ${url}`);
