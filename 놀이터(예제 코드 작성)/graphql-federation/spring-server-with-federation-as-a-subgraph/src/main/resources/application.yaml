@@ -1,0 +1,9 @@
+logging:
+  level:
+    root: debug
+
+graphql:
+  packages:
+    - "com.banjjoknim.subgraphservice"
+  playground:
+    enabled: true
