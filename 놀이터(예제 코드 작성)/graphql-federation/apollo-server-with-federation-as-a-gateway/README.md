@@ -1,3 +1,24 @@
+## 실행 방법
+
+> 1. `GraphQL Federation`를 제공하는 서버를 먼저 실행시킨다. 이때 구동되는 서버는 반드시 `subgraph` 역할을 지원하는 것이어야 하며, 해당 기능의 가능 유무에 대한 내용은 아래 참고 자료
+     중에서 [Federation-compatible subgraph implementations](https://www.apollographql.com/docs/federation/building-supergraphs/supported-subgraphs/)
+     를 참조하도록 한다.
+
+> 2. 본 프로젝트의 `supergraphql.yaml`의 내용에 1번 단계에서 실행시킨 서버의 `routing_url`, `schema.subgraph_url` 을 지정한다.
+     이는 [Rover supergraph commands](https://www.apollographql.com/docs/rover/commands/supergraphs)를 참조하도록 한다.
+
+> 3. 본 프로젝트의 `compose_supergraph.sh` 파일을 실행한다.
+>
+>```shell
+>sh compose_supergraph.sh
+>```
+
+> 4. 마지막으로 본 프로젝트를 실행한다.
+>
+>```shell
+>npm run start
+>```
+
 ## 참고 자료
 
 ### Node.js etc Docs.
