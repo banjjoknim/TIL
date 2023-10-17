@@ -15,7 +15,14 @@
 >sh compose_supergraph.sh
 >```
 
-> 4. 마지막으로 본 프로젝트를 실행한다.
+> 4. `npm install` 명령을 실행하지 않았다면 해당 명령어를 실행한다.
+>
+>```shell
+> npm install
+>```
+
+
+> 5. 마지막으로 본 프로젝트를 실행한다.
 >
 >```shell
 >npm run start
