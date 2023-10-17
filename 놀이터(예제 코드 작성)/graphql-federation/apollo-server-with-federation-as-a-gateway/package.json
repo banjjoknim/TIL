@@ -1,5 +1,5 @@
 {
-  "name": "graphql-federation",
+  "name": "apollo-server-with-federation-as-a-gateway",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
