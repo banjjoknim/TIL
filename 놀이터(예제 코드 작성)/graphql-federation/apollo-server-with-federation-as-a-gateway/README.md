@@ -1,3 +1,5 @@
+# GraphQL Federation Sample
+
 ## 실행 방법
 
 > 1. `GraphQL Federation`를 제공하는 서버를 먼저 실행시킨다. 이때 구동되는 서버는 반드시 `subgraph` 역할을 지원하는 것이어야 하며, 해당 기능의 가능 유무에 대한 내용은 아래 참고 자료
@@ -18,6 +20,10 @@
 >```shell
 >npm run start
 >```
+
+### 주의사항
+
+- `supergraph.graphql` 파일의 내용이 비어있으면 실행이 되지 않음에 유의할 것.
 
 ## 참고 자료
 
