@@ -54,6 +54,7 @@ class GraphQLConfiguration {
     @Bean
     fun graphQL(schema: GraphQLSchema?): GraphQL {
         val dataFetcherExceptionHandler = object : DataFetcherExceptionHandler {} // 기본 구현체 사용
+//        val customDataFetcherExceptionHandler = CustomDataFetcherExceptionHandler() // 사용자 정의 구현체 사용
         return GraphQL.newGraphQL(schema)
             .queryExecutionStrategy(AsyncExecutionStrategy(dataFetcherExceptionHandler))
             .mutationExecutionStrategy(AsyncSerialExecutionStrategy(dataFetcherExceptionHandler))
