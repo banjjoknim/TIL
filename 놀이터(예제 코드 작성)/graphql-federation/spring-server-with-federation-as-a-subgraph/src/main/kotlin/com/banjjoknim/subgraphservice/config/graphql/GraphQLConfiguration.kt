@@ -1,8 +1,8 @@
 package com.banjjoknim.subgraphservice.config.graphql
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
-import com.expediagroup.graphql.generator.federation.FederatedSchemaGeneratorHooks
 import com.expediagroup.graphql.generator.federation.execution.FederatedTypeResolver
+import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.expediagroup.graphql.server.Schema
 import graphql.GraphQL
 import graphql.execution.AsyncExecutionStrategy
@@ -47,7 +47,7 @@ class GraphQLConfiguration {
      * @see com.expediagroup.graphql.generator.federation.types.SERVICE_OBJECT_TYPE // 상단에 명시된 쿼리 참조.
      */
     @Bean
-    fun federatedSchemaGeneratorHooks(resolvers: Optional<List<FederatedTypeResolver>>): FederatedSchemaGeneratorHooks {
+    fun federatedSchemaGeneratorHooks(resolvers: Optional<List<FederatedTypeResolver>>): SchemaGeneratorHooks {
         return CustomFederationSchemaGeneratorHooks(resolvers.orElse(emptyList()))
     }
 
