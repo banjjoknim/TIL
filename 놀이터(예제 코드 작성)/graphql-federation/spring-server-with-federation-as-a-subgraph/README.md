@@ -19,7 +19,11 @@
 - [Configuration Properties](https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring-server/spring-properties)
 - [Subscriptions](https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring-server/spring-subscriptions)
 
+- [GraphQL over WebSocket Protocol](https://github.com/enisdenjo/graphql-ws/blob/master/PROTOCOL.md)
 
 - [Cannot get any subscription back to the consumer(React client / Postman) #938](https://github.com/ExpediaGroup/graphql-kotlin/issues/938)
 
+### etc.
 
+- [Curl command for GraphQL Subscriptions](https://stackoverflow.com/questions/73232291/curl-command-for-graphql-subscriptions)
+- [How to read a websocket response with cURL](https://stackoverflow.com/questions/47860689/how-to-read-a-websocket-response-with-curl)
