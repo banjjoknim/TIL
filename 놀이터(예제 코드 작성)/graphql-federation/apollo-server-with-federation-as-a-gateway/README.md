@@ -40,7 +40,7 @@
 - [Node.js와 ESM](https://jjnooys.medium.com/node-js%EC%99%80-esm-2462af271156)
 - [Node.js와 ESM (2) Typescript 프로젝트 ESM으로 변환하기](https://jjnooys.medium.com/node-js%EC%99%80-esm-2-typescript-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-esm%EC%9C%BC%EB%A1%9C-%EB%B3%80%ED%99%98%ED%95%98%EA%B8%B0-7266e8174906)
 
-### Apollo 
+### Apollo
 
 - [Get started with Apollo Server](https://www.apollographql.com/docs/apollo-server/getting-started)
 - [Implementing a gateway with Apollo Server](https://www.apollographql.com/docs/apollo-server/using-federation/apollo-gateway-setup)
@@ -56,3 +56,6 @@
 - [join v0.1 - for defining supergraphs which join multiple subgraphs](https://specs.apollo.dev/join/v0.1/)
 - [Apollo Library of Technical Specifications](https://specs.apollo.dev/)
 - [Learn GraphQL: What is Federated Architecture?](https://graphql.com/learn/federated-architecture/)
+- [Subscriptions in Apollo Server](https://www.apollographql.com/docs/apollo-server/data/subscriptions/)
+  - [The WebSocket API (WebSockets)](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) 
+  - [Subscriptions - Get real-time updates from your GraphQL server](https://www.apollographql.com/docs/react/data/subscriptions)
