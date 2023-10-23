@@ -1,5 +1,11 @@
 # GraphQL Federation SubGraph GraphQL API Server Sample
 
+## GraphQL 관련 라이브러리 버전 참조
+
+아래 사진은 작성당시 라이브러리 버전 캡쳐.
+
+![img.png](libraries.png)
+
 ## 참고 자료
 
 ### GraphQL Kotlin (ExpediaGroup)
