@@ -39,6 +39,7 @@ class GraphQLConfiguration {
      * @see com.expediagroup.graphql.generator.SchemaGeneratorConfig
      * @see com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
      * @see com.expediagroup.graphql.generator.hooks.NoopSchemaGeneratorHooks
+     * @see com.expediagroup.graphql.generator.hooks.FlowSubscriptionSchemaGeneratorHooks
      * @see com.expediagroup.graphql.server.spring.NonFederatedSchemaAutoConfiguration
      *
      * @see com.expediagroup.graphql.generator.federation.FederatedSchemaGenerator
@@ -52,6 +53,13 @@ class GraphQLConfiguration {
         return CustomFederationSchemaGeneratorHooks(resolvers.orElse(emptyList()))
     }
 
+    /**
+     * @see com.expediagroup.graphql.server.spring.GraphQLSchemaConfiguration
+     * @see com.expediagroup.graphql.server.spring.SubscriptionAutoConfiguration
+     * @see com.expediagroup.graphql.generator.execution.FlowSubscriptionExecutionStrategy
+     * @see com.expediagroup.graphql.server.execution.subscription.GraphQLWebSocketServer
+     * @see com.expediagroup.graphql.server.spring.SubscriptionGraphQLWsAutoConfiguration
+     */
     @Bean
     fun graphQL(schema: GraphQLSchema?): GraphQL {
         val dataFetcherExceptionHandler = object : DataFetcherExceptionHandler {} // 기본 구현체 사용
@@ -59,7 +67,7 @@ class GraphQLConfiguration {
         return GraphQL.newGraphQL(schema)
             .queryExecutionStrategy(AsyncExecutionStrategy(dataFetcherExceptionHandler))
             .mutationExecutionStrategy(AsyncSerialExecutionStrategy(dataFetcherExceptionHandler))
-            .subscriptionExecutionStrategy(FlowSubscriptionExecutionStrategy())
+            .subscriptionExecutionStrategy(FlowSubscriptionExecutionStrategy(dataFetcherExceptionHandler))
             .build()
     }
 }
