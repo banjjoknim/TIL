@@ -33,8 +33,8 @@ class GraphQLConfiguration {
      * }
      * ```
      *
-     * 참고 : Federation 설정이 진행되면 위 쿼리를 이용해서 SuperGraph 에 SubGraph를 제공할 수 있게 됨.
-     *
+     * - 참고 : Federation 설정이 진행되면 위 쿼리를 이용해서 SuperGraph 에 SubGraph를 제공할 수 있게 됨.
+     * - 참고 : 작성시점을 기준으로 제공되는 스키마 정보는 federation 버전이 2.5임. 그에 맞게 게이트웨이에서 수집하는 federation 버전도 수정해주어야 함.
      * @see com.expediagroup.graphql.generator.SchemaGenerator
      * @see com.expediagroup.graphql.generator.SchemaGeneratorConfig
      * @see com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
