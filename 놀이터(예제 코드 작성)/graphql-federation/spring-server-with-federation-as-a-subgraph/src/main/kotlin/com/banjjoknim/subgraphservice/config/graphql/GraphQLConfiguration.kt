@@ -1,6 +1,7 @@
 package com.banjjoknim.subgraphservice.config.graphql
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
+import com.expediagroup.graphql.generator.execution.FlowSubscriptionExecutionStrategy
 import com.expediagroup.graphql.generator.federation.execution.FederatedTypeResolver
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.expediagroup.graphql.server.Schema
@@ -58,6 +59,7 @@ class GraphQLConfiguration {
         return GraphQL.newGraphQL(schema)
             .queryExecutionStrategy(AsyncExecutionStrategy(dataFetcherExceptionHandler))
             .mutationExecutionStrategy(AsyncSerialExecutionStrategy(dataFetcherExceptionHandler))
+            .subscriptionExecutionStrategy(FlowSubscriptionExecutionStrategy())
             .build()
     }
 }
