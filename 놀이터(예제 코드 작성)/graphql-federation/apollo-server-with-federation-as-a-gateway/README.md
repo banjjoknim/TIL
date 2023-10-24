@@ -18,7 +18,7 @@
 >```
 >
 > [결과]
-> 
+>
 > ```text
 > $ apollo-server-with-federation-as-a-gateway git:(graphql-federation) ✗ sh compose_supergraph.sh 
 > ⌛ resolving SDL for subgraphs defined in ./supergraph.yaml
@@ -68,7 +68,7 @@
 > ```shell
 > ./router
 > ```
-> 
+>
 > [결과]
 >
 >```text
@@ -103,29 +103,39 @@
 >- 로컬에서 직접 호스팅할 것이므로 `Pass a local schema file with the '--supergraph' option` 문구에 주목할 것.
 
 > 6. 공통 과정 중에서 3번 과정의 결과로 얻은 `supergraph.graphql` 파일을 이용하여 `router`를 실행한다.
-> 
-> ```shell
-> ./router --dev --supergraph supergraph.graphql
-> ```
-> 
-> [결과]
-> 
-> ```text
-> ➜  apollo-server-with-federation-as-a-gateway git:(graphql-federation) ✗ ./router --dev --supergraph supergraph.graphql       
-> 2023-10-24T01:34:24.083263Z  INFO Running with *development* mode settings which facilitate development experience (e.g., introspection enabled)
-> 2023-10-24T01:34:24.171701Z  INFO Apollo Router v1.33.1 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
-> 2023-10-24T01:34:24.171742Z  INFO Anonymous usage data is gathered to inform Apollo product development.  See https://go.apollo.dev/o/privacy for details.
-> 2023-10-24T01:34:24.739457Z  INFO Health check endpoint exposed at http://127.0.0.1:8088/health
-> 2023-10-24T01:34:24.742890Z  INFO GraphQL endpoint exposed at http://127.0.0.1:4000/ 🚀
-> 2023-10-24T01:34:24.744535Z  INFO You're using some "experimental" features of the Apollo Router (those which have their configuration prefixed by "experimental_").
-> We may make breaking changes in future releases. To help us design the stable version we need your feedback.
-> Here is a list of links where you can give your opinion:
 >
->        - experimental_response_trace_id: https://github.com/apollographql/router/discussions/2147
-> 
-> For more information about launch stages, please see the documentation here: https://www.apollographql.com/docs/resources/product-launch-stages/
+> 6-1. `YAML config file`이 없이 실행할 경우 (`--dev` 옵션은 development 환경에서만 사용할 것)
+> ```shell
+> ./router --supergraph supergraph.graphql
 > ```
+>
+> [결과]
+>
+> ```text
+> ➜  apollo-server-with-federation-as-a-gateway git:(graphql-federation) ✗ ./router --supergraph supergraph.graphql               
+> 2023-10-24T02:16:52.887308Z  INFO Apollo Router v1.33.1 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
+> 2023-10-24T02:16:52.887340Z  INFO Anonymous usage data is gathered to inform Apollo product development.  See https://go.apollo.dev/o/privacy for details.
+> 2023-10-24T02:16:53.232700Z  INFO Health check endpoint exposed at http://127.0.0.1:8088/health
+> 2023-10-24T02:16:53.233573Z  INFO GraphQL endpoint exposed at http://127.0.0.1:4000/ 🚀
+> ```
+>
+> 6-2. `YAML config file`과 함께 실행할 경우
+> ```shell
+> ./router --config router.yaml --supergraph supergraph.graphql
+> ```
+>
+> [결과]
+>
+> ```text
+> ➜  apollo-server-with-federation-as-a-gateway git:(graphql-federation) ✗ ./router --config router.yaml --supergraph supergraph.graphql
+> 2023-10-24T02:15:18.337906Z  INFO Apollo Router v1.33.1 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
+> 2023-10-24T02:15:18.337950Z  INFO Anonymous usage data is gathered to inform Apollo product development.  See https://go.apollo.dev/o/privacy for details.
+> 2023-10-24T02:15:18.723950Z  INFO Health check endpoint exposed at http://127.0.0.1:8088/health
+> 2023-10-24T02:15:18.725344Z  INFO GraphQL endpoint exposed at http://127.0.0.1:4000/graphql 🚀
+> ```
+>
 > - `GraphQL endpoint exposed at 'http://127.0.0.1:4000/'` 문구에 주목. 해당 엔드포인트로 접속하면 `Federated` 처리된 GraphQL API를 호출할 수 있음.
+> - `yaml` 타입의 Config File을 사용할 수 있음.
 
 ##### 주의사항
 
@@ -147,7 +157,6 @@
 - [The Rover CLI](https://www.apollographql.com/docs/rover)
 - [Rover supergraph commands](https://www.apollographql.com/docs/rover/commands/supergraphs)
 - [Federation-compatible subgraph implementations](https://www.apollographql.com/docs/federation/building-supergraphs/supported-subgraphs/)
-- [The Apollo Router](https://www.apollographql.com/docs/router/)
 - [API Reference: @apollo/gateway](https://www.apollographql.com/docs/apollo-server/using-federation/api/apollo-gateway/)
 - [API Reference: ApolloServer](https://www.apollographql.com/docs/apollo-server/api/apollo-server)
 - [API Reference: startStandaloneServer](https://www.apollographql.com/docs/apollo-server/api/standalone)
@@ -163,5 +172,8 @@
   - [Subscriptions - Get real-time updates from your GraphQL server](https://www.apollographql.com/docs/react/data/subscriptions)
 - [HTTP callback protocol for GraphQL subscriptions](https://www.apollographql.com/docs/router/executing-operations/subscription-callback-protocol/)
 - [The router](https://www.apollographql.com/docs/federation/building-supergraphs/router)
-  - [Apollo Router quickstart](https://www.apollographql.com/docs/router/quickstart/)
   - [Federation 2 quickstart](https://www.apollographql.com/docs/federation/quickstart/setup/)
+- [The Apollo Router](https://www.apollographql.com/docs/router/)
+  - [Apollo Router quickstart](https://www.apollographql.com/docs/router/quickstart/)
+  - [Configuring the Apollo Router](https://www.apollographql.com/docs/router/configuration/overview)
+    - ![apollo-router-config.png](apollo-router-config.png)
