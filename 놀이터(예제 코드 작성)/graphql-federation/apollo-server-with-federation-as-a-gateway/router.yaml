@@ -1,0 +1,19 @@
+# 자세한 내용은 https://www.apollographql.com/docs/router/configuration/overview 참고.
+supergraph:
+
+  # IPv4
+  # The socket address and port to listen on
+  listen: 127.0.0.1:4000
+
+  # IPv6
+  # The socket address and port to listen on.
+  # Note that this must be quoted to avoid interpretation as an array in YAML.
+  # listen: '[::1]:4000'
+
+  # The path for GraphQL execution
+  # (Defaults to /)
+  # The path must start with '/'.
+  path: /graphql
+
+  # Do not enable introspection in production!
+  introspection: true
