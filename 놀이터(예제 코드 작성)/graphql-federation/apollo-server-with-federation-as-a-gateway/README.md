@@ -177,3 +177,6 @@
   - [Apollo Router quickstart](https://www.apollographql.com/docs/router/quickstart/)
   - [Configuring the Apollo Router](https://www.apollographql.com/docs/router/configuration/overview)
     - ![apollo-router-config.png](apollo-router-config.png)
+- [join v0.1 - for defining supergraphs which join multiple subgraphs](https://specs.apollo.dev/join/v0.3/)
+- [link v0.1 - for linking schemas together](https://specs.apollo.dev/link/v1.0/)
+- [API Reference: Subscription callback plugin](https://www.apollographql.com/docs/apollo-server/api/plugin/subscription-callback)
