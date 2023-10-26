@@ -34,6 +34,15 @@
   - [Subscriptions in Apollo Server](https://www.apollographql.com/docs/apollo-server/data/subscriptions/)
   - [The WebSocket API (WebSockets)](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 
+### Spring Redis
+
+- [hantsy/spring-reactive-sample/boot-data-redis](https://github.com/hantsy/spring-reactive-sample/tree/master/boot-data-redis)
+- [hantsy/spring-reactive-sample/data-redis-message](https://github.com/hantsy/spring-reactive-sample/tree/master/data-redis-message)
+- [hantsy/Spring Data Redis](https://hantsy.github.io/spring-reactive-sample/data/data-redis.html)
+- [Accessing Data Reactively with Redis](https://spring.io/guides/gs/spring-data-reactive-redis/)
+- [PubSub Messaging with Spring Data Redis](https://www.baeldung.com/spring-data-redis-pub-sub)
+- [Spring2.x(WebFlux) + ReactiveRedis](https://warpgate3.tistory.com/entry/Spring2xWebFlux-ReactiveRedis)
+
 ### etc.
 
 - [Curl command for GraphQL Subscriptions](https://stackoverflow.com/questions/73232291/curl-command-for-graphql-subscriptions)

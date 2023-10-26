@@ -13,3 +13,7 @@ graphql: # https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring
 #  sdl:
 #    enabled: true
 #    endpoint: sdl
+
+REDIS_HOST: localhost
+REDIS_PORT: 6379
+REDIS_PASSWORD: ${REDIS_PASSWORD_VALUE:}
