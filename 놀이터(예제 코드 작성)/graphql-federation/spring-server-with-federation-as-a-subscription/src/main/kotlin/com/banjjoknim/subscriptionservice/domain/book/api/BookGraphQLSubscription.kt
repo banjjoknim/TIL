@@ -2,23 +2,25 @@ package com.banjjoknim.subscriptionservice.domain.book.api
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Subscription
+import org.springframework.data.redis.listener.ChannelTopic
+import org.springframework.data.redis.listener.ReactiveRedisMessageListenerContainer
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
-import java.time.Duration
-import kotlin.random.Random
 
 @Component
-class BookGraphQLSubscription : Subscription {
+class BookGraphQLSubscription(
+    private val redisMessageListenerContainer: ReactiveRedisMessageListenerContainer,
+) : Subscription {
 
-    private val books = mapOf(0 to "어린왕자", 1 to "보물섬", 2 to "피터팬")
 
-    @GraphQLDescription("무작위 번호로 책 이름을 조회한다.")
-    fun randomBookName(): Flux<String> {
-        return Flux.interval(Duration.ofSeconds(1))
-            .mapNotNull {
-                val number = Random.nextInt(from = 0, until = 3)
-                println("number is created. value: $number")
-                books[number]
-            }
+    companion object {
+        private val channelTopic = ChannelTopic.of("pickupBook")
+    }
+
+    @GraphQLDescription("사용자가 책을 집을 경우 이에 대한 정보를 알린다")
+    fun notifyPickupBook(): Flux<String> {
+        return redisMessageListenerContainer.receive(channelTopic)
+            .map { it.message }
+            .doOnEach { message -> println("Message has received. message: $message") }
     }
 }
