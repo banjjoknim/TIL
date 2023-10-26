@@ -11,11 +11,13 @@ class BookGraphQLQuery(
     private val redisTemplate: ReactiveStringRedisTemplate,
 ) : Query {
 
-    @GraphQLDescription("번호로 책을 조회한다.")
-    fun getBook(number: Int): BookResponse {
+    @GraphQLDescription("번호로 책을 집는다")
+    fun pickupBook(number: Int): BookResponse {
         val book = BookDataSource.getBook(number)
-        redisTemplate.convertAndSend("pickupBook", "book has picked up. number: $number, title: ${book.title}")
-            .subscribe()
+        redisTemplate.convertAndSend(
+            "pickupBook",
+            "book has picked up with number: $number. it's title is [${book.title}]"
+        ).subscribe()
         return BookResponse(book)
     }
 }
