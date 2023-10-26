@@ -13,3 +13,6 @@ graphql: # https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring
 #  sdl:
 #    enabled: true
 #    endpoint: sdl
+
+server:
+  port: 8081
