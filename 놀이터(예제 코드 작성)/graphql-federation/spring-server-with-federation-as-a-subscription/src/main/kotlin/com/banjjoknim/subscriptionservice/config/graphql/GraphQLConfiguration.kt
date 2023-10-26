@@ -6,8 +6,6 @@ import com.expediagroup.graphql.generator.federation.execution.FederatedTypeReso
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.expediagroup.graphql.server.Schema
 import graphql.GraphQL
-import graphql.execution.AsyncExecutionStrategy
-import graphql.execution.AsyncSerialExecutionStrategy
 import graphql.execution.DataFetcherExceptionHandler
 import graphql.schema.GraphQLSchema
 import org.springframework.context.annotation.Bean
@@ -65,8 +63,6 @@ class GraphQLConfiguration {
         val dataFetcherExceptionHandler = object : DataFetcherExceptionHandler {} // 기본 구현체 사용
 //        val customDataFetcherExceptionHandler = CustomDataFetcherExceptionHandler() // 사용자 정의 구현체 사용
         return GraphQL.newGraphQL(schema)
-            .queryExecutionStrategy(AsyncExecutionStrategy(dataFetcherExceptionHandler))
-            .mutationExecutionStrategy(AsyncSerialExecutionStrategy(dataFetcherExceptionHandler))
             .subscriptionExecutionStrategy(FlowSubscriptionExecutionStrategy(dataFetcherExceptionHandler))
             .build()
     }
