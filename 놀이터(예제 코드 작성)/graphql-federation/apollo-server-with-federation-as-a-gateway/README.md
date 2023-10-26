@@ -1,5 +1,11 @@
 # GraphQL Federation SuperGraph Gateway Sample
 
+## Subscription With Federation Data Graph Architecture 참조
+
+![architecture.svg](..%2Farchitecture.svg)
+
+출처 : [apollosolutions/federation-subscription-tools](https://github.com/apollosolutions/federation-subscription-tools)
+
 ## 실행 방법
 
 ### Apollo Server, Apollo Router 공통 (1 ~ 3 과정)

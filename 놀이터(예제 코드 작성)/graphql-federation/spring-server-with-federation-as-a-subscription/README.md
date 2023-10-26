@@ -6,6 +6,12 @@
 
 ![img.png](libraries.png)
 
+## Subscription With Federation Data Graph Architecture 참조
+
+![architecture.svg](..%2Farchitecture.svg)
+
+출처 : [apollosolutions/federation-subscription-tools](https://github.com/apollosolutions/federation-subscription-tools)
+
 ## 참고 자료
 
 ### GraphQL Kotlin (ExpediaGroup)
@@ -33,6 +39,8 @@
   - [Is this possible to server websocket handler and normal servlet over same context?](https://stackoverflow.com/questions/48006498/is-this-possible-to-server-websocket-handler-and-normal-servlet-over-same-contex)
   - [Subscriptions in Apollo Server](https://www.apollographql.com/docs/apollo-server/data/subscriptions/)
   - [The WebSocket API (WebSockets)](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+
+- [apollosolutions/federation-subscription-tools](https://github.com/apollosolutions/federation-subscription-tools)
 
 ### Spring Redis
 
