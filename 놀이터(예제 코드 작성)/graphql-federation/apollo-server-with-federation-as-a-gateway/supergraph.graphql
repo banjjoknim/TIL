@@ -52,13 +52,13 @@ type Query
   @join__type(graph: BOOK_API)
   @join__type(graph: BOOK_SUBSCRIPTION)
 {
-  """번호로 책을 조회한다."""
-  getBook(number: Int!): BookResponse! @join__field(graph: BOOK_API)
+  """번호로 책을 집는다"""
+  pickupBook(number: Int!): BookResponse! @join__field(graph: BOOK_API)
 }
 
 type Subscription
   @join__type(graph: BOOK_SUBSCRIPTION)
 {
-  """무작위 번호로 책 이름을 조회한다."""
-  randomBookName: String!
+  """사용자가 책을 집을 경우 이에 대한 정보를 알린다"""
+  notifyPickupBook: String!
 }
