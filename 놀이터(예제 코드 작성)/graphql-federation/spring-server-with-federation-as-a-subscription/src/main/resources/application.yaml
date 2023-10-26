@@ -16,3 +16,7 @@ graphql: # https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring
 
 server:
   port: 8081
+
+REDIS_HOST: localhost
+REDIS_PORT: 6379
+REDIS_PASSWORD: ${REDIS_PASSWORD_VALUE:}
