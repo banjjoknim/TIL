@@ -1,4 +1,4 @@
-package com.banjjoknim.subgraphservice.domain.book.api
+package com.banjjoknim.subscriptionservice.domain.book.api
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Subscription
