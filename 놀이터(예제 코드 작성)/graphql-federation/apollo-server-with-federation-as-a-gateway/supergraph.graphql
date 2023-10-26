@@ -20,16 +20,18 @@ directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on
 
 directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
 
-type Book
-  @join__type(graph: BOOK)
+type BookResponse
+  @join__type(graph: BOOK_API)
 {
+  number: Int!
   title: String!
 }
 
 scalar join__FieldSet
 
 enum join__Graph {
-  BOOK @join__graph(name: "book", url: "http://localhost:8080/graphql")
+  BOOK_API @join__graph(name: "book_api", url: "http://localhost:8080/graphql")
+  BOOK_SUBSCRIPTION @join__graph(name: "book_subscription", url: "http://localhost:8081/graphql")
 }
 
 scalar link__Import
@@ -47,14 +49,15 @@ enum link__Purpose {
 }
 
 type Query
-  @join__type(graph: BOOK)
+  @join__type(graph: BOOK_API)
+  @join__type(graph: BOOK_SUBSCRIPTION)
 {
-  """제목으로 책을 조회한다."""
-  getBook(title: String!): Book!
+  """번호로 책을 조회한다."""
+  getBook(number: Int!): BookResponse! @join__field(graph: BOOK_API)
 }
 
 type Subscription
-  @join__type(graph: BOOK)
+  @join__type(graph: BOOK_SUBSCRIPTION)
 {
   """무작위 번호로 책 이름을 조회한다."""
   randomBookName: String!
