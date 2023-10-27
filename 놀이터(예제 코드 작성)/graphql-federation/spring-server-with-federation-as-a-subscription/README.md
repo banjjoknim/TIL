@@ -105,4 +105,6 @@ tasks.withType<Test> {
 - [How to read a websocket response with cURL](https://stackoverflow.com/questions/47860689/how-to-read-a-websocket-response-with-curl)
 - [Add WebSocket support to WebFlux Functional API (and Kotlin DSL) [SPR-16770] #19476](https://github.com/spring-projects/spring-framework/issues/19476)
 - [Subscription on netty http not working #458](https://github.com/spring-projects/spring-graphql/issues/458)
-
+- [/var/lib/docker/tmp/docker-builderXXXXXXX/... no such file or directory #1922](https://github.com/docker/for-mac/issues/1922)
+- [openjdk:17-alpine](https://hub.docker.com/layers/library/openjdk/17-alpine/images/sha256-a996cdcc040704ec6badaf5fecf1e144c096e00231a29188596c784bcf858d05)
+- [COPY failed: stat /var/lib/docker/tmp/docker-xxx : no such file or directory](https://stackoverflow.com/questions/63455621/copy-failed-stat-var-lib-docker-tmp-docker-xxx-no-such-file-or-directory)
