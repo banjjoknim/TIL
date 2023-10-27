@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+
+  apollo-server-with-federation-as-a-gateway:
+    container_name: apollo-server-with-federation-as-a-gateway
+    build:
+      context: ./apollo-server-with-federation-as-a-gateway
+    ports:
+      - 4000:4000
+    restart: always
+    depends_on:
+      - spring-server-with-federation-as-a-subgraph
+      - spring-server-with-federation-as-a-subscription
+    command: npm run start
+
+  spring-server-with-federation-as-a-subgraph:
+    container_name: spring-server-with-federation-as-a-subgraph
+    restart: always
+    build:
+      context: ./spring-server-with-federation-as-a-subgraph
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis-for-connecting-subgraph-and-subscription
+    command: java -jar build/libs/app.jar
+
+  spring-server-with-federation-as-a-subscription:
+    container_name: spring-server-with-federation-as-a-subscription
+    restart: always
+    build:
+      context: ./spring-server-with-federation-as-a-subscription
+    ports:
+      - 8081:8081
+    depends_on:
+      - redis-for-connecting-subgraph-and-subscription
+    command: java -jar build/libs/app.jar
+
+  redis-for-connecting-subgraph-and-subscription:
+#    image: redis:5.0.9-alpine
+    container_name: redis-for-connecting-subgraph-and-subscription
+    build:
+      context: ./redis-for-connecting-subgraph-and-subscription
+    ports:
+      - 6379:6379
+    restart: always
+
+  react-client-app-for-connect-with-subscription:
+    container_name: react-client-app-for-connect-with-subscription
+    restart: always
+    build:
+      context: ./react-client-app-for-connect-with-subscription
+    env_file:
+      - ./react-client-app-for-connect-with-subscription/.env
+    ports:
+      - 3000:3000
+    stdin_open: true
+    command: npm start

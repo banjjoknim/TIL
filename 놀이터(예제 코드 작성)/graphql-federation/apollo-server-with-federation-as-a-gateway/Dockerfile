@@ -17,4 +17,4 @@ RUN ln -s /root/.rover/bin/rover /usr/local/bin/rover
 
 EXPOSE 4000
 
-CMD [ "npm", "run", "start" ]
+#CMD [ "npm", "run", "start" ]
