@@ -20,6 +20,7 @@
 > 3. 본 프로젝트의 `compose_supergraph.sh` 파일을 실행한다.
 >
 >```shell
+>chmod +x compose_supergraph.sh
 >sh compose_supergraph.sh
 >```
 >
@@ -161,6 +162,7 @@
 - [Implementing a gateway with Apollo Server](https://www.apollographql.com/docs/apollo-server/using-federation/apollo-gateway-setup)
 - [Schema composition](https://www.apollographql.com/docs/federation/federated-types/composition/#supported-methods)
 - [The Rover CLI](https://www.apollographql.com/docs/rover)
+  - [Installing Rover](https://www.apollographql.com/docs/rover/getting-started)
 - [Rover supergraph commands](https://www.apollographql.com/docs/rover/commands/supergraphs)
 - [Federation-compatible subgraph implementations](https://www.apollographql.com/docs/federation/building-supergraphs/supported-subgraphs/)
 - [API Reference: @apollo/gateway](https://www.apollographql.com/docs/apollo-server/using-federation/api/apollo-gateway/)
