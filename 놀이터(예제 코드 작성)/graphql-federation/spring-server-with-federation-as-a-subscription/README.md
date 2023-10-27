@@ -1,4 +1,4 @@
-# GraphQL Federation Subscription Server Sample
+# GraphQL Federation Subscription Server Sample료
 
 ## GraphQL 관련 라이브러리 버전 참조
 
