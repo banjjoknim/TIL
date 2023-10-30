@@ -101,3 +101,14 @@ Error: error:0308010C:digital envelope routines::unsupported
 
 }
 ```
+
+### ENV File
+
+브라우저(크롬 등)는 서버처럼 `Docker Network 내부`가 아닌 `로컬 환경(Docker Network 내부가 아닌 Host 환경)`에서 열리는 것이기 때문에 아래와 같이 환경변수를 설정한다.
+
+- `.env`
+
+```text
+REACT_APP_GATEWAY_API_URL=http://localhost:4000/graphq
+REACT_APP_SUBSCRIPTIONS_API_URL=ws://localhost:8081/subscriptions
+```
