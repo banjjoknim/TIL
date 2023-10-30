@@ -1,0 +1,36 @@
+federation_version: =2.5.0
+subgraphs:
+
+#  # Local .graphql file
+#  films:
+#    routing_url: https://films.example.com
+#    schema:
+#      file: ./films.graphql
+
+  # Subgraph introspection
+  book_api:
+    routing_url: http://spring-server-with-federation-as-a-subgraph:8080/graphql  # <- can be omitted if the same as introspection URL
+#    routing_url: http://localhost:8080/graphql  # <- can be omitted if the same as introspection URL
+    schema:
+      subgraph_url: http://spring-server-with-federation-as-a-subgraph:8080/graphql
+#      subgraph_url: http://localhost:8080/graphql
+
+#      introspection_headers:  # Optional headers to include in introspection request
+#        Authorization: Bearer ${env.PEOPLE_AUTH_TOKEN}
+
+  book_subscription:
+    routing_url: http://spring-server-with-federation-as-a-subscription:8081/graphql
+#    routing_url: http://localhost:8081/graphql
+    schema:
+      subgraph_url: http://spring-server-with-federation-as-a-subscription:8081/graphql
+#      subgraph_url: http://localhost:8081/graphql
+
+#      introspection_headers:  # Optional headers to include in introspection request
+#        Authorization: Bearer ${env.PEOPLE_AUTH_TOKEN}
+
+#  # Apollo Studio graph ref
+#  actors:
+#    routing_url: http://localhost:4005  # <- can be omitted if matches existing URL in Studio
+#    schema:
+#      graphref: mygraph@current
+#      subgraph: actors

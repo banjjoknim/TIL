@@ -1,0 +1,22 @@
+logging:
+  level:
+    root: debug
+
+graphql: # https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring-server/spring-properties 참조.
+  packages: # packages 항목을 제외한 나머지는 모두 기본값이 존재함. GraphQLConfigurationProperties 참조.
+    - "com.banjjoknim.subgraphservice"
+#  playground:
+#    enabled: true
+#    endpoint: playground
+#  subscriptions:
+#    endpoint: subscriptions
+#  sdl:
+#    enabled: true
+#    endpoint: sdl
+
+spring:
+  data:
+    redis:
+      client-type: lettuce
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
