@@ -4,9 +4,10 @@
 
 ### `터미널`을 이용해 실행할 경우
 
-- 아래의 명령어를 실행한다.
+- 아래의 명령어를 순서대로 실행한다.
 
 ```shell
+npm install --no-optional && npm cache clean --force
 npm run start
 ```
 
