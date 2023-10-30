@@ -13,6 +13,8 @@ services:
       - spring-server-with-federation-as-a-subgraph
       - spring-server-with-federation-as-a-subscription
     command: npm run start
+    environment:
+      APOLLO_ELV2_LICENSE: accept
 
   spring-server-with-federation-as-a-subgraph:
     container_name: spring-server-with-federation-as-a-subgraph
@@ -24,6 +26,9 @@ services:
     depends_on:
       - redis-for-connecting-subgraph-and-subscription
     command: java -jar build/libs/app.jar
+    environment:
+      REDIS_HOST: redis-for-connecting-subgraph-and-subscription
+      REDIS_PORT: 6379
 
   spring-server-with-federation-as-a-subscription:
     container_name: spring-server-with-federation-as-a-subscription
@@ -35,6 +40,9 @@ services:
     depends_on:
       - redis-for-connecting-subgraph-and-subscription
     command: java -jar build/libs/app.jar
+    environment:
+      REDIS_HOST: redis-for-connecting-subgraph-and-subscription
+      REDIS_PORT: 6379
 
   redis-for-connecting-subgraph-and-subscription:
 #    image: redis:5.0.9-alpine
@@ -44,6 +52,8 @@ services:
     ports:
       - 6379:6379
     restart: always
+    environment:
+      HELLO: WORLD
 
   react-client-app-for-connect-with-subscription:
     container_name: react-client-app-for-connect-with-subscription
@@ -55,4 +65,6 @@ services:
     ports:
       - 3000:3000
     stdin_open: true
+    depends_on:
+      - spring-server-with-federation-as-a-subscription
     command: npm start
