@@ -1,17 +1,20 @@
 package com.banjjoknim.subgraphservice.config.redis
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory
+import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 
 @Configuration
 class RedisConfiguration {
 
-    @Value("\${REDIS_HOST}")
+    @Value("\${spring.data.redis.host}")
     private lateinit var redisHost: String
 
-    @Value("\${REDIS_PORT}")
+    @Value("\${spring.data.redis.port}")
     private lateinit var redisPort: String
 
     /**
@@ -30,6 +33,11 @@ class RedisConfiguration {
      */
 //    @Bean // 주석처리에 대해서는 상기 doc에 기재된 내용 참조.
     fun connectionFactory(): ReactiveRedisConnectionFactory {
-        return LettuceConnectionFactory(redisHost, redisPort.toInt())
+        return LettuceConnectionFactory(RedisStandaloneConfiguration(redisHost, redisPort.toInt()))
+    }
+
+    @Bean
+    fun redisConnectionFactory(): RedisConnectionFactory {
+        return LettuceConnectionFactory(RedisStandaloneConfiguration(redisHost, redisPort.toInt()))
     }
 }

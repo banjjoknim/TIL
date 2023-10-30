@@ -1,6 +1,7 @@
-package com.banjjoknim.subgraphservice.config.redis
+package com.banjjoknim.subscriptionservice.config.redis
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.*
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
@@ -8,10 +9,10 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 @Configuration
 class RedisConfiguration {
 
-    @Value("\${REDIS_HOST}")
+    @Value("\${spring.data.redis.host}")
     private lateinit var redisHost: String
 
-    @Value("\${REDIS_PORT}")
+    @Value("\${spring.data.redis.port}")
     private lateinit var redisPort: String
 
     /**
@@ -23,6 +24,11 @@ class RedisConfiguration {
      */
 //    @Bean // 다수의 Bean 으로 인한 autoconfigure 실패로 인해 주석처리
     fun connectionFactory(): ReactiveRedisConnectionFactory {
-        return LettuceConnectionFactory(redisHost, redisPort.toInt())
+        return LettuceConnectionFactory(RedisStandaloneConfiguration(redisHost, redisPort.toInt()))
+    }
+
+    @Bean
+    fun redisConnectionFactory(): RedisConnectionFactory {
+        return LettuceConnectionFactory(RedisStandaloneConfiguration(redisHost, redisPort.toInt()))
     }
 }
