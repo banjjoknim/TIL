@@ -8,7 +8,7 @@ import org.springframework.data.redis.listener.ReactiveRedisMessageListenerConta
 
 @Profile("redis")
 @Configuration
-class RedisMessagingConfiguration(
+class RedisMessageListenerContainerConfiguration(
     private val connectionFactory: ReactiveRedisConnectionFactory,
 ) {
 

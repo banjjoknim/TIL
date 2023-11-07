@@ -1,3 +1,7 @@
+spring:
+  profiles:
+    default: redis
+
 logging:
   level:
     root: debug
@@ -16,10 +20,20 @@ graphql: # https://opensource.expediagroup.com/graphql-kotlin/docs/server/spring
 
 server:
   port: 8081
-
+---
 spring:
+  config:
+    activate:
+      on-profile: redis
   data:
     redis:
       client-type: lettuce
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+---
+spring:
+  config:
+    activate:
+      on-profile: kafka
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:localhost}:29092
