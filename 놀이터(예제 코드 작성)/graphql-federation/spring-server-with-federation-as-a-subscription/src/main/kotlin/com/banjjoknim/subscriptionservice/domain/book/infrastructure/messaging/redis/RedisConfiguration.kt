@@ -1,12 +1,14 @@
-package com.banjjoknim.subscriptionservice.config.messaging.redis
+package com.banjjoknim.subscriptionservice.domain.book.infrastructure.messaging.redis
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
+import org.springframework.context.annotation.Profile
 import org.springframework.data.redis.connection.*
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 
+@Profile("redis")
 @Configuration
 class RedisConfiguration {
 
