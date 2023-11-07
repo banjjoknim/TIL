@@ -1,10 +1,12 @@
-package com.banjjoknim.subscriptionservice.config.redis
+package com.banjjoknim.subgraphservice.config.messaging.redis
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
-import org.springframework.data.redis.connection.*
+import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory
+import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 
 @Configuration
@@ -36,21 +38,21 @@ class RedisConfiguration {
         return LettuceConnectionFactory(RedisStandaloneConfiguration(redisHost, redisPort.toInt()))
     }
 
-    /**
-     * ```java
-     *  @Bean
-     * 	@ConditionalOnMissingBean(RedisConnectionFactory.class)
-     * 	LettuceConnectionFactory redisConnectionFactory(
-     * 			ObjectProvider<LettuceClientConfigurationBuilderCustomizer> builderCustomizers,
-     * 			ClientResources clientResources) {
-     * 		LettuceClientConfiguration clientConfig = getLettuceClientConfiguration(builderCustomizers, clientResources,
-     * 				getProperties().getLettuce().getPool());
-     * 		return createLettuceConnectionFactory(clientConfig);
-     * 	}
-     * 	```
-     *
-     * 	@see org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration // RedisConnectionFactory 타입 Bean이 존재하지 않을 경우 자동으로 redisConnectionFactory Bean을 등록함.
-     */
+        /**
+         * ```java
+         *  @Bean
+         * 	@ConditionalOnMissingBean(RedisConnectionFactory.class)
+         * 	LettuceConnectionFactory redisConnectionFactory(
+         * 			ObjectProvider<LettuceClientConfigurationBuilderCustomizer> builderCustomizers,
+         * 			ClientResources clientResources) {
+         * 		LettuceClientConfiguration clientConfig = getLettuceClientConfiguration(builderCustomizers, clientResources,
+         * 				getProperties().getLettuce().getPool());
+         * 		return createLettuceConnectionFactory(clientConfig);
+         * 	}
+         * 	```
+         *
+         * 	@see org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration // RedisConnectionFactory 타입 Bean이 존재하지 않을 경우 자동으로 redisConnectionFactory Bean을 등록함.
+         */
     //    @Bean
     fun redisConnectionFactory(): RedisConnectionFactory {
         return LettuceConnectionFactory(RedisStandaloneConfiguration(redisHost, redisPort.toInt()))

@@ -1,4 +1,4 @@
-package com.banjjoknim.subscriptionservice.config.redis
+package com.banjjoknim.subscriptionservice.config.messaging.redis
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
