@@ -1,9 +1,9 @@
 import React from "react";
 import {useSubscription} from "@apollo/client";
-import {NOTIFY_PICKUP_BOOK} from "../graphql/subscriptions";
+import {SUBSCRIBE_PICKUP_BOOK_NOTI_CHANNEL} from "../graphql/subscriptions";
 
 function NotiAboutBookOfPickedUpPage() {
-  const {data, loading} = useSubscription(NOTIFY_PICKUP_BOOK);
+  const {data, loading} = useSubscription(SUBSCRIBE_PICKUP_BOOK_NOTI_CHANNEL);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -12,8 +12,8 @@ function NotiAboutBookOfPickedUpPage() {
   return (
       <div>
         <h2>Notification About Book of Picked Up</h2>
-        {data && data.notifyPickupBook ? (
-            <p>{data.notifyPickupBook}</p>
+        {data && data.subscribePickupBookNotiChannel ? (
+            <p>{data.subscribePickupBookNotiChannel}</p>
         ) : (
             <p>There is No Book Picked Up!</p>
         )}
