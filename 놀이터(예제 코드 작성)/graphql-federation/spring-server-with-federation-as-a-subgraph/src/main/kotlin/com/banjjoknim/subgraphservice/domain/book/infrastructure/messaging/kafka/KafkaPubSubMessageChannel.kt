@@ -1,7 +1,7 @@
 package com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.kafka
 
-import com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.MessageChannel
 import com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.PubSubMessage
+import com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.PubSubMessageChannel
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
 import org.springframework.kafka.core.KafkaTemplate
@@ -11,9 +11,9 @@ import java.util.concurrent.CompletableFuture
 
 @Profile("kafka")
 @Component
-class KafkaChannel(
+class KafkaPubSubMessageChannel(
     private val kafkaTemplate: KafkaTemplate<String, String>,
-) : MessageChannel {
+) : PubSubMessageChannel {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
