@@ -1,7 +1,6 @@
 package com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.kafka
 
 import org.apache.kafka.clients.admin.AdminClientConfig
-import org.apache.kafka.clients.admin.NewTopic
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Value
@@ -25,11 +24,6 @@ class KafkaConfiguration {
         val configs: MutableMap<String, Any?> = HashMap()
         configs[AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapAddress
         return KafkaAdmin(configs)
-    }
-
-    @Bean
-    fun topic(): NewTopic {
-        return NewTopic("pickupBook", 1, 1.toShort())
     }
 
     @Bean
