@@ -1,7 +1,7 @@
 version: '2'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: confluentinc/cp-zookeeper:7.5.1
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -9,7 +9,7 @@ services:
       - "22181:2181"
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.5.1
     depends_on:
       - zookeeper
     ports:
@@ -21,8 +21,9 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
   console:
-    image: docker.redpanda.com/redpandadata/console:latest
+    image: docker.redpanda.com/redpandadata/console:v2.3.5
     depends_on:
       - kafka
     ports:
