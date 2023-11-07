@@ -7,7 +7,7 @@ services:
     build:
       context: ./apollo-server-with-federation-as-a-gateway
     ports:
-      - 4000:4000
+      - "4000:4000"
     restart: always
     depends_on:
       - spring-server-with-federation-as-a-subgraph
@@ -22,13 +22,13 @@ services:
     build:
       context: ./spring-server-with-federation-as-a-subgraph
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - redis-for-connecting-subgraph-and-subscription
+      - kafka-for-connecting-subgraph-and-subscription
     command: java -jar build/libs/app.jar
-    environment:
-      REDIS_HOST: redis-for-connecting-subgraph-and-subscription
-      REDIS_PORT: 6379
+    env_file:
+      - docker-compose-spring-server.env
 
   spring-server-with-federation-as-a-subscription:
     container_name: spring-server-with-federation-as-a-subscription
@@ -36,13 +36,13 @@ services:
     build:
       context: ./spring-server-with-federation-as-a-subscription
     ports:
-      - 8081:8081
+      - "8081:8081"
     depends_on:
       - redis-for-connecting-subgraph-and-subscription
+      - kafka-for-connecting-subgraph-and-subscription
     command: java -jar build/libs/app.jar
-    environment:
-      REDIS_HOST: redis-for-connecting-subgraph-and-subscription
-      REDIS_PORT: 6379
+    env_file:
+      - docker-compose-spring-server.env
 
   redis-for-connecting-subgraph-and-subscription:
 #    image: redis:5.0.9-alpine
@@ -50,7 +50,7 @@ services:
     build:
       context: ./redis-for-connecting-subgraph-and-subscription
     ports:
-      - 6379:6379
+      - "6379:6379"
     restart: always
     environment:
       HELLO: WORLD
@@ -63,7 +63,7 @@ services:
     env_file:
       - ./react-client-app-for-connect-with-subscription/.env
     ports:
-      - 3000:3000
+      - "3000:3000"
     stdin_open: true
     depends_on:
       - spring-server-with-federation-as-a-subscription
@@ -78,7 +78,7 @@ services:
     ports:
       - "22181:2181"
 
-  kafka:
+  kafka-for-connecting-subgraph-and-subscription:
     image: confluentinc/cp-kafka:7.5.1
     depends_on:
       - zookeeper
@@ -87,7 +87,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://kafka:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-for-connecting-subgraph-and-subscription:9092,PLAINTEXT_HOST://kafka-for-connecting-subgraph-and-subscription:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -95,8 +95,8 @@ services:
   console:
     image: docker.redpanda.com/redpandadata/console:v2.3.5
     depends_on:
-      - kafka
+      - kafka-for-connecting-subgraph-and-subscription
     ports:
-      - 18080:8080
+      - "18080:8080"
     environment:
-      KAFKA_BROKERS: kafka:9092
+      KAFKA_BROKERS: kafka-for-connecting-subgraph-and-subscription:9092
