@@ -1,4 +1,4 @@
-package com.banjjoknim.subgraphservice.config.messaging.kafka
+package com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.kafka
 
 import org.apache.kafka.clients.admin.AdminClientConfig
 import org.apache.kafka.clients.admin.NewTopic

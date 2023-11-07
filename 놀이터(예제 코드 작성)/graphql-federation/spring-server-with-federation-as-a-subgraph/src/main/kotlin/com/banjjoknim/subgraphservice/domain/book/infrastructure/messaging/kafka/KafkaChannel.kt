@@ -1,5 +1,7 @@
-package com.banjjoknim.subgraphservice.domain.book.infrastructure
+package com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.kafka
 
+import com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.MessageChannel
+import com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.PubSubMessage
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
 import org.springframework.kafka.core.KafkaTemplate

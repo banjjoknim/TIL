@@ -1,4 +1,4 @@
-package com.banjjoknim.subgraphservice.domain.book.infrastructure
+package com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging
 
 interface MessageChannel {
 

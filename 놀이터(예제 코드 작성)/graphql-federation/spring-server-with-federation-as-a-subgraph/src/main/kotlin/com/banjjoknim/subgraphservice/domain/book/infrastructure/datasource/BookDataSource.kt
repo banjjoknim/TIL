@@ -1,4 +1,6 @@
-package com.banjjoknim.subgraphservice.domain.book.datasource
+package com.banjjoknim.subgraphservice.domain.book.infrastructure.datasource
+
+import com.banjjoknim.subgraphservice.domain.book.model.Book
 
 object BookDataSource {
 

@@ -1,9 +1,9 @@
 package com.banjjoknim.subgraphservice.domain.book.application
 
 import com.banjjoknim.subgraphservice.domain.book.api.BookResponse
-import com.banjjoknim.subgraphservice.domain.book.datasource.BookDataSource
-import com.banjjoknim.subgraphservice.domain.book.infrastructure.MessageChannel
-import com.banjjoknim.subgraphservice.domain.book.infrastructure.PubSubMessage
+import com.banjjoknim.subgraphservice.domain.book.infrastructure.datasource.BookDataSource
+import com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.MessageChannel
+import com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.PubSubMessage
 import org.springframework.stereotype.Service
 
 @Service

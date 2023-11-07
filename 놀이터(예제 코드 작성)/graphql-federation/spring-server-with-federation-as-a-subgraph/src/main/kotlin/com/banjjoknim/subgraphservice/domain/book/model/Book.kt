@@ -1,4 +1,4 @@
-package com.banjjoknim.subgraphservice.domain.book.datasource
+package com.banjjoknim.subgraphservice.domain.book.model
 
 data class Book(
     val number: Int,

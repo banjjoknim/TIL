@@ -1,4 +1,4 @@
-package com.banjjoknim.subgraphservice.config.messaging.redis
+package com.banjjoknim.subgraphservice.domain.book.infrastructure.messaging.redis
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
