@@ -13,7 +13,7 @@
  */
 ```
 
-편의상 서버 기동시에는 `Redis`, `Kafka` 서버 모두 구동되도록 되어있음. `Spring Server` 의 기본값은 `Redis`를 사용하는 것으로 설정되어 있음에 유의.
+편의상 `docker-compose`를 이용한 서버 기동시에는 `Redis`, `Kafka` 서버 모두 구동되도록 되어있음. `Spring Server` 의 기본값은 `Redis`를 사용하는 것으로 설정되어 있음에 유의.
 
 1. `docker-compose`를 통해 구성 프로젝트 전체 실행
 
