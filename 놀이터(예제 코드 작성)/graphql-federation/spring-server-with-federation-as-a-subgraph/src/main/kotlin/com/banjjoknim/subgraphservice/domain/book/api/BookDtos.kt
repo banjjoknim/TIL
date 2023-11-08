@@ -1,6 +1,6 @@
 package com.banjjoknim.subgraphservice.domain.book.api
 
-import com.banjjoknim.subgraphservice.domain.book.datasource.Book
+import com.banjjoknim.subgraphservice.domain.book.model.Book
 
 data class BookResponse(
     val number: Int,

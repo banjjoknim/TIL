@@ -31,6 +31,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.expediagroup/graphql-kotlin-spring-server
     implementation("com.expediagroup:graphql-kotlin-spring-server:7.0.1")
 //    implementation("com.expediagroup:graphql-kotlin-spring-server:7.0.0-alpha.0")
+
+    implementation("org.springframework.kafka:spring-kafka")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
 }
 
 tasks.withType<KotlinCompile> {

@@ -1,7 +1,7 @@
 import {gql} from "@apollo/client";
 
-export const NOTIFY_PICKUP_BOOK = gql`
-  subscription NotifyPickupBook {
-      notifyPickupBook
+export const SUBSCRIBE_PICKUP_BOOK_NOTI_CHANNEL = gql`
+  subscription SubscribePickupBookNotiChannel {
+      subscribePickupBookNotiChannel
   }
 `
