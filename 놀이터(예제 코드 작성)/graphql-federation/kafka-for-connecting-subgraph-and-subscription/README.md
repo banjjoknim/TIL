@@ -16,5 +16,4 @@ docker-compose up
 - [confluentinc/cp-zookeeper](https://hub.docker.com/r/confluentinc/cp-zookeeper/)
 - [docker compose up](https://docs.docker.com/engine/reference/commandline/compose_up/)
 - [Guide to Setting Up Apache Kafka Using Docker](https://www.baeldung.com/ops/kafka-docker-setup)
-- [Intro to Apache Kafka with Spring](https://www.baeldung.com/spring-kafka)
 - [redpandadata/console](https://hub.docker.com/r/redpandadata/console)
