@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-sample
+  namespace: test
+spec:
+  selector:
+    matchLabels:
+      app: argocd-sample
+  replicas: 1
+  revisionHistoryLimit: 3
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: argocd-sample
+    spec:
+      containers:
+        - image: banjjoknim/argocd-sample:1
+          name: argocd-sample
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: argocd-sample-config
+            - secretRef:
+                name: argocd-sample-secret
