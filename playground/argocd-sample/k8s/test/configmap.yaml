@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-sample-config
+  namespace: test
+data:
+  APPLICATION_VERSION_VALUE: "v1"
