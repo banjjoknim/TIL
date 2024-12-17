@@ -1,5 +1,6 @@
 rootProject.name = "TIL"
 include("playground:argocd-sample")
+include("playground:ddd-start2")
 include("playground:graphql-federation")
 include("playground:graphql-kotlin")
 include("playground:jackson")
