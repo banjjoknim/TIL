@@ -25,6 +25,10 @@ dependencies {
 	// webp
 	// https://mvnrepository.com/artifact/org.sejda.imageio/webp-imageio
 	implementation("org.sejda.imageio:webp-imageio:0.1.6")
+
+	// image metadata
+	// https://mvnrepository.com/artifact/com.drewnoakes/metadata-extractor
+	implementation("com.drewnoakes:metadata-extractor:2.19.0")
 }
 
 tasks.withType<KotlinCompile> {
