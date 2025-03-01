@@ -2,6 +2,35 @@
 
 이미지 처리의 기본적인 것들을 구현한다.
 
+## 필요 의존성
+
+Heic 확장자를 지원하기 위해서는 ImageMagick의 설치가 필요하다.
+
+- [ImageMagick](https://imagemagick.org/)
+- [ImageMagick Download](https://imagemagick.org/script/download.php)
+
+### MacOS
+
+```shell
+brew install imagemagick
+```
+
+### Linux
+
+1. apt (Debian/Ubuntu)
+
+```shell
+apt update
+apt install -y imagemagick
+```
+
+2. apk (Alpine Linux)
+
+```shell
+apk update
+apk add imagemagick
+```
+
 ## 이미지 업로드
 
 <details>
