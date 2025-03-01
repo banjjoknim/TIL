@@ -24,10 +24,9 @@ data class ThumbnailGenerator(
         )
 
         /**
-         * BufferedImage로 변환, 투명성 지원(알파 채널)
-         * 원본 이미지를 썸네일 크기로 축소
+         * BufferedImage로 변환, 원본 이미지를 썸네일 크기로 축소
          */
-        val bufferedThumbnail = BufferedImage(thumbnailSize.width, thumbnailSize.height, BufferedImage.TYPE_INT_ARGB)
+        val bufferedThumbnail = BufferedImage(thumbnailSize.width, thumbnailSize.height, thumbnailImageType())
         val graphics = bufferedThumbnail.createGraphics()
         graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC)
         val thumbnail = originalImage.getScaledInstance(thumbnailSize.width, thumbnailSize.height, Image.SCALE_SMOOTH)
@@ -51,7 +50,7 @@ data class ThumbnailGenerator(
         val correctedImage = BufferedImage(
             correctImageTransform.transformWidth,
             correctImageTransform.transformHeight,
-            BufferedImage.TYPE_INT_ARGB
+            thumbnailImageType(),
         )
         val g2d: Graphics2D = correctedImage.createGraphics()
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC)
@@ -61,5 +60,15 @@ data class ThumbnailGenerator(
         g2d.dispose()
 
         return correctedImage
+    }
+
+    /**
+     * jpg, jpeg는 투명도(알파 채널)을 지원하지 않는다.
+     */
+    private fun thumbnailImageType(): Int {
+        return when (this.thumbnailType) {
+            "jpg", "jpeg" -> BufferedImage.TYPE_INT_RGB
+            else -> BufferedImage.TYPE_INT_ARGB // e.g. png, webp, ...
+        }
     }
 }
