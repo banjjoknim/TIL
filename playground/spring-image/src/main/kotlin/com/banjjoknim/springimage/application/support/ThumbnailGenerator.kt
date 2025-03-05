@@ -26,19 +26,28 @@ data class ThumbnailGenerator(
         /**
          * BufferedImage로 변환, 원본 이미지를 썸네일 크기로 축소
          */
-        val bufferedThumbnail = BufferedImage(thumbnailSize.width, thumbnailSize.height, thumbnailImageType())
-        val graphics = bufferedThumbnail.createGraphics()
-        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC)
-        val thumbnail = originalImage.getScaledInstance(thumbnailSize.width, thumbnailSize.height, Image.SCALE_SMOOTH)
-        graphics.drawImage(thumbnail, 0, 0, null)
-        graphics.dispose()
+        val thumbnail = try {
+            val bufferedImage = BufferedImage(thumbnailSize.width, thumbnailSize.height, thumbnailImageType())
+            val graphics = bufferedImage.createGraphics()
+            graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC)
+            graphics.drawImage(originalImage, 0, 0, thumbnailSize.width, thumbnailSize.height, null)
+            graphics.dispose()
+            bufferedImage
+        } finally {
+            originalImage.flush() // 명시적으로 메모리 해제
+        }
 
         // 이미지의 회전, 배치 방향을 보정한다
-        val correctedImage = doCorrectImageOrientation(bufferedThumbnail, orientation)
+        val correctedImage = doCorrectImageOrientation(thumbnail, orientation)
 
         // BufferedImage 의 Bytes 를 output에 씀
         val thumbnailByteArrayOutputStream = ByteArrayOutputStream()
-        ImageIO.write(correctedImage, thumbnailType, thumbnailByteArrayOutputStream)
+        try {
+            ImageIO.write(correctedImage, thumbnailType, thumbnailByteArrayOutputStream)
+        } finally {
+            correctedImage.flush() // 명시적으로 메모리 해제
+        }
+
 
         return thumbnailByteArrayOutputStream.toByteArray()
     }
@@ -56,8 +65,12 @@ data class ThumbnailGenerator(
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC)
 
         // transform 적용 후 이미지 그리기
-        g2d.drawImage(image, correctImageTransform.transform, null)
-        g2d.dispose()
+        try {
+            g2d.drawImage(image, correctImageTransform.transform, null)
+            g2d.dispose()
+        } finally {
+            image.flush() // 명시적으로 메모리 해제
+        }
 
         return correctedImage
     }
