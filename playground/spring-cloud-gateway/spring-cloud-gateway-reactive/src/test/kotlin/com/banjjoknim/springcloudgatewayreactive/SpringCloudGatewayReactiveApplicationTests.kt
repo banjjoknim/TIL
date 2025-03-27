@@ -1,10 +1,10 @@
-package com.carmerce.springcloudgateway
+package com.banjjoknim.springcloudgatewayreactive
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class SpringCloudGatewayApplicationTests {
+class SpringCloudGatewayReactiveApplicationTests {
 
     @Test
     fun contextLoads() {
