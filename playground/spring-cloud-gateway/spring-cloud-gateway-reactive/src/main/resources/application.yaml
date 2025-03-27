@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: Spring Cloud Gateway Reactive Sample
+    profile: local
+    version: v1
+    url: http://localhost:8080
+
+  cloud:
+    gateway:
+      default-filters:
+        - AuthorizationHeader # 사용자 지정 인증 필터, NamingRule에 따라 동작한다. `기본값 : XXXGatewayFilterFactory -> XXX`
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE # 헤더의 중복을 제거하기 위한 설정
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-headers: "*"
+            allowed-methods: "*"
+      routes:
+        - id: server-1
+          metadata:
+            serviceDesc: Reactive Server 1
+            routePath: server-1
+          uri: http://localhost:8010
+          predicates:
+            - Path=/server-1/**
+          filters:
+            - RewritePath=/server-1/(?<path>.*), /$\{path}
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud: INFO
+      apache:
+        http: INFO
+    com.banjjoknim: INFO
