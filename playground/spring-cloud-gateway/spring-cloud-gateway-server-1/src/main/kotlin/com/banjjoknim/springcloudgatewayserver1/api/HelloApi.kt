@@ -1,9 +1,8 @@
-package com.banjjoknim.springcloudgatewayreactiveserver1.api
+package com.banjjoknim.springcloudgatewayserver1.api
 
 import org.springframework.http.HttpHeaders
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
