@@ -19,13 +19,22 @@ spring:
       routes:
         - id: server-1
           metadata:
-            serviceDesc: Reactive Server 1
+            serviceDescription: Reactive Server 1
             routePath: server-1
           uri: http://localhost:8010
           predicates:
             - Path=/server-1/**
           filters:
             - RewritePath=/server-1/(?<path>.*), /$\{path}
+        - id: server-2
+          metadata:
+            serviceDescription: Reactive Server 2
+            routePath: server-2
+          uri: http://localhost:8020
+          predicates:
+            - Path=/server-2/**
+          filters:
+            - RewritePath=/server-2/(?<path>.*), /$\{path}
 
 logging:
   level:
