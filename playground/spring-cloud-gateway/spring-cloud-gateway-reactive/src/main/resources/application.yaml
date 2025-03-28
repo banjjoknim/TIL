@@ -8,7 +8,7 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - AuthorizationHeader # 사용자 지정 인증 필터, NamingRule에 따라 동작한다. `기본값 : XXXGatewayFilterFactory -> XXX`
+        - AuthorizationHeader # 사용자 지정 인증 필터, NamingRule에 따라 변환된 값을 넣어야 제대로 동작한다. 그렇지 않으면 해당 필터를 찾지 못해 서버가 기동되지 않는다. `기본값 : XXXGatewayFilterFactory -> XXX`
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE # 헤더의 중복을 제거하기 위한 설정
       globalcors:
         cors-configurations:
