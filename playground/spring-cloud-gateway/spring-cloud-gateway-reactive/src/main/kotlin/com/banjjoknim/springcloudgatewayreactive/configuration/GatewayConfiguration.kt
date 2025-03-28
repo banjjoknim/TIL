@@ -24,27 +24,48 @@ class GatewayConfiguration {
      */
     class AuthorizationHeaderGatewayFilterFactory :
         AbstractGatewayFilterFactory<GatewayConfiguration>(GatewayConfiguration::class.java) {
+        companion object {
+            private const val SECRET_HEADER_NAME = "Secret"
+        }
 
         private val logger = LoggerFactory.getLogger(this::class.java)
 
-        override fun apply(config: GatewayConfiguration?): GatewayFilter {
+        override fun apply(config: GatewayConfiguration): GatewayFilter {
             return GatewayFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->
                 val request: ServerHttpRequest = exchange.request
                 val response: ServerHttpResponse = exchange.response
+                val authorizedExchange = exchange.toAuthorizedExchange(request)
 
-                val authorization = request.headers[HttpHeaders.AUTHORIZATION]?.first()
-                    ?: throw RuntimeException("인증 정보가 존재하지 않습니다.")
-                request.mutate().headers { it.add(HttpHeaders.AUTHORIZATION, authorization) }
-                request.mutate().headers { it.add("Secret", authorization.toSecret()) } // TODO: 동작하지 않는 원인 찾기.
-
-                chain.filter(exchange).then(Mono.fromRunnable {
+                chain.filter(authorizedExchange).then(Mono.fromRunnable {
                     logger.info("request.remoteAddress: ${request.remoteAddress}, request.path: ${request.uri.path}, response.statusCode: ${response.statusCode}")
                 })
             }
         }
 
+        /**
+         * 인증 정보를 검사하고, 인증 필터 처리에 사용할 ServerWebExchange 생성한다.
+         *
+         * @see org.springframework.web.server.ServerWebExchange
+         */
+        private fun ServerWebExchange.toAuthorizedExchange(request: ServerHttpRequest): ServerWebExchange {
+            val authorization = request.headers[HttpHeaders.AUTHORIZATION]?.first()
+                ?: throw RuntimeException("인증 정보가 존재하지 않습니다.")
+            val authorizedRequest = request.mutate()
+                .headers {
+                    /**
+                     * 수신한 요청에 이미 존재하는 헤더이므로 굳이 작성할 필요는 없으나, 예시용으로 작성하였음.
+                     * `add()` 사용시 라우팅되는 서버에는 중복으로 값이 부여된 Authorization 헤더가 전달됨에 유의할 것.
+                     */
+                    it.set(HttpHeaders.AUTHORIZATION, authorization)
+                    it.set(SECRET_HEADER_NAME, authorization.toSecret())
+                }
+                .build()
+            val authorizedExchange = this.mutate().request(authorizedRequest).build()
+            return authorizedExchange
+        }
+
         private fun String.toSecret(): String {
-            return this
+            return "Secret-$this" // 필요할 경우 원하는 작업을 수행하게끔 구현한다.
         }
     }
 
