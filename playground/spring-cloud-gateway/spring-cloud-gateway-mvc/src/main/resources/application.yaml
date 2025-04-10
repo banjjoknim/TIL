@@ -1,3 +1,6 @@
+server:
+  port: 8070
+
 spring:
   application:
     name: Spring Cloud Gateway Mvc Sample
