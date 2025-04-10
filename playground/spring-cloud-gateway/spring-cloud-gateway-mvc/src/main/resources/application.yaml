@@ -1,0 +1,56 @@
+server:
+  port: 8070
+
+spring:
+  application:
+    name: Spring Cloud Gateway Mvc Sample
+    profile: local
+    version: v1
+    url: http://localhost:8080
+
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: server-1
+            metadata:
+              serviceDescription: Server 1
+              routePath: server-1
+            uri: http://localhost:8010
+            predicates:
+              - Path=/server-1/**
+            filters:
+              - AuthorizationHeaderFilter # `mvc`를 사용하는 경우, `reactive`와는 달리 `resources/META-INF/spring.factories` 에 정의해 주어야 동작한다.
+              - RewritePath=/server-1/(?<path>.*), /$\{path}
+              - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE # 헤더의 중복을 제거하기 위한 설정
+          - id: server-2
+            metadata:
+              serviceDescription: Server 2
+              routePath: server-2
+            uri: http://localhost:8020
+            predicates:
+              - Path=/server-2/**
+            filters:
+              - AuthorizationHeaderFilter
+              - RewritePath=/server-2/(?<path>.*), /$\{path}
+              - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE # 헤더의 중복을 제거하기 위한 설정
+          - id: server-3
+            metadata:
+              serviceDescription: Server 3
+              routePath: server-3
+            uri: http://localhost:8030
+            predicates:
+              - Path=/server-3/**
+            filters:
+              - AuthorizationHeaderFilter
+              - RewritePath=/server-3/(?<path>.*), /$\{path}
+              - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE # 헤더의 중복을 제거하기 위한 설정
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud: INFO
+      apache:
+        http: INFO
+    com.banjjoknim: INFO
