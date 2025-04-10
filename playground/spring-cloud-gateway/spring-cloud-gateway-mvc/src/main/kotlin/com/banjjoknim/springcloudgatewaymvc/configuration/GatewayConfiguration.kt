@@ -1,5 +1,6 @@
 package com.banjjoknim.springcloudgatewaymvc.configuration
 
+import org.slf4j.LoggerFactory
 import org.springframework.cloud.gateway.server.mvc.common.Shortcut
 import org.springframework.cloud.gateway.server.mvc.filter.FilterSupplier
 import org.springframework.context.annotation.Configuration
@@ -30,6 +31,8 @@ class GatewayConfiguration {
 
             private const val SECRET_HEADER_NAME = "Secret"
 
+            private val logger = LoggerFactory.getLogger(this::class.java)
+
             /**
              * Kotlin의 Companion object 내부에 있는 함수는 JVM에서 실제로는 `진짜 static`이 아니다.
              *
@@ -57,6 +60,7 @@ class GatewayConfiguration {
                 val requestProcessor = java.util.function.Function<ServerRequest, ServerRequest> { request ->
                     val authorization = request.headers().header(HttpHeaders.AUTHORIZATION).first()
                         ?: throw RuntimeException("인증 정보가 존재하지 않습니다.")
+                    logger.info("request.remoteAddress: ${request.remoteAddress()}, request.path: ${request.uri().path}")
                     ServerRequest.from(request).header(SECRET_HEADER_NAME, authorization.toSecret()).build()
                 }
                 return HandlerFilterFunction.ofRequestProcessor(requestProcessor)
