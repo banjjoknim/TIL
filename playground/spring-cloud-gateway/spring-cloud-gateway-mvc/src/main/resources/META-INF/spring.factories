@@ -1,0 +1,2 @@
+org.springframework.cloud.gateway.server.mvc.filter.FilterSupplier=\
+  com.banjjoknim.springcloudgatewaymvc.configuration.GatewayConfiguration.AuthorizationHeaderFilterSupplier
