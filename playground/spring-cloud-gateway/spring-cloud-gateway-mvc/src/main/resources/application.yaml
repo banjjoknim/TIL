@@ -21,6 +21,7 @@ spring:
               - Path=/server-1/**
             filters:
               - AuthorizationHeaderFilter # `mvc`를 사용하는 경우, `reactive`와는 달리 `resources/META-INF/spring.factories` 에 정의해 주어야 동작한다.
+              - ServerHeaderFilter=X-server-1-header # `mvc`를 사용하는 경우, `reactive`와는 달리 `resources/META-INF/spring.factories` 에 정의해 주어야 동작한다.
               - RewritePath=/server-1/(?<path>.*), /$\{path}
               - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE # 헤더의 중복을 제거하기 위한 설정
           - id: server-2
@@ -31,7 +32,8 @@ spring:
             predicates:
               - Path=/server-2/**
             filters:
-              - AuthorizationHeaderFilter
+              - AuthorizationHeaderFilter # `mvc`를 사용하는 경우, `reactive`와는 달리 `resources/META-INF/spring.factories` 에 정의해 주어야 동작한다.
+              - ServerHeaderFilter=X-server-2-header # `mvc`를 사용하는 경우, `reactive`와는 달리 `resources/META-INF/spring.factories` 에 정의해 주어야 동작한다.
               - RewritePath=/server-2/(?<path>.*), /$\{path}
               - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE # 헤더의 중복을 제거하기 위한 설정
           - id: server-3
@@ -42,7 +44,8 @@ spring:
             predicates:
               - Path=/server-3/**
             filters:
-              - AuthorizationHeaderFilter
+              - AuthorizationHeaderFilter # `mvc`를 사용하는 경우, `reactive`와는 달리 `resources/META-INF/spring.factories` 에 정의해 주어야 동작한다.
+              - ServerHeaderFilter=X-server-3-header # `mvc`를 사용하는 경우, `reactive`와는 달리 `resources/META-INF/spring.factories` 에 정의해 주어야 동작한다.
               - RewritePath=/server-3/(?<path>.*), /$\{path}
               - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE # 헤더의 중복을 제거하기 위한 설정
 

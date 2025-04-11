@@ -46,7 +46,9 @@ class GatewayConfiguration {
              */
             @JvmStatic
             /**
-             * `Spring Cloud Gateway MVC`가 이 어노테이션이 선언된 함수를 필터 메서드로 인식하게 해준다.
+             * `Spring Cloud Gateway MVC`가 이 어노테이션이 선언된 함수의 이름과 인자를 순서대로 이용하여 필터 메서드로 인식하게 해준다.
+             *
+             * - 인자가 없는 경우 : e.g. AuthorizationHeaderFilter
              *
              * @see org.springframework.web.servlet.function.HandlerFilterFunction
              * @see org.springframework.web.servlet.function.ServerRequest
@@ -60,6 +62,41 @@ class GatewayConfiguration {
                 val requestProcessor = java.util.function.Function<ServerRequest, ServerRequest> { request ->
                     val authorization = request.headers().header(HttpHeaders.AUTHORIZATION).first()
                         ?: throw RuntimeException("인증 정보가 존재하지 않습니다.")
+                    logger.info("request.remoteAddress: ${request.remoteAddress()}, request.path: ${request.uri().path}")
+                    ServerRequest.from(request).header(SECRET_HEADER_NAME, authorization.toSecret()).build()
+                }
+                return HandlerFilterFunction.ofRequestProcessor(requestProcessor)
+            }
+
+            /**
+             * Kotlin의 Companion object 내부에 있는 함수는 JVM에서 실제로는 `진짜 static`이 아니다.
+             *
+             * Companion Object 내의 함수는 `AuthorizationHeaderFilterFunctions$Companion`라는 내부 클래스로 변환되고, 해당 메서드들은 INSTANCE 객체를 통해 접근한다.
+             *
+             * 즉, Java처럼 `진짜 static`이 아니기 때문에 `Spring Cloud Gateway MVC`에서 기대하는 `@Shortcut` 필터로 인식되지 않는다(`@Shortcut` 필터로 인식되려면 `진짜 static` 함수 여야 한다).
+             *
+             * 따라서 `진짜 static`으로 만들어주기 위해 `@JvmStatic` 선언이 필요하다.
+             *
+             * @see kotlin.jvm.JvmStatic
+             */
+            @JvmStatic
+            /**
+             * `Spring Cloud Gateway MVC`가 이 어노테이션이 선언된 함수의 이름과 인자를 순서대로 이용하여 필터 메서드로 인식하게 해준다.
+             *
+             * - 인자가 있는 경우 : e.g. MyHeaderFilter=X-my-header
+             *
+             * @see org.springframework.web.servlet.function.HandlerFilterFunction
+             * @see org.springframework.web.servlet.function.ServerRequest
+             * @see org.springframework.web.servlet.function.ServerResponse
+             * @see org.springframework.cloud.gateway.server.mvc.common.Shortcut
+             * @see org.springframework.cloud.gateway.server.mvc.config.NormalizedOperationMethod
+             * @see org.springframework.cloud.gateway.server.mvc.config.NormalizedOperationMethod.normalizeArgs
+             */
+            @Shortcut
+            fun serverHeaderFilter(serverHeaderName: String): HandlerFilterFunction<ServerResponse, ServerResponse> {
+                val requestProcessor = java.util.function.Function<ServerRequest, ServerRequest> { request ->
+                    val authorization = request.headers().header(serverHeaderName).first()
+                        ?: throw RuntimeException("헤더 정보가 존재하지 않습니다.")
                     logger.info("request.remoteAddress: ${request.remoteAddress()}, request.path: ${request.uri().path}")
                     ServerRequest.from(request).header(SECRET_HEADER_NAME, authorization.toSecret()).build()
                 }
