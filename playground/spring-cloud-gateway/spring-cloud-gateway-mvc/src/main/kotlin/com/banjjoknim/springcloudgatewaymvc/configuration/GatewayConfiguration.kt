@@ -46,7 +46,9 @@ class GatewayConfiguration {
              */
             @JvmStatic
             /**
-             * `Spring Cloud Gateway MVC`가 이 어노테이션이 선언된 함수의 이름과 인자를 순서대로 이용하여 필터 메서드로 인식하게 해준다.
+             * `@Shortcut` 어노테이션은 `Spring Cloud Gateway MVC`가 이 어노테이션이 선언된 함수의 이름과 인자를 순서대로 이용하여 필터 메서드로 인식하게 해준다.
+             *
+             * 인자가 없을 시에는 굳이 함수에 명시하지 않아도 동작한다. 단, 인자가 있을 시에는 반드시 명시해줘야 한다.
              *
              * - 인자가 없는 경우 : e.g. AuthorizationHeaderFilter
              *
@@ -57,7 +59,7 @@ class GatewayConfiguration {
              * @see org.springframework.cloud.gateway.server.mvc.config.NormalizedOperationMethod
              * @see org.springframework.cloud.gateway.server.mvc.config.NormalizedOperationMethod.normalizeArgs
              */
-            @Shortcut
+//            @Shortcut
             fun authorizationHeaderFilter(): HandlerFilterFunction<ServerResponse, ServerResponse> {
                 val requestProcessor = java.util.function.Function<ServerRequest, ServerRequest> { request ->
                     val authorization = request.headers().header(HttpHeaders.AUTHORIZATION).first()
@@ -81,7 +83,9 @@ class GatewayConfiguration {
              */
             @JvmStatic
             /**
-             * `Spring Cloud Gateway MVC`가 이 어노테이션이 선언된 함수의 이름과 인자를 순서대로 이용하여 필터 메서드로 인식하게 해준다.
+             * `@Shortcut` 어노테이션은 `Spring Cloud Gateway MVC`가 이 어노테이션이 선언된 함수의 이름과 인자를 순서대로 이용하여 필터 메서드로 인식하게 해준다.
+             *
+             * 인자가 없을 시에는 굳이 함수에 명시하지 않아도 동작한다. 단, 인자가 있을 시에는 반드시 명시해줘야 한다.
              *
              * - 인자가 있는 경우 : e.g. MyHeaderFilter=X-my-header
              *
