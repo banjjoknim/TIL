@@ -4,7 +4,7 @@ databaseChangeLog:
       id: create_table_order
       changes:
         - sqlFile:
-            path: create_table_order.sql
+            path: ../data/create_table_order.sql # https://github.com/liquibase/liquibase/issues/3200
             dbms: h2
             relativeToChangelogFile: true
   - changeSet:
