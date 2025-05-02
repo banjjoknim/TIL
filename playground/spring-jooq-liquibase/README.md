@@ -56,6 +56,7 @@
 ### Trouble Shooting
 
 - [Table creation fails with H2 v2 when a change set specifies](https://github.com/liquibase/liquibase/issues/3250)
+- [sqlFile throws IOException when relativeToChangelogFile is used (from an included databaseChangeLog file)](https://github.com/liquibase/liquibase/issues/3200)
 
 ## Etc.
 
