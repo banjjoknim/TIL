@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+replicas:
+  - name: argocd-sample
+    count: 1
+images:
+  - name: docker.io/banjjoknim/argocd-sample # app.yaml의 `annotations.argocd-image-updater.argoproj.io/image-list`에 정의된 값과 동일해야 한다.
+#    newTag: latest # 이 설정을 활성화하면 latest 태그만을 감지한다. 활성화하지 않으면 Image Updater가 자동으로 최신 태그를 채워넣는다.
+resources:
+  - configmap.yaml
+  - deployment.yaml
+  - service.yaml
+  - secret.yaml
