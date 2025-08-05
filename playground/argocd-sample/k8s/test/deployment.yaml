@@ -21,7 +21,7 @@ spec:
         app: argocd-sample
     spec:
       containers:
-        - image: banjjoknim/argocd-sample:1
+        - image: docker.io/banjjoknim/argocd-sample
           name: argocd-sample
           ports:
             - containerPort: 8080
