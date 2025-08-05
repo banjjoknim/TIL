@@ -1,3 +1,0 @@
-kustomize:
-  images:
-  - docker.io/banjjoknim/argocd-sample:2

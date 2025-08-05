@@ -214,6 +214,156 @@ CLI 방식과 UI 방식이 존재하는데, 필자는 UI 방식을 사용하도�
 
 ![img.png](images/argocd-sample_test.png)
 
+## Apply ArgoCD Image Updater (GitOps)
+
+### ArgoCD Image Updater 적용 순서
+
+#### 1. Installing as Kubernetes workload in Argo CD namespace
+
+ArgoCD Image Updater 관련 resource를 생성, 설치한다.
+
+```shell
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/stable/manifests/install.yaml
+```
+
+#### 2. Generate SSH Key
+
+GitHub에 연결할 SSH Key를 생성한다.
+
+```shell
+➜  argocd-sample git:(apply-argocd-image-updater) ✗ ssh-keygen -t rsa -b 4096 -C "argocd-image-updater-ssh-key" -f ~/.ssh/argocd-image-updater-ssh-key
+
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /Users/baejaehong/.ssh/argocd-image-updater-ssh-key
+Your public key has been saved in /Users/baejaehong/.ssh/argocd-image-updater-ssh-key.pub
+The key fingerprint is:
+SHA256:6l1v+dbvRNWNlm1UoxlOG0tm85bUDFN8T+w8OrKZfH8 argocd-image-updater-ssh-key
+The key's randomart image is:
++---[RSA 4096]----+
+| ...             |
+| ...             |
+| ...             |
+| ...             |
+| ...             |
+| ...             |
+| ...             |
+| ...             |
+| ...             |
++----[SHA256]-----+
+```
+
+#### 3. Create K8s Secret For ArgoCD Image Updater SSH Key
+
+```shell
+kubectl create secret generic argocd-image-updater-ssh-key \
+  --from-file=argocdImageUpdaterGitSshPrivateKey=~/.ssh/argocd-image-updater-ssh-key \
+  -n argocd
+```
+
+#### 4. Update ArgoCD ConfigMap
+
+```shell
+kubectl edit configmap argocd-image-updater-config -n argocd
+```
+
+```yaml
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"argocd-image-updater-config","app.kubernetes.io/part-of":"argocd-image-updater"},"name":"argocd-image-updater-config","namespace":"argocd"}}
+  creationTimestamp: "2025-07-24T01:44:56Z"
+  labels:
+    app.kubernetes.io/name: argocd-image-updater-config
+    app.kubernetes.io/part-of: argocd-image-updater
+  name: argocd-image-updater-config
+  namespace: argocd
+  resourceVersion: "15892"
+  uid: 46bfe0b7-0974-4e83-9ca3-3305c0525ff2
+
+```
+
+아래 내용 추가
+
+```yaml
+data:
+  GIT_SSH_KEY_PATH: "/app/config/argocd-image-updater/argocdImageUpdaterGitSshPrivateKey"
+```
+
+최종
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"argocd-image-updater-config","app.kubernetes.io/part-of":"argocd-image-updater"},"name":"argocd-image-updater-config","namespace":"argocd"}}
+  creationTimestamp: "2025-08-05T06:47:50Z"
+  labels:
+    app.kubernetes.io/name: argocd-image-updater-config
+    app.kubernetes.io/part-of: argocd-image-updater
+  name: argocd-image-updater-config
+  namespace: argocd
+  resourceVersion: "2295"
+  uid: 15d91bf6-da91-4a2a-98bb-c04913470029
+data:
+  GIT_SSH_KEY_PATH: "/app/config/argocd-image-updater/argocdImageUpdaterGitSshPrivateKey"
+
+```
+
+#### 5. Update ArgoCD Deployment
+
+```shell
+kubectl edit deployment argocd-image-updater -n argocd
+```
+
+volumeMounts에 아래 내용 추가
+
+```yaml
+volumeMounts:
+  - name: argocd-image-updater-git-ssh-private-key
+    mountPath: /app/config/argocd-image-updater/argocdImageUpdaterGitSshPrivateKey
+
+```
+
+env에 아래 내용 추가
+
+```yaml
+env:
+  - name: GIT_SSH_KEY_PATH
+    value: /app/config/argocd-image-updater/argocdImageUpdaterGitSshPrivateKey
+```
+
+배포 설정 적용 후 재시작
+
+```shell
+kubectl rollout restart deployment argocd-image-updater -n argocd
+```
+
+#### 6. Apply Application
+
+```shell
+kubectl apply -f k8s/argocd/application.yaml
+```
+
+#### 6. ArgoCD Image Updater Auto Sync Test
+
+최신 버전의 이미지를 DockerHub에 push → ArgoCD가 관리하는 Application의 버전이 자동으로 업데이트 되는지 확인.
+
+또는 다음 명령어로 수동 실행도 가능:
+
+```shell
+kubectl -n argocd exec deploy/argocd-image-updater -- argocd-image-updater run --once
+```
+
 ### 참고 자료
 
 - https://docs.docker.com/engine/install/
