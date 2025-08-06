@@ -1,0 +1,11 @@
+replicas:
+  - name: argocd-sample
+    count: 1
+images:
+  - name: "docker.io/banjjoknim/argocd-sample"
+    newTag: "1"
+resources:
+  - configmap.yaml
+  - deployment.yaml
+  - service.yaml
+  - secret.yaml
