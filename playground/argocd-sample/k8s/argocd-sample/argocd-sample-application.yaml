@@ -11,11 +11,11 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: test
+    namespace: argocd-sample
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: playground/argocd-sample/k8s/test
+    path: playground/argocd-sample/k8s/argocd-sample # ArgoCD Image Updater는 Kustomize or Helm type 중 하나여야 한다.
     repoURL: git@github.com:banjjoknim/TIL # https://github.com/banjjoknim/TIL
     targetRevision: apply-argocd-image-updater-2
   syncPolicy:
