@@ -1005,7 +1005,6 @@ time="2025-08-06T03:18:40Z" level=info msg="Processing results: applications=1 i
 time="2025-08-06T03:20:40Z" level=info msg="Starting image update cycle, considering 1 annotated application(s) for update"
 time="2025-08-06T03:20:40Z" level=warning msg="\"latest\" strategy has been renamed to \"newest-build\". Please switch to the new convention as support for the old naming convention will be removed in future versions." image_alias= image_name=docker.io/banjjoknim/argocd-sample registry_url=docker.io
 time="2025-08-06T03:20:42Z" level=info msg="Processing results: applications=1 images_considered=1 images_skipped=0 images_updated=0 errors=0"
-
 ```
 
 ArgoCD가 성공적으로 업데이트를 마치면 [.argocd-source-argocd-sample.yaml](k8s%2Fargocd-sample%2F.argocd-source-argocd-sample.yaml)파일에 변경사항(배포 버전)을 커밋한다.
