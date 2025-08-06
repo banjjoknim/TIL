@@ -907,6 +907,104 @@ time="2025-08-06T02:52:00Z" level=info msg="Starting image update cycle, conside
 time="2025-08-06T02:52:00Z" level=info msg="Processing results: applications=0 images_considered=0 images_skipped=0 images_updated=0 errors=0"
 time="2025-08-06T02:54:00Z" level=info msg="Starting image update cycle, considering 0 annotated application(s) for update"
 time="2025-08-06T02:54:00Z" level=info msg="Processing results: applications=0 images_considered=0 images_skipped=0 images_updated=0 errors=0"
+...
+time="2025-08-06T03:06:00Z" level=warning msg="\"latest\" strategy has been renamed to \"newest-build\". Please switch to the new convention as support for the old naming convention will be removed in future versions." image_alias= image_name=docker.io/banjjoknim/argocd-sample registry_url=docker.io
+time="2025-08-06T03:06:02Z" level=info msg="Setting new image to docker.io/banjjoknim/argocd-sample:2" alias= application=argocd-sample image_name=banjjoknim/argocd-sample image_tag=1 registry=docker.io
+time="2025-08-06T03:06:02Z" level=info msg="Successfully updated image 'docker.io/banjjoknim/argocd-sample:1' to 'docker.io/banjjoknim/argocd-sample:2', but pending spec update (dry run=false)" alias= application=argocd-sample image_name=banjjoknim/argocd-sample image_tag=1 registry=docker.io
+time="2025-08-06T03:06:02Z" level=info msg="Committing 1 parameter update(s) for application argocd-sample" application=argocd-sample
+time="2025-08-06T03:06:02Z" level=info msg="Starting configmap/secret informers"
+time="2025-08-06T03:06:02Z" level=info msg="Configmap/secret informer synced"
+time="2025-08-06T03:06:02Z" level=info msg="configmap informer cancelled"
+time="2025-08-06T03:06:02Z" level=info msg="secrets informer cancelled"
+time="2025-08-06T03:06:02Z" level=info msg="Initializing git@github.com:banjjoknim/TIL to /tmp/git-argocd-sample3121665167"
+time="2025-08-06T03:06:02Z" level=info msg="git fetch origin apply-argocd-image-updater-2 --force --prune --depth 1" dir=/tmp/git-argocd-sample3121665167 execID=b76ae
+time="2025-08-06T03:06:07Z" level=info msg=Trace args="[git fetch origin apply-argocd-image-updater-2 --force --prune --depth 1]" dir=/tmp/git-argocd-sample3121665167 operation_name="exec git" time_ms=4686.57296
+time="2025-08-06T03:06:07Z" level=info msg="git checkout --force apply-argocd-image-updater-2" dir=/tmp/git-argocd-sample3121665167 execID=3b220
+time="2025-08-06T03:06:08Z" level=info msg=Trace args="[git checkout --force apply-argocd-image-updater-2]" dir=/tmp/git-argocd-sample3121665167 operation_name="exec git" time_ms=317.727827
+time="2025-08-06T03:06:08Z" level=info msg="git clean -ffdx" dir=/tmp/git-argocd-sample3121665167 execID=265a2
+time="2025-08-06T03:06:08Z" level=info msg=Trace args="[git clean -ffdx]" dir=/tmp/git-argocd-sample3121665167 operation_name="exec git" time_ms=17.952441
+time="2025-08-06T03:06:08Z" level=info msg="git config user.name argocd-image-updater" dir=/tmp/git-argocd-sample3121665167 execID=4b293
+time="2025-08-06T03:06:08Z" level=info msg=Trace args="[git config user.name argocd-image-updater]" dir=/tmp/git-argocd-sample3121665167 operation_name="exec git" time_ms=4.485524
+time="2025-08-06T03:06:08Z" level=info msg="git config user.email noreply@argoproj.io" dir=/tmp/git-argocd-sample3121665167 execID=07340
+time="2025-08-06T03:06:08Z" level=info msg=Trace args="[git config user.email noreply@argoproj.io]" dir=/tmp/git-argocd-sample3121665167 operation_name="exec git" time_ms=2.8263659999999997
+time="2025-08-06T03:06:08Z" level=info msg="git -c gpg.format=openpgp commit -a -F /tmp/image-updater-commit-msg3878954001" dir=/tmp/git-argocd-sample3121665167 execID=53d04
+time="2025-08-06T03:06:08Z" level=info msg=Trace args="[git -c gpg.format=openpgp commit -a -F /tmp/image-updater-commit-msg3878954001]" dir=/tmp/git-argocd-sample3121665167 operation_name="exec git" time_ms=98.560994
+time="2025-08-06T03:06:08Z" level=info msg="git push origin apply-argocd-image-updater-2" dir=/tmp/git-argocd-sample3121665167 execID=3d8c7
+time="2025-08-06T03:06:10Z" level=info msg=Trace args="[git push origin apply-argocd-image-updater-2]" dir=/tmp/git-argocd-sample3121665167 operation_name="exec git" time_ms=2253.8575779999996
+time="2025-08-06T03:06:10Z" level=info msg="Successfully updated the live application spec" application=argocd-sample
+time="2025-08-06T03:06:10Z" level=info msg="Processing results: applications=1 images_considered=1 images_skipped=0 images_updated=1 errors=0"
+time="2025-08-06T03:08:10Z" level=info msg="Starting image update cycle, considering 0 annotated application(s) for update"
+time="2025-08-06T03:08:10Z" level=info msg="Processing results: applications=0 images_considered=0 images_skipped=0 images_updated=0 errors=0"
+time="2025-08-06T03:10:10Z" level=info msg="Starting image update cycle, considering 0 annotated application(s) for update"
+time="2025-08-06T03:10:10Z" level=info msg="Processing results: applications=0 images_considered=0 images_skipped=0 images_updated=0 errors=0"
+time="2025-08-06T03:12:10Z" level=info msg="Starting image update cycle, considering 1 annotated application(s) for update"
+time="2025-08-06T03:12:10Z" level=warning msg="\"latest\" strategy has been renamed to \"newest-build\". Please switch to the new convention as support for the old naming convention will be removed in future versions." image_alias= image_name=docker.io/banjjoknim/argocd-sample registry_url=docker.io
+time="2025-08-06T03:12:12Z" level=info msg="Processing results: applications=1 images_considered=1 images_skipped=0 images_updated=0 errors=0"
+time="2025-08-06T03:14:12Z" level=info msg="Starting image update cycle, considering 1 annotated application(s) for update"
+time="2025-08-06T03:14:12Z" level=warning msg="\"latest\" strategy has been renamed to \"newest-build\". Please switch to the new convention as support for the old naming convention will be removed in future versions." image_alias= image_name=docker.io/banjjoknim/argocd-sample registry_url=docker.io
+time="2025-08-06T03:14:18Z" level=info msg="Setting new image to docker.io/banjjoknim/argocd-sample:3" alias= application=argocd-sample image_name=banjjoknim/argocd-sample image_tag=2 registry=docker.io
+time="2025-08-06T03:14:18Z" level=info msg="Successfully updated image 'docker.io/banjjoknim/argocd-sample:2' to 'docker.io/banjjoknim/argocd-sample:3', but pending spec update (dry run=false)" alias= application=argocd-sample image_name=banjjoknim/argocd-sample image_tag=2 registry=docker.io
+time="2025-08-06T03:14:18Z" level=info msg="Committing 1 parameter update(s) for application argocd-sample" application=argocd-sample
+time="2025-08-06T03:14:18Z" level=info msg="Starting configmap/secret informers"
+time="2025-08-06T03:14:18Z" level=info msg="Configmap/secret informer synced"
+time="2025-08-06T03:14:18Z" level=info msg="secrets informer cancelled"
+time="2025-08-06T03:14:18Z" level=info msg="configmap informer cancelled"
+time="2025-08-06T03:14:18Z" level=info msg="Initializing git@github.com:banjjoknim/TIL to /tmp/git-argocd-sample3743955147"
+time="2025-08-06T03:14:18Z" level=info msg="git fetch origin apply-argocd-image-updater-2 --force --prune --depth 1" dir=/tmp/git-argocd-sample3743955147 execID=a1a5a
+time="2025-08-06T03:14:22Z" level=info msg=Trace args="[git fetch origin apply-argocd-image-updater-2 --force --prune --depth 1]" dir=/tmp/git-argocd-sample3743955147 operation_name="exec git" time_ms=4628.385834999999
+time="2025-08-06T03:14:22Z" level=info msg="git checkout --force apply-argocd-image-updater-2" dir=/tmp/git-argocd-sample3743955147 execID=3491c
+time="2025-08-06T03:14:23Z" level=info msg=Trace args="[git checkout --force apply-argocd-image-updater-2]" dir=/tmp/git-argocd-sample3743955147 operation_name="exec git" time_ms=317.47493
+time="2025-08-06T03:14:23Z" level=info msg="git clean -ffdx" dir=/tmp/git-argocd-sample3743955147 execID=5deb5
+time="2025-08-06T03:14:23Z" level=info msg=Trace args="[git clean -ffdx]" dir=/tmp/git-argocd-sample3743955147 operation_name="exec git" time_ms=21.306907
+time="2025-08-06T03:14:23Z" level=info msg="git config user.name argocd-image-updater" dir=/tmp/git-argocd-sample3743955147 execID=8b1e2
+time="2025-08-06T03:14:23Z" level=info msg=Trace args="[git config user.name argocd-image-updater]" dir=/tmp/git-argocd-sample3743955147 operation_name="exec git" time_ms=3.398011
+time="2025-08-06T03:14:23Z" level=info msg="git config user.email noreply@argoproj.io" dir=/tmp/git-argocd-sample3743955147 execID=41a24
+time="2025-08-06T03:14:23Z" level=info msg=Trace args="[git config user.email noreply@argoproj.io]" dir=/tmp/git-argocd-sample3743955147 operation_name="exec git" time_ms=3.676626
+time="2025-08-06T03:14:23Z" level=info msg="git -c gpg.format=openpgp commit -a -F /tmp/image-updater-commit-msg3153475228" dir=/tmp/git-argocd-sample3743955147 execID=b2144
+time="2025-08-06T03:14:23Z" level=info msg=Trace args="[git -c gpg.format=openpgp commit -a -F /tmp/image-updater-commit-msg3153475228]" dir=/tmp/git-argocd-sample3743955147 operation_name="exec git" time_ms=81.49390199999999
+time="2025-08-06T03:14:23Z" level=info msg="git push origin apply-argocd-image-updater-2" dir=/tmp/git-argocd-sample3743955147 execID=0c989
+time="2025-08-06T03:14:25Z" level=info msg=Trace args="[git push origin apply-argocd-image-updater-2]" dir=/tmp/git-argocd-sample3743955147 operation_name="exec git" time_ms=2384.2855489999997
+time="2025-08-06T03:14:25Z" level=info msg="Successfully updated the live application spec" application=argocd-sample
+time="2025-08-06T03:14:25Z" level=info msg="Processing results: applications=1 images_considered=1 images_skipped=0 images_updated=1 errors=0"
+time="2025-08-06T03:16:25Z" level=info msg="Starting image update cycle, considering 1 annotated application(s) for update"
+time="2025-08-06T03:16:25Z" level=warning msg="\"latest\" strategy has been renamed to \"newest-build\". Please switch to the new convention as support for the old naming convention will be removed in future versions." image_alias= image_name=docker.io/banjjoknim/argocd-sample registry_url=docker.io
+time="2025-08-06T03:16:27Z" level=info msg="Setting new image to docker.io/banjjoknim/argocd-sample:3" alias= application=argocd-sample image_name=banjjoknim/argocd-sample image_tag=2 registry=docker.io
+time="2025-08-06T03:16:27Z" level=info msg="Successfully updated image 'docker.io/banjjoknim/argocd-sample:2' to 'docker.io/banjjoknim/argocd-sample:3', but pending spec update (dry run=false)" alias= application=argocd-sample image_name=banjjoknim/argocd-sample image_tag=2 registry=docker.io
+time="2025-08-06T03:16:27Z" level=info msg="Committing 1 parameter update(s) for application argocd-sample" application=argocd-sample
+time="2025-08-06T03:16:27Z" level=info msg="Starting configmap/secret informers"
+time="2025-08-06T03:16:27Z" level=info msg="Configmap/secret informer synced"
+time="2025-08-06T03:16:27Z" level=info msg="Initializing git@github.com:banjjoknim/TIL to /tmp/git-argocd-sample2113638423"
+time="2025-08-06T03:16:27Z" level=info msg="secrets informer cancelled"
+time="2025-08-06T03:16:27Z" level=info msg="configmap informer cancelled"
+time="2025-08-06T03:16:27Z" level=info msg="git fetch origin apply-argocd-image-updater-2 --force --prune --depth 1" dir=/tmp/git-argocd-sample2113638423 execID=0b548
+time="2025-08-06T03:16:32Z" level=info msg=Trace args="[git fetch origin apply-argocd-image-updater-2 --force --prune --depth 1]" dir=/tmp/git-argocd-sample2113638423 operation_name="exec git" time_ms=4632.752234
+time="2025-08-06T03:16:32Z" level=info msg="git checkout --force apply-argocd-image-updater-2" dir=/tmp/git-argocd-sample2113638423 execID=135a1
+time="2025-08-06T03:16:32Z" level=info msg=Trace args="[git checkout --force apply-argocd-image-updater-2]" dir=/tmp/git-argocd-sample2113638423 operation_name="exec git" time_ms=249.298623
+time="2025-08-06T03:16:32Z" level=info msg="git clean -ffdx" dir=/tmp/git-argocd-sample2113638423 execID=9fedd
+time="2025-08-06T03:16:32Z" level=info msg=Trace args="[git clean -ffdx]" dir=/tmp/git-argocd-sample2113638423 operation_name="exec git" time_ms=25.202919
+time="2025-08-06T03:16:32Z" level=info msg="Successfully updated the live application spec" application=argocd-sample
+time="2025-08-06T03:16:32Z" level=info msg="Processing results: applications=1 images_considered=1 images_skipped=0 images_updated=1 errors=0"
+time="2025-08-06T03:18:32Z" level=info msg="Starting image update cycle, considering 1 annotated application(s) for update"
+time="2025-08-06T03:18:32Z" level=warning msg="\"latest\" strategy has been renamed to \"newest-build\". Please switch to the new convention as support for the old naming convention will be removed in future versions." image_alias= image_name=docker.io/banjjoknim/argocd-sample registry_url=docker.io
+time="2025-08-06T03:18:34Z" level=info msg="Setting new image to docker.io/banjjoknim/argocd-sample:3" alias= application=argocd-sample image_name=banjjoknim/argocd-sample image_tag=2 registry=docker.io
+time="2025-08-06T03:18:34Z" level=info msg="Successfully updated image 'docker.io/banjjoknim/argocd-sample:2' to 'docker.io/banjjoknim/argocd-sample:3', but pending spec update (dry run=false)" alias= application=argocd-sample image_name=banjjoknim/argocd-sample image_tag=2 registry=docker.io
+time="2025-08-06T03:18:34Z" level=info msg="Committing 1 parameter update(s) for application argocd-sample" application=argocd-sample
+time="2025-08-06T03:18:34Z" level=info msg="Starting configmap/secret informers"
+time="2025-08-06T03:18:34Z" level=info msg="Configmap/secret informer synced"
+time="2025-08-06T03:18:34Z" level=info msg="Initializing git@github.com:banjjoknim/TIL to /tmp/git-argocd-sample3241728312"
+time="2025-08-06T03:18:34Z" level=info msg="configmap informer cancelled"
+time="2025-08-06T03:18:34Z" level=info msg="git fetch origin apply-argocd-image-updater-2 --force --prune --depth 1" dir=/tmp/git-argocd-sample3241728312 execID=7f70a
+time="2025-08-06T03:18:34Z" level=info msg="secrets informer cancelled"
+time="2025-08-06T03:18:39Z" level=info msg=Trace args="[git fetch origin apply-argocd-image-updater-2 --force --prune --depth 1]" dir=/tmp/git-argocd-sample3241728312 operation_name="exec git" time_ms=4947.118145
+time="2025-08-06T03:18:39Z" level=info msg="git checkout --force apply-argocd-image-updater-2" dir=/tmp/git-argocd-sample3241728312 execID=fc83a
+time="2025-08-06T03:18:40Z" level=info msg=Trace args="[git checkout --force apply-argocd-image-updater-2]" dir=/tmp/git-argocd-sample3241728312 operation_name="exec git" time_ms=202.760603
+time="2025-08-06T03:18:40Z" level=info msg="git clean -ffdx" dir=/tmp/git-argocd-sample3241728312 execID=6781f
+time="2025-08-06T03:18:40Z" level=info msg=Trace args="[git clean -ffdx]" dir=/tmp/git-argocd-sample3241728312 operation_name="exec git" time_ms=15.395814000000001
+time="2025-08-06T03:18:40Z" level=info msg="Successfully updated the live application spec" application=argocd-sample
+time="2025-08-06T03:18:40Z" level=info msg="Processing results: applications=1 images_considered=1 images_skipped=0 images_updated=1 errors=0"
+time="2025-08-06T03:20:40Z" level=info msg="Starting image update cycle, considering 1 annotated application(s) for update"
+time="2025-08-06T03:20:40Z" level=warning msg="\"latest\" strategy has been renamed to \"newest-build\". Please switch to the new convention as support for the old naming convention will be removed in future versions." image_alias= image_name=docker.io/banjjoknim/argocd-sample registry_url=docker.io
+time="2025-08-06T03:20:42Z" level=info msg="Processing results: applications=1 images_considered=1 images_skipped=0 images_updated=0 errors=0"
 ```
 
 ArgoCD가 성공적으로 업데이트를 마치면 [.argocd-source-argocd-sample.yaml](k8s%2Fargocd-sample%2F.argocd-source-argocd-sample.yaml)파일에 변경사항(배포 버전)을 커밋한다.
