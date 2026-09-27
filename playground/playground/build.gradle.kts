@@ -2,11 +2,23 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	id("java")
+	idea
 	id("org.springframework.boot") version "2.6.1"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	kotlin("jvm") version "1.6.0"
-	kotlin("plugin.spring") version "1.6.0"
-	kotlin("plugin.jpa") version "1.6.0"
+	kotlin("jvm") version "1.9.22"
+	kotlin("plugin.spring") version "1.9.22"
+	kotlin("plugin.jpa") version "1.9.22"
+}
+
+// Boot BOM pins kotlin.version=1.6.0; override so stdlib sources include generated/_Arrays.kt
+// (groupBy lives there — required for IDE Go to Declaration / Cmd+B).
+extra["kotlin.version"] = "1.9.22"
+
+idea {
+	module {
+		isDownloadSources = true
+		isDownloadJavadoc = true
+	}
 }
 
 group = "com.banjjoknim"
