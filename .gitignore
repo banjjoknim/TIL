@@ -17,3 +17,6 @@ WebServiceBySpringBootAndAWS/build/test-results/test/binary/output.bin
 WebServiceBySpringBootAndAWS/build/test-results/test/binary/output.bin.idx
 WebServiceBySpringBootAndAWS/build/test-results/test/binary/results.bin
 *.iml
+
+# Video transcripts (local only, not redistributed)
+*.transcript.txt
